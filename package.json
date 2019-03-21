@@ -1,0 +1,30 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "compile": "lerna run compile",
+    "clean": "lerna run clean",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "update-version": "lerna publish --skip-git --skip-npm --force-publish '*'"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.6",
+    "@types/node": "^11.9.4",
+    "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
+    "jest": "^24.1.0",
+    "lerna": "^3.13.0",
+    "prettier": "^1.15.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-testing-library": "^6.0.1",
+    "ts-jest": "^24.0.0",
+    "tslint-config-prettier": "^1.16.0",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "semantic-ui-react": "^0.86.0"
+  }
+}
