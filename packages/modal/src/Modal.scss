@@ -1,0 +1,33 @@
+.ui-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+  }
+
+  &-content {
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+
+    &-description {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 100px 0 100px;
+    }
+  }
+
+  .header {
+    background: #f9fafb !important;
+  }
+
+  .ui-icon {
+    margin-right: 10px;
+  }
+}
