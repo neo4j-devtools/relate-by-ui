@@ -1,8 +1,9 @@
 import 'react-testing-library/cleanup-after-each';
+import 'jest-dom/extend-expect';
 import React, { useState } from 'react';
 import { render, fireEvent } from 'react-testing-library';
 import { Modal } from '../src';
-import { Button } from 'semantic-ui-react';
+import { ButtonConfirm } from '@relate-by-ui/buttons';
 import 'jest-dom/extend-expect';
 
 const TestModal = (props: any) => {
@@ -22,7 +23,7 @@ const TestModal = (props: any) => {
       semanticModal={{
         className: 'test-semantic-modal',
         open,
-        trigger: <Button onClick={() => modalState(true)}>Open modal</Button>,
+        trigger: <ButtonConfirm title="Open modal" onClick={() => modalState(true)} />,
         onClose: () => modalState(false),
       }}
     >

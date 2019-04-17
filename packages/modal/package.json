@@ -5,9 +5,13 @@
   "types": "lib/index.d.ts",
   "license": "MIT",
   "peerDependencies": {
+    "@relate-by-ui/buttons": "*",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "semantic-ui-react": "^0.86.0"
+  },
+  "dependencies": {
+    "@relate-by-ui/buttons": "^1.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.6",

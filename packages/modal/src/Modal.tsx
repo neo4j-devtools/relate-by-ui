@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Modal, ModalProps } from 'semantic-ui-react';
+import { Modal, ModalProps } from 'semantic-ui-react';
+import { ButtonConfirm } from '@relate-by-ui/buttons';
 
 // import './Modal.scss';
 
@@ -30,9 +31,7 @@ const InternalModal = ({ title, icon, scrolling, contentClassName, children, but
     ? buttons
     : !!onClose &&
       buttons === undefined && (
-        <Button primary onClick={e => onClose && onClose(e, semanticModal)}>
-          Close
-        </Button>
+        <ButtonConfirm title="Close" onClick={(e: any) => onClose && onClose(e, semanticModal)} />
       );
 
   return (
