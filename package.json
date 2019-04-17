@@ -1,12 +1,14 @@
 {
-  "name": "root",
+  "name": "relate-by-ui",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "compile": "lerna run compile",
-    "clean": "lerna run clean",
-    "lint": "lerna run lint",
-    "test": "lerna run test",
-    "update-version": "lerna publish --skip-git --skip-npm --force-publish '*'"
+    "tsc": "tsc",
+    "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"packages/**/*.js\" \"packages/**/*.jsx\"",
+    "lint": "tslint --project tsconfig.json",
+    "publish": "npm run test && lerna run tsc && npm run preparePublish && lerna publish && rm -rf .npmrc",
+    "verify": "lerna run test && lerna run tsc",
+    "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc"
   },
   "devDependencies": {
     "@types/jest": "^24.0.6",
