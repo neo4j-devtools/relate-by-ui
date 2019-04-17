@@ -7,7 +7,7 @@ import { ButtonConfirm } from '@relate-by-ui/buttons';
 import 'jest-dom/extend-expect';
 
 const TestModal = (props: any) => {
-  const { mockCallback } = props;
+  const { mockCallback, buttons } = props;
   const [open, setModalState] = useState(false);
 
   const modalState = (state: boolean) => {
@@ -26,13 +26,14 @@ const TestModal = (props: any) => {
         trigger: <ButtonConfirm title="Open modal" onClick={() => modalState(true)} />,
         onClose: () => modalState(false),
       }}
+      buttons={buttons && <ButtonConfirm title="Close modal" onClick={() => modalState(false)} />}
     >
       This is the modal content
     </Modal>
   );
 };
 
-test('Modal', () => {
+test('Modal with default button', () => {
   const mockCallback = jest.fn();
   const { container, getByText } = render(<TestModal mockCallback={mockCallback} />);
 
@@ -49,5 +50,25 @@ test('Modal', () => {
   expect(document.body.children[1].children[0].children[1].classList.contains('test-modal')).toBe(true);
 
   fireEvent.click(getByText(/Close/));
+  expect(document.body.children.length).toBe(1);
+});
+
+test('Modal with custom button', () => {
+  const mockCallback = jest.fn();
+  const { container, getByText } = render(<TestModal mockCallback={mockCallback} buttons />);
+
+  expect(container.firstChild).toHaveTextContent('Open modal');
+
+  fireEvent.click(getByText(/Open modal/));
+  expect(mockCallback).toBeCalled();
+  expect(document.body.children.length).toBe(2);
+
+  expect(document.body.children[1].children[0].children[0]).toHaveTextContent('This is the title');
+  expect(document.body.children[1].children[0].children[1]).toHaveTextContent('This is the modal content');
+
+  expect(document.body.children[1].children[0].classList.contains('test-semantic-modal')).toBe(true);
+  expect(document.body.children[1].children[0].children[1].classList.contains('test-modal')).toBe(true);
+
+  fireEvent.click(getByText(/Close modal/));
   expect(document.body.children.length).toBe(1);
 });
