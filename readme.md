@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./ui.png" alt="UI." />
+  <img src="./ui.png" alt="UI." width=171" />
 </p>
 
 <p align="center" style="font-size: 1.2rem;">
