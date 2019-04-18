@@ -1,28 +1,25 @@
 import React from 'react';
-import { Modal, ModalProps } from 'semantic-ui-react';
+import { Modal } from 'semantic-ui-react';
+import { RelateByUIModal } from './Types';
 import { ButtonConfirm } from '@relate-by-ui/buttons';
 
-// import './Modal.scss';
-
-interface PropTypes {
-  title: string;
-  icon?: string;
-  contentClassName?: string;
-  scrolling?: boolean;
-  children?: any[] | any;
-  buttons?: any[] | any;
-  semanticModal: ModalProps;
-}
-
-const InternalModal = ({ title, icon, scrolling, contentClassName, children, buttons, semanticModal }: PropTypes) => {
+const InternalModal = ({
+  title,
+  icon,
+  scrolling,
+  contentClassName,
+  children,
+  buttons,
+  semanticModal,
+}: RelateByUIModal) => {
   const { onClose } = semanticModal;
 
-  const modalClassName = ['ui-modal'];
+  const modalClassName = ['relate-by-ui-modal'];
   if (semanticModal.className) {
     modalClassName.push(semanticModal.className);
   }
 
-  const modalContentClassName = ['ui-modal-content'];
+  const modalContentClassName = ['relate-by-ui-modal-content'];
   if (contentClassName) {
     modalContentClassName.push(contentClassName);
   }
@@ -38,16 +35,16 @@ const InternalModal = ({ title, icon, scrolling, contentClassName, children, but
     <Modal {...semanticModal} className={modalClassName.join(' ')}>
       {title && (
         <Modal.Header>
-          <div className="ui-modal-header">
+          <div className="relate-by-ui-modal-header">
             {icon && <i className={`ui-icon ui-icon-${icon} dark icon-header-small`} />}
-            <div className="ui-modal-header-title">{title}</div>
+            <div className="relate-by-ui-modal-header-title">{title}</div>
           </div>
         </Modal.Header>
       )}
       <Modal.Content scrolling={scrolling} className={modalContentClassName.join(' ')}>
         {children}
       </Modal.Content>
-      {actions && <Modal.Actions className="ui-modal-actions">{actions}</Modal.Actions>}
+      {actions && <Modal.Actions className="relate-by-ui-modal-actions">{actions}</Modal.Actions>}
     </Modal>
   );
 };

@@ -1,0 +1,27 @@
+.relate-by-ui-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.relate-by-ui-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.relate-by-ui-modal-content-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 100px 0 100px;
+}
+
+.relate-by-ui-modal-content .header {
+  background: #f9fafb !important;
+}
+
+.relate-by-ui-modal-content .ui-icon {
+  margin-right: 10px;
+}

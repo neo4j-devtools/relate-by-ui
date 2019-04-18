@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from './ButtonTemplate';
-import { UIButtonPropTypes } from './Types';
+import { RelateByUIButton } from './Types';
 
-const ButtonDismiss = ({ title, onClick, loading, showIcon }: UIButtonPropTypes) => {
-  const props: UIButtonPropTypes = {
+const ButtonDismiss = ({ title, onClick, loading, showIcon }: RelateByUIButton) => {
+  const props: RelateByUIButton = {
     title,
     className: 'secondary',
     onClick,
