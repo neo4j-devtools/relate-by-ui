@@ -1,21 +1,28 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import Button from './ButtonTemplate';
 import { RelateByUIButton } from './Types';
 
-const ButtonConfirm = ({ title, onClick, loading, showIcon }: RelateByUIButton) => {
-  const props: RelateByUIButton = {
-    title,
-    className: 'primary',
-    onClick,
-    loading,
-    positive: true,
-  };
+const ButtonConfirm = (props: RelateByUIButton) => {
+  const newProps: RelateByUIButton = { ...props };
 
-  if (showIcon) {
-    props.icon = 'confirm';
+  newProps.className = 'primary';
+  newProps.positive = true;
+
+  if (newProps.showIcon) {
+    newProps.icon = 'confirm';
   }
 
-  return <Button {...props} />;
+  const StyledButton = styled(Button)`
+    background-color: #6dce9c;
+
+    &:hover,
+    &:focus {
+      background-color: #6dce9c;
+    }
+  `;
+
+  return <StyledButton {...newProps} />;
 };
 
 export default ButtonConfirm;

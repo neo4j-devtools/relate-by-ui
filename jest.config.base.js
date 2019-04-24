@@ -9,11 +9,7 @@ module.exports = {
       statements: 60,
     },
   },
-  globals: {
-    'ts-jest': {
-      extends: './babel.config.js',
-    },
-  },
+  globals: {},
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   notify: false,
   notifyMode: 'always',

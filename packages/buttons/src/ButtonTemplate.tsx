@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react';
 import { RelateByUIButton } from './Types';
 
 const ButtonTemplate = ({ title, className, onClick, icon }: RelateByUIButton) => {
-  const classNames = [];
+  const classNames = ['relate-by-ui-button'];
   if (className) {
     classNames.push(className);
   }

@@ -1,6 +1,7 @@
 import { ModalProps } from 'semantic-ui-react';
 
 export interface RelateByUIModal {
+  className?: string;
   title: string;
   icon?: string;
   contentClassName?: string;

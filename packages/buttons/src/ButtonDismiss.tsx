@@ -1,21 +1,28 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import Button from './ButtonTemplate';
 import { RelateByUIButton } from './Types';
 
-const ButtonDismiss = ({ title, onClick, loading, showIcon }: RelateByUIButton) => {
-  const props: RelateByUIButton = {
-    title,
-    className: 'secondary',
-    onClick,
-    loading,
-    negative: true,
-  };
+const ButtonDismiss = (props: RelateByUIButton) => {
+  const newProps: RelateByUIButton = { ...props };
 
-  if (showIcon) {
-    props.icon = 'dismiss';
+  newProps.className = 'secondary';
+  newProps.negative = true;
+
+  if (newProps.showIcon) {
+    newProps.icon = 'dismiss';
   }
 
-  return <Button {...props} />;
+  const StyledButton = styled(Button)`
+    background-color: #ff6769;
+
+    &:hover,
+    &:focus {
+      background-color: #ff6769;
+    }
+  `;
+
+  return <StyledButton {...newProps} />;
 };
 
 export default ButtonDismiss;
