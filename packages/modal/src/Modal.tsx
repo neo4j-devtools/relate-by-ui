@@ -3,7 +3,7 @@ import { Modal, ModalProps } from 'semantic-ui-react';
 import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { RelateByUIModal } from './Types';
-import { ButtonConfirm } from '@relate-by-ui/buttons';
+import { ButtonDismissPrimary } from '@relate-by-ui/buttons';
 
 const ModalHeader = ({ className, title, icon }: { title: string; icon?: string; className?: string }) => {
   const classNames = ['relate-by-ui-modal-header'];
@@ -58,7 +58,7 @@ const ModalActions = ({
     ? buttons
     : !!onClose &&
       buttons === undefined && (
-        <ButtonConfirm title="Close" onClick={(e: any) => onClose && onClose(e, semanticModal)} />
+        <ButtonDismissPrimary title="Close" onClick={(e: any) => onClose && onClose(e, semanticModal)} />
       );
 
   const classNames = ['relate-by-ui-modal-actions'];
