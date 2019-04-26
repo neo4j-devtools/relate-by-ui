@@ -44,7 +44,7 @@
 /* Header */
 .ui.message .header {
   display: block;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin: -0.14285714em 0em 0rem 0em;
 }
@@ -497,6 +497,12 @@
          Theme Overrides
 *******************************/
 
+
+/* Code */
+.ui.code.message {
+  font-family: 'Fira Mono', monospace;
+  background-color: #F3F4F5;
+}
 
 
 /*******************************

@@ -494,7 +494,7 @@ a.ui.card:hover,
 .ui.red.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @red,
+    @coloredShadowPosition @red,
     @shadowBoxShadow
   ;
 }
@@ -503,7 +503,7 @@ a.ui.card:hover,
 .ui.red.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @redHover,
+    @coloredShadowPosition @redHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -514,7 +514,7 @@ a.ui.card:hover,
 .ui.orange.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @orange,
+    @coloredShadowPosition @orange,
     @shadowBoxShadow
   ;
 }
@@ -523,7 +523,7 @@ a.ui.card:hover,
 .ui.orange.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @orangeHover,
+    @coloredShadowPosition @orangeHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -534,7 +534,7 @@ a.ui.card:hover,
 .ui.yellow.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @yellow,
+    @coloredShadowPosition @yellow,
     @shadowBoxShadow
   ;
 }
@@ -543,7 +543,7 @@ a.ui.card:hover,
 .ui.yellow.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @yellowHover,
+    @coloredShadowPosition @yellowHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -554,7 +554,7 @@ a.ui.card:hover,
 .ui.olive.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @olive,
+    @coloredShadowPosition @olive,
     @shadowBoxShadow
   ;
 }
@@ -563,7 +563,7 @@ a.ui.card:hover,
 .ui.olive.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @oliveHover,
+    @coloredShadowPosition @oliveHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -574,7 +574,7 @@ a.ui.card:hover,
 .ui.green.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @green,
+    @coloredShadowPosition @green,
     @shadowBoxShadow
   ;
 }
@@ -583,7 +583,7 @@ a.ui.card:hover,
 .ui.green.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @greenHover,
+    @coloredShadowPosition @greenHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -594,7 +594,7 @@ a.ui.card:hover,
 .ui.teal.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @teal,
+    @coloredShadowPosition @teal,
     @shadowBoxShadow
   ;
 }
@@ -603,7 +603,7 @@ a.ui.card:hover,
 .ui.teal.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @tealHover,
+    @coloredShadowPosition @tealHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -614,7 +614,7 @@ a.ui.card:hover,
 .ui.blue.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @blue,
+    @coloredShadowPosition @blue,
     @shadowBoxShadow
   ;
 }
@@ -623,7 +623,7 @@ a.ui.card:hover,
 .ui.blue.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @blueHover,
+    @coloredShadowPosition @blueHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -634,7 +634,7 @@ a.ui.card:hover,
 .ui.violet.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @violet,
+    @coloredShadowPosition @violet,
     @shadowBoxShadow
   ;
 }
@@ -643,7 +643,7 @@ a.ui.card:hover,
 .ui.violet.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @violetHover,
+    @coloredShadowPosition @violetHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -654,7 +654,7 @@ a.ui.card:hover,
 .ui.purple.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @purple,
+    @coloredShadowPosition @purple,
     @shadowBoxShadow
   ;
 }
@@ -663,7 +663,7 @@ a.ui.card:hover,
 .ui.purple.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @purpleHover,
+    @coloredShadowPosition @purpleHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -674,7 +674,7 @@ a.ui.card:hover,
 .ui.pink.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @pink,
+    @coloredShadowPosition @pink,
     @shadowBoxShadow
   ;
 }
@@ -683,7 +683,7 @@ a.ui.card:hover,
 .ui.pink.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @pinkHover,
+    @coloredShadowPosition @pinkHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -694,7 +694,7 @@ a.ui.card:hover,
 .ui.brown.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @brown,
+    @coloredShadowPosition @brown,
     @shadowBoxShadow
   ;
 }
@@ -703,7 +703,7 @@ a.ui.card:hover,
 .ui.brown.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @brownHover,
+    @coloredShadowPosition @brownHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -714,7 +714,7 @@ a.ui.card:hover,
 .ui.grey.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @grey,
+    @coloredShadowPosition @grey,
     @shadowBoxShadow
   ;
 }
@@ -723,7 +723,7 @@ a.ui.card:hover,
 .ui.grey.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @greyHover,
+    @coloredShadowPosition @greyHover,
     @shadowHoverBoxShadow
   ;
 }
@@ -734,7 +734,7 @@ a.ui.card:hover,
 .ui.black.card {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @black,
+    @coloredShadowPosition @black,
     @shadowBoxShadow
   ;
 }
@@ -743,7 +743,7 @@ a.ui.card:hover,
 .ui.black.card:hover {
   box-shadow:
     @borderShadow,
-    0px @coloredShadowDistance 0px 0px @blackHover,
+    @coloredShadowPosition @blackHover,
     @shadowHoverBoxShadow
   ;
 }
