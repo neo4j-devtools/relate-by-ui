@@ -1,3 +1,10 @@
 /*******************************
          Theme Overrides
 *******************************/
+
+
+/* Code */
+.ui.code.message {
+  font-family: @codeFont;
+  background-color: @darkWhite;
+}

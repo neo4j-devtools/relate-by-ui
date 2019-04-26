@@ -2,6 +2,23 @@
         Global Overrides
 *******************************/
 
+@font-face {
+  font-family: @codeFontName;
+  src: @codeFontSrc;
+  font-style: normal;
+  font-weight: regular;
+  font-variant: normal;
+  text-decoration: inherit;
+  text-transform: none;
+}
+
 pre {
   font-family: @codeFont;
+}
+
+.code {
+  font-family: @codeFont;
+  background-color: @darkWhite;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }

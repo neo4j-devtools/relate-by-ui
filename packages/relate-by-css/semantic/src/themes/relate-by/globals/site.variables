@@ -12,21 +12,28 @@
 @headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 @pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
-@codeFontName      : 'Fira Mono';
-@codeFont          : @codeFontName, monospace;
-
 @googleFontName    : @fontName;
 @importGoogleFonts : true;
 @googleFontSizes   : '300,400,700,300i,400i,700i';
 @googleSubset      : 'latin';
 
 @googleProtocol    : 'https://';
-@googleFontRequest : '@{googleFontName}|@{codeFontName}:@{googleFontSizes}&subset=@{googleSubset}';
+@googleFontRequest : '@{googleFontName}:@{googleFontSizes}&subset=@{googleSubset}';
 
 
 @light             : light;
 @bold              : bold;
 @normal            : normal;
+
+@codeFontName      : 'Fira Mono';
+@codeFont          : @codeFontName, monospace;
+@codeFontSrc:
+  url("@{fontPath}/FiraCode/eot/FiraCode-Regular.eot?#iefix") format('embedded-opentype'),
+  url("@{fontPath}/FiraCode/woff2/FiraCode-Regular.woff2") format('woff2'),
+  url("@{fontPath}/FiraCode/woff/FiraCode-Regular.woff") format('woff'),
+  url("@{fontPath}/FiraCode/ttf/FiraCode-Regular.ttf") format('truetype')
+;
+@fallbackSRC: url("@{fontPath}/@{fontName}.eot");
 
 /*-------------------
       Base Sizes
@@ -383,8 +390,8 @@
 --------------------*/
 
 /* For source only. Modified in gulp for dist */
-@imagePath : '../../themes/default/assets/images';
-@fontPath  : '../../themes/default/assets/fonts';
+@imagePath : '../../themes/relate-by/assets/images';
+@fontPath  : '../../themes/relate-by/assets/fonts';
 
 /*-------------------
        Em Sizes
