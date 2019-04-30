@@ -1247,7 +1247,7 @@ stories.add('Payments & Shopping', () => (
 ));
 
 
-stories.add('Payments & Shopping', () => (
+stories.add('Shapes', () => (
   <div className='ui segment'>
     <i class="bookmark icon"></i>
     <i class="bookmark outline icon"></i>
