@@ -7,15 +7,6 @@ import * as faker from "faker";
 const stories = storiesOf('Element/Input', module);
 
 
-stories.add('Input', () => (
-  <div className="ui segment">
-    <div class="ui input">
-      <input type="text" placeholder="Search..."/>
-    </div>
-  </div>
-));
-
-
 stories.add('States:Focus', () => (
   <div className="ui segment">
     <div class="ui input focus">
@@ -328,3 +319,13 @@ stories.add('Variations:Size', () => (
     </div>
   </div>
 ));
+
+
+stories.add('Variations:Password', () => (
+  <div className="ui segment">
+    <div class="ui input">
+      <input type="password" placeholder={faker.internet.password()}/>
+    </div>
+  </div>
+));
+
