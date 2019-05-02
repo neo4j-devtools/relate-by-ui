@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Element/Flag', module);
+const stories = storiesOf('Semantic UI/Element/Flag', module);
 
 stories.add('Example', () => (
   <div className="ui segment">

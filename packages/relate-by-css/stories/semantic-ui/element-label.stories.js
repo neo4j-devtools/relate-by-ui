@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import * as faker from "faker";
 
-const stories = storiesOf('Element/Label', module);
+const stories = storiesOf('Semantic UI/Element/Label', module);
 
 
 stories.add('Label', () => (

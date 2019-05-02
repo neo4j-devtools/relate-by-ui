@@ -8,7 +8,6 @@ const ButtonDestructiveSecondary = (props: RelateByUIButton) => {
 
   newProps.secondary = true;
   newProps.negative = true;
-  newProps.basic = true;
   newProps.color = 'red';
 
   if (newProps.showIcon || newProps.icon) {

@@ -6,7 +6,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Element/Divider', module);
+const stories = storiesOf('Semantic UI/Element/Divider', module);
 
 
 stories.add('Divider', () => (

@@ -3,10 +3,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
+import { TextBlock, MediaBlock, TextRow, RectShape, RoundShape } from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Global/Variables', module);
-
+const stories = storiesOf('Semantic UI/Global/Variables', module);
 
 stories.add('Brand Colors', () => (
   <div className="ui segment">
@@ -46,10 +45,12 @@ stories.add('Border Styles', () => (
     </div>
     <table className="ui definition table">
       <thead>
-        <tr><th></th>
-        <th>Header 1</th>
-        <th>Header 2</th>
-      </tr></thead>
+        <tr>
+          <th />
+          <th>Header 1</th>
+          <th>Header 2</th>
+        </tr>
+      </thead>
       <tbody>
         <tr>
           <td>Definition</td>
@@ -69,25 +70,23 @@ stories.add('Border Styles', () => (
 stories.add('Size', () => (
   <div className="ui segment">
     <h3 className="ui header">Examples of Absolutely Sized UI</h3>
-      <div className="ui button">
-        Button
+    <div className="ui button">Button</div>
+    <div className="ui input">
+      <input type="text" placeholder="Input" />
+    </div>
+    <h3 className="ui header">Examples of Relative Sized UI</h3>
+    <div>
+      <p>Larger content container</p>
+      <div className="ui bulleted link list">
+        <a className="item">List Item</a>
+        <a className="item">List Item</a>
+        <a className="item">List Item</a>
+        <a className="item">List Item</a>
+        <a className="item">List Item</a>
       </div>
-      <div className="ui input">
-        <input type="text" placeholder="Input"/>
+      <div className="ui message">
+        <p>Message</p>
       </div>
-      <h3 className="ui header">Examples of Relative Sized UI</h3>
-      <div>
-        <p>Larger content container</p>
-        <div className="ui bulleted link list">
-          <a className="item">List Item</a>
-          <a className="item">List Item</a>
-          <a className="item">List Item</a>
-          <a className="item">List Item</a>
-          <a className="item">List Item</a>
-        </div>
-        <div className="ui message">
-          <p>Message</p>
-        </div>
-      </div>
+    </div>
   </div>
-))
+));

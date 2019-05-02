@@ -3,41 +3,38 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
+import { TextBlock, MediaBlock, TextRow, RectShape, RoundShape } from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Element/Button', module);
+const stories = storiesOf('Semantic UI/Element/Button', module);
 
-
-stories.add('Button', () => (
-  <div className="ui segments">
-    <div className="ui segment">
-      <button className="ui button">Follow</button>  
-    </div>
-    <div className="ui segment">
-      <button className="ui button">
-        Button
-      </button>
-      <div className="ui button" tabindex="0">
-        Focusable
+stories.add(
+  'Button',
+  () => (
+    <div className="ui segments">
+      <div className="ui segment">
+        <button className="ui button">Follow</button>
+      </div>
+      <div className="ui segment">
+        <button className="ui button">Button</button>
+        <div className="ui button" tabindex="0">
+          Focusable
+        </div>
       </div>
     </div>
-  </div>
-), {
-  info: {
-    text: `
+  ),
+  {
+    info: {
+      text: `
           A standard button.
         `,
-  }
-});
+    },
+  },
+);
 
 stories.add('Emphasis', () => (
   <div className="ui segment">
-    <button className="ui primary button">
-      Save
-    </button>
-    <button className="ui button">
-      Discard
-    </button>
+    <button className="ui primary button">Save</button>
+    <button className="ui button">Discard</button>
   </div>
 ));
 
@@ -46,103 +43,87 @@ stories.add('Animated', () => (
     <div class="ui animated button" tabindex="0">
       <div class="visible content">Next</div>
       <div class="hidden content">
-        <i class="right arrow icon"></i>
+        <i class="right arrow icon" />
       </div>
     </div>
     <div class="ui vertical animated button" tabindex="0">
       <div class="hidden content">Shop</div>
       <div class="visible content">
-        <i class="shop icon"></i>
+        <i class="shop icon" />
       </div>
     </div>
     <div class="ui animated fade button" tabindex="0">
       <div class="visible content">Sign-up for a Pro account</div>
-      <div class="hidden content">
-        $12.99 a month
-      </div>
+      <div class="hidden content">$12.99 a month</div>
     </div>
   </div>
 ));
 
 stories.add('Labeled', () => (
-
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui labeled button" tabindex="0">
         <div class="ui button">
-          <i class="heart icon"></i> Like
+          <i class="heart icon" /> Like
         </div>
-        <a class="ui basic label">
-          2,048
-        </a>
+        <a class="ui basic label">2,048</a>
       </div>
       <div class="ui left labeled button" tabindex="0">
-        <a class="ui basic right pointing label">
-          2,048
-        </a>
+        <a class="ui basic right pointing label">2,048</a>
         <div class="ui button">
-          <i class="heart icon"></i> Like
+          <i class="heart icon" /> Like
         </div>
       </div>
       <div class="ui left labeled button" tabindex="0">
-        <a class="ui basic label">
-          1,048
-        </a>
+        <a class="ui basic label">1,048</a>
         <div class="ui icon button">
-          <i class="fork icon"></i>
+          <i class="fork icon" />
         </div>
       </div>
     </div>
     <div className="ui segment">
       <div class="ui labeled button" tabindex="0">
-      <div class="ui red button">
-        <i class="heart icon"></i> Like
+        <div class="ui red button">
+          <i class="heart icon" /> Like
+        </div>
+        <a class="ui basic red left pointing label">1,048</a>
       </div>
-      <a class="ui basic red left pointing label">
-        1,048
-      </a>
-    </div>
-    <div class="ui labeled button" tabindex="0">
-      <div class="ui basic blue button">
-        <i class="fork icon"></i> Forks
+      <div class="ui labeled button" tabindex="0">
+        <div class="ui basic blue button">
+          <i class="fork icon" /> Forks
+        </div>
+        <a class="ui basic left pointing blue label">1,048</a>
       </div>
-      <a class="ui basic left pointing blue label">
-        1,048
-      </a>
-    </div>
     </div>
   </div>
 ));
-
 
 stories.add('Icon', () => (
   <div className="ui segment">
     <button class="ui icon button">
-      <i class="cloud icon"></i>
+      <i class="cloud icon" />
     </button>
   </div>
 ));
 
-
 stories.add('Labeled Icon', () => (
   <div className="ui segment">
     <button class="ui labeled icon button">
-      <i class="pause icon"></i>
+      <i class="pause icon" />
       Pause
     </button>
     <button class="ui right labeled icon button">
-      <i class="right arrow icon"></i>
+      <i class="right arrow icon" />
       Next
     </button>
   </div>
 ));
 
-
 stories.add('Basic', () => (
   <div className="ui segments">
     <div className="ui segment">
       <button class="ui basic button">
-        <i class="icon user"></i>
+        <i class="icon user" />
         Add Friend
       </button>
     </div>
@@ -169,7 +150,6 @@ stories.add('Basic', () => (
     </div>
   </div>
 ));
-
 
 stories.add('Inverted', () => (
   <div className="ui segments">
@@ -212,7 +192,6 @@ stories.add('Inverted', () => (
   </div>
 ));
 
-
 stories.add('Groups', () => (
   <div className="ui segments">
     <div className="ui segment">
@@ -224,15 +203,29 @@ stories.add('Groups', () => (
     </div>
     <div className="ui segment">
       <div class="ui icon buttons">
-        <button class="ui button"><i class="align left icon"></i></button>
-        <button class="ui button"><i class="align center icon"></i></button>
-        <button class="ui button"><i class="align right icon"></i></button>
-        <button class="ui button"><i class="align justify icon"></i></button>
+        <button class="ui button">
+          <i class="align left icon" />
+        </button>
+        <button class="ui button">
+          <i class="align center icon" />
+        </button>
+        <button class="ui button">
+          <i class="align right icon" />
+        </button>
+        <button class="ui button">
+          <i class="align justify icon" />
+        </button>
       </div>
       <div class="ui icon buttons">
-        <button class="ui button"><i class="bold icon"></i></button>
-        <button class="ui button"><i class="underline icon"></i></button>
-        <button class="ui button"><i class="text width icon"></i></button>
+        <button class="ui button">
+          <i class="bold icon" />
+        </button>
+        <button class="ui button">
+          <i class="underline icon" />
+        </button>
+        <button class="ui button">
+          <i class="text width icon" />
+        </button>
       </div>
     </div>
   </div>
@@ -243,32 +236,31 @@ stories.add('Conditionals', () => (
     <div className="ui segment">
       <div class="ui buttons">
         <button class="ui button">Cancel</button>
-        <div class="or"></div>
+        <div class="or" />
         <button class="ui positive button">Save</button>
       </div>
     </div>
     <div className="ui segment">
       <div class="ui buttons">
         <button class="ui button">un</button>
-        <div class="or" data-text="ou"></div>
+        <div class="or" data-text="ou" />
         <button class="ui positive button">deux</button>
       </div>
     </div>
   </div>
 ));
 
-
 stories.add('States', () => (
   <div className="ui segments">
     <div className="ui segment">
       <button class="ui active button">
-        <i class="user icon"></i>
+        <i class="user icon" />
         Follow
       </button>
     </div>
     <div className="ui segment">
       <button class="ui disabled button">
-        <i class="user icon"></i>
+        <i class="user icon" />
         Followed
       </button>
     </div>
@@ -281,35 +273,34 @@ stories.add('States', () => (
   </div>
 ));
 
-
 stories.add('Variations: Social', () => (
   <div className="ui segment">
     <button class="ui facebook button">
-      <i class="facebook icon"></i>
+      <i class="facebook icon" />
       Facebook
     </button>
     <button class="ui twitter button">
-      <i class="twitter icon"></i>
+      <i class="twitter icon" />
       Twitter
     </button>
     <button class="ui google plus button">
-      <i class="google plus icon"></i>
+      <i class="google plus icon" />
       Google Plus
     </button>
     <button class="ui vk button">
-      <i class="vk icon"></i>
+      <i class="vk icon" />
       VK
     </button>
     <button class="ui linkedin button">
-      <i class="linkedin icon"></i>
+      <i class="linkedin icon" />
       LinkedIn
     </button>
     <button class="ui instagram button">
-      <i class="instagram icon"></i>
+      <i class="instagram icon" />
       Instagram
     </button>
     <button class="ui youtube button">
-      <i class="youtube icon"></i>
+      <i class="youtube icon" />
       YouTube
     </button>
   </div>
@@ -317,36 +308,19 @@ stories.add('Variations: Social', () => (
 
 stories.add('Variations: Size', () => (
   <div className="ui segment">
-    <button class="mini ui button">
-      Mini
-    </button>
-    <button class="tiny ui button">
-      Tiny
-    </button>
-    <button class="small ui button">
-      Small
-    </button>
-    <button class="medium ui button">
-      Medium
-    </button>
-    <button class="large ui button">
-      Large
-    </button>
-    <button class="big ui button">
-      Big
-    </button>
-    <button class="huge ui button">
-      Huge
-    </button>
-    <button class="massive ui button">
-      Massive
-    </button>
+    <button class="mini ui button">Mini</button>
+    <button class="tiny ui button">Tiny</button>
+    <button class="small ui button">Small</button>
+    <button class="medium ui button">Medium</button>
+    <button class="large ui button">Large</button>
+    <button class="big ui button">Big</button>
+    <button class="huge ui button">Huge</button>
+    <button class="massive ui button">Massive</button>
   </div>
 ));
 
-
 stories.add('Variations: Floated', () => (
-  <div className="ui segment" style={{height:'6em'}}>
+  <div className="ui segment" style={{ height: '6em' }}>
     <button class="ui right floated button">Right Floated</button>
     <button class="ui left floated button">Left Floated</button>
   </div>
@@ -370,85 +344,79 @@ stories.add('Variations: Colored', () => (
   </div>
 ));
 
-
 stories.add('Variations: Compact', () => (
   <div className="ui segment">
-    <button class="compact ui button">
-      Hold
-    </button>
+    <button class="compact ui button">Hold</button>
     <button class="ui compact icon button">
-      <i class="pause icon"></i>
+      <i class="pause icon" />
     </button>
     <button class="ui compact labeled icon button">
-      <i class="pause icon"></i>
+      <i class="pause icon" />
       Pause
     </button>
   </div>
 ));
 
-
 stories.add('Variations: Toggle', () => (
-  <div className="ui segment" style={{height:'6em'}}>
-    <button class="ui toggle button">
-      Vote
-    </button>
+  <div className="ui segment" style={{ height: '6em' }}>
+    <button class="ui toggle button">Vote</button>
   </div>
 ));
 
 stories.add('Variations: Positive', () => (
-  <div className="ui segment" style={{height:'6em'}}>
+  <div className="ui segment" style={{ height: '6em' }}>
     <button class="positive ui button">Positive Button</button>
   </div>
 ));
 
-
 stories.add('Variations: Negative', () => (
-  <div className="ui segment" style={{height:'6em'}}>
+  <div className="ui segment" style={{ height: '6em' }}>
     <button class="negative ui button">Negative Button</button>
   </div>
 ));
 
-
 stories.add('Variations: Fluid', () => (
-  <div className="ui segment" style={{height:'6em'}}>
+  <div className="ui segment" style={{ height: '6em' }}>
     <button class="fluid ui button">Fits container</button>
   </div>
 ));
-
 
 stories.add('Variations: Circular', () => (
   <div className="ui segments">
     <div className="ui segment">
       <button class="circular ui icon button">
-        <i class="icon settings"></i>
+        <i class="icon settings" />
       </button>
     </div>
     <div className="ui segment">
       <button class="ui circular facebook icon button">
-        <i class="facebook icon"></i>
+        <i class="facebook icon" />
       </button>
       <button class="ui circular twitter icon button">
-        <i class="twitter icon"></i>
+        <i class="twitter icon" />
       </button>
       <button class="ui circular linkedin icon button">
-        <i class="linkedin icon"></i>
+        <i class="linkedin icon" />
       </button>
       <button class="ui circular google plus icon button">
-        <i class="google plus icon"></i>
+        <i class="google plus icon" />
       </button>
     </div>
   </div>
 ));
 
-
 stories.add('Variations: Vertically Attached', () => (
   <div className="ui segments">
     <div className="ui segment">
-      <div class="ui top attached button" tabindex="0">Top</div>
-      <div class="ui attached segment">
-        <p></p>
+      <div class="ui top attached button" tabindex="0">
+        Top
       </div>
-      <div class="ui bottom attached button" tabindex="0">Bottom</div>
+      <div class="ui attached segment">
+        <p />
+      </div>
+      <div class="ui bottom attached button" tabindex="0">
+        Bottom
+      </div>
     </div>
     <div className="ui segment">
       <div class="ui two top attached buttons">
@@ -456,7 +424,7 @@ stories.add('Variations: Vertically Attached', () => (
         <div class="ui button">Two</div>
       </div>
       <div class="ui attached segment">
-        <p></p>
+        <p />
       </div>
       <div class="ui two bottom attached buttons">
         <div class="ui button">One</div>
@@ -466,14 +434,12 @@ stories.add('Variations: Vertically Attached', () => (
   </div>
 ));
 
-
 stories.add('Variations: Horizonally Attached', () => (
   <div className="ui segment">
     <button class="ui left attached button">Left</button>
     <button class="right attached ui button">Right</button>
   </div>
 ));
-
 
 stories.add('Variations: Vertical Buttons', () => (
   <div className="ui segment">
@@ -490,60 +456,55 @@ stories.add('Variations: Icon Buttons', () => (
   <div className="ui segment">
     <div class="ui icon buttons">
       <button class="ui button">
-        <i class="play icon"></i>
+        <i class="play icon" />
       </button>
       <button class="ui button">
-        <i class="pause icon"></i>
+        <i class="pause icon" />
       </button>
       <button class="ui button">
-        <i class="shuffle icon"></i>
+        <i class="shuffle icon" />
       </button>
     </div>
   </div>
 ));
 
-
-
 stories.add('Variations: Labeled Icon Buttons', () => (
   <div className="ui segment">
     <div class="ui vertical labeled icon buttons">
       <button class="ui button">
-        <i class="pause icon"></i>
+        <i class="pause icon" />
         Pause
       </button>
       <button class="ui button">
-        <i class="play icon"></i>
+        <i class="play icon" />
         Play
       </button>
       <button class="ui button">
-        <i class="shuffle icon"></i>
+        <i class="shuffle icon" />
         Shuffle
       </button>
     </div>
   </div>
 ));
 
-
 stories.add('Variations: Mixed Group', () => (
   <div className="ui segment">
     <div class="ui buttons">
       <button class="ui labeled icon button">
-        <i class="left chevron icon"></i>
+        <i class="left chevron icon" />
         Back
       </button>
       <button class="ui button">
-        <i class="stop icon"></i>
+        <i class="stop icon" />
         Stop
       </button>
       <button class="ui right labeled icon button">
         Forward
-        <i class="right chevron icon"></i>
+        <i class="right chevron icon" />
       </button>
     </div>
   </div>
 ));
-
-
 
 stories.add('Variations: Equal Width', () => (
   <div className="ui segment">
@@ -562,7 +523,6 @@ stories.add('Variations: Equal Width', () => (
   </div>
 ));
 
-
 stories.add('Variations: Colored Buttons', () => (
   <div className="ui segment">
     <div class="orange ui buttons">
@@ -573,7 +533,6 @@ stories.add('Variations: Colored Buttons', () => (
   </div>
 ));
 
-
 stories.add('Variations: Basic Buttons', () => (
   <div className="ui segments">
     <div className="ui segment">
@@ -582,7 +541,7 @@ stories.add('Variations: Basic Buttons', () => (
         <div class="ui button">Two</div>
         <div class="ui button">Three</div>
       </div>
-      <div class="ui divider"></div>
+      <div class="ui divider" />
       <div class="ui vertical basic buttons">
         <button class="ui button">One</button>
         <button class="ui button">Two</button>
@@ -599,7 +558,6 @@ stories.add('Variations: Basic Buttons', () => (
   </div>
 ));
 
-
 stories.add('Variations: Group Sizes', () => (
   <div className="ui segments">
     <div className="ui segment">
@@ -611,16 +569,24 @@ stories.add('Variations: Group Sizes', () => (
     </div>
     <div className="ui segment">
       <div class="ui small basic icon buttons">
-        <button class="ui button"><i class="file icon"></i></button>
-        <button class="ui button"><i class="save icon"></i></button>
-        <button class="ui button"><i class="upload icon"></i></button>
-        <button class="ui button"><i class="download icon"></i></button>
+        <button class="ui button">
+          <i class="file icon" />
+        </button>
+        <button class="ui button">
+          <i class="save icon" />
+        </button>
+        <button class="ui button">
+          <i class="upload icon" />
+        </button>
+        <button class="ui button">
+          <i class="download icon" />
+        </button>
       </div>
     </div>
     <div className="ui segment">
       <div class="ui large buttons">
         <button class="ui button">One</button>
-        <div class="or"></div>
+        <div class="or" />
         <button class="ui button">Two</button>
       </div>
     </div>

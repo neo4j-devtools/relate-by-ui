@@ -1,18 +1,17 @@
 import React from 'react';
-import * as faker from "faker";
+import * as faker from 'faker';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
+import { TextBlock, MediaBlock, TextRow, RectShape, RoundShape } from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Element/Container', module);
-
+const stories = storiesOf('Semantic UI/Element/Container', module);
 
 stories.add('Container', () => (
   <div>
     <div className="ui container">
-        <MediaBlock color='#E0E0E0' rows={4} />
+      <MediaBlock color="#E0E0E0" rows={4} />
     </div>
   </div>
 ));
@@ -24,7 +23,6 @@ stories.add('Text Container', () => (
     </div>
   </div>
 ));
-
 
 stories.add('Text Alignment', () => (
   <div className="ui segment">
@@ -42,7 +40,6 @@ stories.add('Text Alignment', () => (
     </div>
   </div>
 ));
-
 
 stories.add('Fluid', () => (
   <div>

@@ -1,17 +1,16 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
-import * as faker from "faker";
+import { TextBlock, MediaBlock, TextRow, RectShape, RoundShape } from 'react-placeholder/lib/placeholders';
+import * as faker from 'faker';
 
-const stories = storiesOf('Module/Dropdown', module);
-
+const stories = storiesOf('Semantic UI/Module/Dropdown', module);
 
 stories.add('Dropdown', () => (
   <div className="ui segment">
     <div class="ui dropdown">
       <div class="text">File</div>
-      <i class="dropdown icon"></i>
+      <i class="dropdown icon" />
       <div class="menu">
         <div class="item">New</div>
         <div class="item">
@@ -28,17 +27,17 @@ stories.add('Dropdown', () => (
         </div>
         <div class="item">Make a copy</div>
         <div class="item">
-          <i class="folder icon"></i>
+          <i class="folder icon" />
           Move to folder
         </div>
         <div class="item">
-          <i class="trash icon"></i>
+          <i class="trash icon" />
           Move to trash
         </div>
-        <div class="divider"></div>
+        <div class="divider" />
         <div class="item">Download As...</div>
         <div class="item">
-          <i class="dropdown icon"></i>
+          <i class="dropdown icon" />
           Publish To Web
           <div class="menu">
             <div class="item">Google Docs</div>
@@ -54,4 +53,3 @@ stories.add('Dropdown', () => (
     </div>
   </div>
 ));
-

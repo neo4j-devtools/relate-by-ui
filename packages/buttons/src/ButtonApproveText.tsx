@@ -17,7 +17,7 @@ const ButtonApproveText = (props: RelateByUIButton) => {
 
   // Custom styles if needed
   const StyledButton = styled(Button)`
-    border: 1px solid transparent !important;
+    box-shadow: 0px 0px 0px 1px transparent inset !important;
   `;
 
   return <StyledButton {...newProps} />;

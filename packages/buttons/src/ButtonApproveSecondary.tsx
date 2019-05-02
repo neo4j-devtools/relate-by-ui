@@ -8,7 +8,6 @@ const ButtonApproveSecondary = (props: RelateByUIButton) => {
 
   newProps.secondary = true;
   newProps.positive = true;
-  newProps.basic = true;
   newProps.color = 'blue';
 
   if (newProps.showIcon || newProps.icon) {

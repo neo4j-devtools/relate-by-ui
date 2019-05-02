@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import * as faker from "faker";
 
-const stories = storiesOf('Element/Input', module);
+const stories = storiesOf('Semantic UI/Element/Input', module);
 
 
 stories.add('States:Focus', () => (

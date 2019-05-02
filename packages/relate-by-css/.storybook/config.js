@@ -10,7 +10,7 @@ const req = require.context('../stories', true, /\.stories\.js$/);
 
 addDecorator(withInfo); //
 
-addDecorator(storyFn => <div className='ui container'>{storyFn()}</div>);
+addDecorator(storyFn => <div className="ui container">{storyFn()}</div>);
 
 function loadStories() {
   req.keys().forEach(filename => req(filename));
