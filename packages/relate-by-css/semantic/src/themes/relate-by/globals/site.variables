@@ -231,13 +231,13 @@
 --------------------*/
 
 /*---  Colors  ---*/
-@red              : #DB2828;
+@red              : #ff6769;
 @orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
-@green            : #21BA45;
+@green            : #38d399;
 @teal             : #00B5AD;
-@blue             : #2185D0;
+@blue             : #45bff8;
 @violet           : #6435C9;
 @purple           : #A333C8;
 @pink             : #E03997;
@@ -246,13 +246,13 @@
 @black            : #1B1C1D;
 
 /*---  Light Colors  ---*/
-@lightRed         : #FF695E;
+@lightRed         : #ff6769;
 @lightOrange      : #FF851B;
 @lightYellow      : #FFE21F;
 @lightOlive       : #D9E778;
-@lightGreen       : #2ECC40;
+@lightGreen       : #38d399;
 @lightTeal        : #6DFFFF;
-@lightBlue        : #54C8FF;
+@lightBlue        : #45bff8;
 @lightViolet      : #A291FB;
 @lightPurple      : #DC73FF;
 @lightPink        : #FF8EDF;
