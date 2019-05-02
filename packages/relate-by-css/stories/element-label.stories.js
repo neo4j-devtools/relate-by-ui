@@ -156,5 +156,61 @@ stories.add('Corner', () => (
       </div>
     </div>
   </div>
-))
+));
+
+
+stories.add('Tag', () => (
+  <div className="ui segment">
+    <a class="ui tag label">New</a>
+    <a class="ui red tag label">Upcoming</a>
+    <a class="ui teal tag label">Featured</a>
+  </div>
+));
+
+
+stories.add('Ribbon', () => (
+  <div className="ui segments">
+    <div className="ui segment">
+      <div class="ui two column grid">
+        <div class="column">
+          <div class="ui raised segment">
+            <a class="ui red ribbon label">Overview</a>
+            <span>Account Details</span>
+            <p><TextBlock color='#E0E0E0' rows={4} /></p>
+            <a class="ui blue ribbon label">Community</a> User Reviews
+            <p><TextBlock color='#E0E0E0' rows={4} /></p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="ui segment">
+            <a class="ui orange right ribbon label">Specs</a>
+            <p><TextBlock color='#E0E0E0' rows={4} /></p>
+            <a class="ui teal right ribbon label">Reviews</a>
+            <p><TextBlock color='#E0E0E0' rows={4} /></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="ui segment">
+      <div class="ui two column grid">
+        <div class="column">
+          <div class="ui fluid image">
+            <div class="ui black ribbon label">
+              <i class="hotel icon"></i> Hotel
+            </div>
+            <img src="/images/wireframe/image.png"/>
+          </div>
+        </div>
+        <div class="column">
+          <div class="ui fluid image">
+            <div class="ui blue ribbon label">
+              <i class="spoon icon"></i> Food
+            </div>
+            <img src="/images/wireframe/image.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+));
 
