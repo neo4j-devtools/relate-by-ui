@@ -7,7 +7,7 @@
 --------------------*/
 
 /* Shadow */
-@shadowBlue: 12px
+@shadowBlur: 12px
 @shadowDistance: 2px;
 @shadowBoxShadow: 0px @shadowDistance @shadowBlur 0px @solidBorderColor;
 
