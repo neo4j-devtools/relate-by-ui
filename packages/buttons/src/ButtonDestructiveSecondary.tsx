@@ -8,14 +8,18 @@ const ButtonDestructiveSecondary = (props: RelateByUIButton) => {
 
   newProps.secondary = true;
   newProps.negative = true;
+  newProps.basic = true;
   newProps.color = 'red';
 
   if (newProps.showIcon || newProps.icon) {
     newProps.icon = newProps.icon ? newProps.icon : 'dismiss';
   }
 
-  // Custom styles if needed
-  const StyledButton = styled(Button)``;
+  const StyledButton = styled(Button)`
+    .ui.relate-by-ui-button& {
+      font-weight: 600;
+    }
+  `;
 
   return <StyledButton {...newProps} />;
 };

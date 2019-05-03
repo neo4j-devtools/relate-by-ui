@@ -14,8 +14,11 @@ const ButtonDestructivePrimary = (props: RelateByUIButton) => {
     newProps.icon = newProps.icon ? newProps.icon : 'dismiss';
   }
 
-  // Custom styles if needed
-  const StyledButton = styled(Button)``;
+  const StyledButton = styled(Button)`
+    .ui.relate-by-ui-button& {
+      font-weight: 600;
+    }
+  `;
 
   return <StyledButton {...newProps} />;
 };

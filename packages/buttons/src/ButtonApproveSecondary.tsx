@@ -8,14 +8,18 @@ const ButtonApproveSecondary = (props: RelateByUIButton) => {
 
   newProps.secondary = true;
   newProps.positive = true;
+  newProps.basic = true;
   newProps.color = 'blue';
 
   if (newProps.showIcon || newProps.icon) {
     newProps.icon = newProps.icon ? newProps.icon : 'confirm';
   }
 
-  // Custom styles if needed
-  const StyledButton = styled(Button)``;
+  const StyledButton = styled(Button)`
+    .ui.relate-by-ui-button& {
+      font-weight: 600;
+    }
+  `;
 
   return <StyledButton {...newProps} />;
 };

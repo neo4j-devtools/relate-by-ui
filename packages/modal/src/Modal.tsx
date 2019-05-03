@@ -97,8 +97,9 @@ const ModalWrapper = ({
     <Modal {...semanticModal} className={modalClassName.join(' ')}>
       <Global
         styles={css`
-          .ui.modals.dimmer {
+          .ui.dimmer {
             background-color: rgba(255, 255, 255, 0.9);
+            transition: initial;
           }
 
           .ui.modal.relate-by-ui-modal {
@@ -111,7 +112,7 @@ const ModalWrapper = ({
             border-radius: 2px;
           }
 
-          .ui.modal.relate-by-ui-modal > .header {
+          .ui.modal.relate-by-ui-modal > .relate-by-ui-modal-header {
             background-color: initial;
             border: 0;
             display: flex;

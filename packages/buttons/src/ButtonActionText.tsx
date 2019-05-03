@@ -10,6 +10,7 @@ const ButtonActionText = (props: RelateByUIButton) => {
   newProps.positive = true;
   newProps.basic = true;
   newProps.color = 'green';
+  newProps.className = 'text';
 
   if (newProps.showIcon || newProps.icon) {
     newProps.icon = newProps.icon ? newProps.icon : 'confirm';
@@ -17,7 +18,13 @@ const ButtonActionText = (props: RelateByUIButton) => {
 
   // Custom styles if needed
   const StyledButton = styled(Button)`
-    box-shadow: 0px 0px 0px 1px transparent inset !important;
+    .ui.basic.green.relate-by-ui-button& {
+      box-shadow: 0px 0px 0px 1px transparent inset !important;
+      &:hover,
+      &:focus {
+        box-shadow: 0px 0px 0px 1px transparent inset !important;
+      }
+    }
   `;
 
   return <StyledButton {...newProps} />;

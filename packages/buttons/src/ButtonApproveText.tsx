@@ -10,6 +10,7 @@ const ButtonApproveText = (props: RelateByUIButton) => {
   newProps.positive = true;
   newProps.basic = true;
   newProps.color = 'blue';
+  newProps.className = 'text';
 
   if (newProps.showIcon || newProps.icon) {
     newProps.icon = newProps.icon ? newProps.icon : 'confirm';
@@ -17,7 +18,13 @@ const ButtonApproveText = (props: RelateByUIButton) => {
 
   // Custom styles if needed
   const StyledButton = styled(Button)`
-    box-shadow: 0px 0px 0px 1px transparent inset !important;
+    .ui.basic.blue.relate-by-ui-button& {
+      box-shadow: 0px 0px 0px 1px transparent inset !important;
+      &:hover,
+      &:focus {
+        box-shadow: 0px 0px 0px 1px transparent inset !important;
+      }
+    }
   `;
 
   return <StyledButton {...newProps} />;

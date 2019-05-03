@@ -9,6 +9,7 @@ const ButtonDismissText = (props: RelateByUIButton) => {
   newProps.secondary = true;
   newProps.negative = true;
   newProps.basic = true;
+  newProps.className = 'text';
 
   if (newProps.showIcon || newProps.icon) {
     newProps.icon = newProps.icon ? newProps.icon : 'dismiss';
@@ -16,7 +17,13 @@ const ButtonDismissText = (props: RelateByUIButton) => {
 
   // Custom styles if needed
   const StyledButton = styled(Button)`
-    box-shadow: 0px 0px 0px 1px transparent inset !important;
+    .ui.basic.relate-by-ui-button& {
+      box-shadow: 0px 0px 0px 1px transparent inset !important;
+      &:hover,
+      &:focus {
+        box-shadow: 0px 0px 0px 1px transparent inset !important;
+      }
+    }
   `;
 
   return <StyledButton {...newProps} />;
