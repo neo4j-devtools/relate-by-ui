@@ -93,15 +93,14 @@ const ModalWrapper = ({
     modalClassName.push(className);
   }
 
+  if (!semanticModal.dimmer) {
+    semanticModal.dimmer = 'inverted';
+  }
+
   return (
     <Modal {...semanticModal} className={modalClassName.join(' ')}>
       <Global
         styles={css`
-          .ui.dimmer {
-            background-color: rgba(255, 255, 255, 0.9);
-            transition: initial;
-          }
-
           .ui.modal.relate-by-ui-modal {
             box-shadow: 0px 0px 2px 0 rgba(52, 58, 67, 0.1), 0px 18px 38px 0 rgba(52, 58, 67, 0.08),
               0px 35px 65px 0 rgba(52, 58, 67, 0.08);
