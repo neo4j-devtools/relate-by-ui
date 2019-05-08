@@ -44,10 +44,12 @@ const ModalContent = ({
 };
 
 const ModalActions = ({
+  checkbox,
   buttons,
   className,
   semanticModal,
 }: {
+  checkbox?: any[] | any;
   buttons?: any[] | any;
   className?: string;
   semanticModal: ModalProps;
@@ -65,7 +67,11 @@ const ModalActions = ({
   if (className) {
     classNames.push(className);
   }
-  return actions ? <Modal.Actions className={classNames.join(' ')}>{actions}</Modal.Actions> : null;
+  return actions ? (
+    <Modal.Actions className={classNames.join(' ')}>
+      {checkbox} {actions}
+    </Modal.Actions>
+  ) : null;
 };
 
 // Styles are added globally for specificity... looking into if it can be fixed here.
@@ -82,6 +88,7 @@ const ModalWrapper = ({
   scrolling,
   contentClassName,
   children,
+  checkbox,
   buttons,
   semanticModal,
 }: RelateByUIModal) => {
@@ -123,6 +130,13 @@ const ModalWrapper = ({
           .ui.modal.relate-by-ui-modal > .relate-by-ui-modal-actions {
             background-color: initial;
             border: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            .ui.checkbox {
+              margin-right: auto;
+            }
           }
         `}
       />
@@ -130,7 +144,7 @@ const ModalWrapper = ({
       <StyledContent scrolling={scrolling} contentClassName={contentClassName}>
         {children}
       </StyledContent>
-      <StyledActions buttons={buttons} semanticModal={semanticModal} />
+      <StyledActions checkbox={checkbox} buttons={buttons} semanticModal={semanticModal} />
     </Modal>
   );
 };

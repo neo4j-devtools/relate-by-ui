@@ -7,6 +7,7 @@ export interface RelateByUIModal {
   contentClassName?: string;
   scrolling?: boolean;
   children?: any[] | any;
+  checkbox?: any[] | any;
   buttons?: any[] | any;
   semanticModal: ModalProps;
 }
