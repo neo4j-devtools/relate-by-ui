@@ -3831,6 +3831,19 @@
 *******************************/
 
 
+/*------------------------------
+      Disabled and Loading
+-------------------------------*/
+
+.ui.buttons .disabled.button.loading,
+.ui.disabled.button.loading,
+.ui.button.loading:disabled,
+.ui.disabled.button.loading:hover,
+.ui.disabled.active.button.loading {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
 
 /*******************************
          Site Overrides
