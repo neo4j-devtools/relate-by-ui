@@ -1,0 +1,32 @@
+{
+  "name": "@relate-by-ui/styleguide",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "start-storybook -s ./static "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-placeholder": "^3.0.2",
+    "semantic-ui": "^2.4.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@storybook/addon-actions": "^5.0.10",
+    "@storybook/addon-info": "^5.0.10",
+    "@storybook/addon-knobs": "^5.0.10",
+    "@storybook/addon-links": "^5.0.10",
+    "@storybook/addon-notes": "^5.0.10",
+    "@storybook/addons": "^5.0.10",
+    "@storybook/react": "^5.0.11",
+    "babel-loader": "^8.0.5",
+    "gulp": "^3.9.1",
+    "gulp-help": "^1.6.1"
+  }
+}
