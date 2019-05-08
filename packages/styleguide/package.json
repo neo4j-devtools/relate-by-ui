@@ -4,17 +4,26 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "start-storybook -s ./static "
+    "storybook": "start-storybook -s ./static "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@relate-by-ui/buttons": "*",
+    "@relate-by-ui/css": "*",
+    "@relate-by-ui/modal": "*",
     "faker": "^4.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-placeholder": "^3.0.2",
-    "semantic-ui": "^2.4.2"
+    "semantic-ui": "^2.4.2",
+    "semantic-ui-react": "^0.87.1"
+  },
+  "peerDependencies": {
+    "@relate-by-ui/css": "*",
+    "@relate-by-ui/buttons": "*",
+    "@relate-by-ui/modal": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

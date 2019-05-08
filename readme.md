@@ -10,3 +10,16 @@
 ---
 
 This repository will be filled with new components whenever the UX team releases new designs in our styleguide.
+
+---
+## Building
+
+Initialize all the sub-packages:
+
+```
+lerna link
+lerna bootstrap
+lerna build
+...?
+```
+

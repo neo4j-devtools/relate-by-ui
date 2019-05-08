@@ -5,7 +5,7 @@ import { ButtonActionPrimary } from '@relate-by-ui/buttons';
 
 import { storiesOf } from '@storybook/react';
 
-const stories = storiesOf('Relate by UI/Modules', module);
+const stories = storiesOf('Module/Modal', module);
 
 const InternalModal = () => {
   const [open, setModalState] = useState(false);

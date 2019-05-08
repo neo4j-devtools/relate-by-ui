@@ -17,7 +17,7 @@ import {
 
 import { storiesOf } from '@storybook/react';
 
-const stories = storiesOf('Relate by UI/Elements', module);
+const stories = storiesOf('Element/Button', module);
 
 stories.add(
   'Buttons',
