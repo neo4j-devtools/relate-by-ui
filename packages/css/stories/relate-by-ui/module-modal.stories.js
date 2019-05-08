@@ -11,8 +11,8 @@ const InternalModal = () => {
   const [open, setModalState] = useState(false);
 
   return (
-    <div>
-      <h1>Modal</h1>
+    <div className="ui" style={{ margin: '3rem 0 5rem 0' }}>
+      <h1 className="ui dividing header">Modal</h1>
       <Modal
         title="This is the title"
         icon="heart"

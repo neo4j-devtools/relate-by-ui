@@ -22,48 +22,54 @@ const stories = storiesOf('Relate by UI/Element/Buttons', module);
 stories.add(
   'Buttons',
   () => (
-    <div className="ui segments">
+    <div className="ui" style={{ margin: '3rem 0 5rem 0' }}>
+      <h1 className="ui dividing header">Buttons</h1>
+      <h2 className="ui dividing header">Primary</h2>
       <div className="ui segment">
-        <h2>Primary</h2>
-        <ButtonActionPrimary title="Action" />
-        <ButtonApprovePrimary title="Approve" />
-        <ButtonDestructivePrimary title="Destructive" />
-        <ButtonDismissPrimary title="Dismiss" />
+        <p className="ui container">
+          <ButtonActionPrimary title="Action" />
+          <ButtonApprovePrimary title="Approve" />
+          <ButtonDestructivePrimary title="Destructive" />
+          <ButtonDismissPrimary title="Dismiss" />
+        </p>
+        <p className="ui container">
+          <ButtonActionPrimary title="Action" disabled />
+          <ButtonApprovePrimary title="Approve" disabled />
+          <ButtonDestructivePrimary title="Destructive" disabled />
+          <ButtonDismissPrimary title="Dismiss" disabled />
+        </p>
       </div>
+
+      <h2 className="ui dividing header">Secondary</h2>
       <div className="ui segment">
-        <h2>Secondary</h2>
-        <ButtonActionSecondary title="Action" />
-        <ButtonApproveSecondary title="Approve" />
-        <ButtonDestructiveSecondary title="Destructive" />
-        <ButtonDismissSecondary title="Dismiss" />
+        <p className="ui container">
+          <ButtonActionSecondary title="Action" />
+          <ButtonApproveSecondary title="Approve" />
+          <ButtonDestructiveSecondary title="Destructive" />
+          <ButtonDismissSecondary title="Dismiss" />
+        </p>
+        <p className="ui container">
+          <ButtonActionSecondary title="Action" disabled />
+          <ButtonApproveSecondary title="Approve" disabled />
+          <ButtonDestructiveSecondary title="Destructive" disabled />
+          <ButtonDismissSecondary title="Dismiss" disabled />
+        </p>
       </div>
+
+      <h2 className="ui dividing header">Text</h2>
       <div className="ui segment">
-        <h2>Text</h2>
-        <ButtonActionText title="Action" />
-        <ButtonApproveText title="Approve" />
-        <ButtonDestructiveText title="Destructive" />
-        <ButtonDismissText title="Dismiss" />
-      </div>
-      <div className="ui segment">
-        <h2>Primary - Disabled</h2>
-        <ButtonActionPrimary title="Action" disabled />
-        <ButtonApprovePrimary title="Approve" disabled />
-        <ButtonDestructivePrimary title="Destructive" disabled />
-        <ButtonDismissPrimary title="Dismiss" disabled />
-      </div>
-      <div className="ui segment">
-        <h2>Secondary - Disabled</h2>
-        <ButtonActionSecondary title="Action" disabled />
-        <ButtonApproveSecondary title="Approve" disabled />
-        <ButtonDestructiveSecondary title="Destructive" disabled />
-        <ButtonDismissSecondary title="Dismiss" disabled />
-      </div>
-      <div className="ui segment">
-        <h2>Text - Disabled</h2>
-        <ButtonActionText title="Action" disabled />
-        <ButtonApproveText title="Approve" disabled />
-        <ButtonDestructiveText title="Destructive" disabled />
-        <ButtonDismissText title="Dismiss" disabled />
+        <p className="ui container">
+          <ButtonActionText title="Action" />
+          <ButtonApproveText title="Approve" />
+          <ButtonDestructiveText title="Destructive" />
+          <ButtonDismissText title="Dismiss" />
+        </p>
+        <p className="ui container">
+          <ButtonActionText title="Action" disabled />
+          <ButtonApproveText title="Approve" disabled />
+          <ButtonDestructiveText title="Destructive" disabled />
+          <ButtonDismissText title="Dismiss" disabled />
+        </p>
       </div>
     </div>
   ),
