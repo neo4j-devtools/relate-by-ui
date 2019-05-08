@@ -24,6 +24,7 @@
   },
   "scripts": {
     "tsc": "tsc",
+    "watch": "tsc -w",
     "test": "jest --no-cache --coverage --config jest.config.js",
     "dev": "jest --no-cache --config jest.config.js --watch",
     "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
