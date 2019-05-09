@@ -13,7 +13,7 @@ import {
   ButtonApproveText,
   ButtonDestructiveText,
   ButtonDismissText,
-} from '@relate-by-ui/buttons';
+} from '../../../buttons/src';
 
 import { storiesOf } from '@storybook/react';
 

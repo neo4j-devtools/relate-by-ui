@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, ModalProps } from 'semantic-ui-react';
 import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import { RelateByUIModal } from './Types';
+import { RelateByUIModal as RelateByUIModalTypes } from './Types';
 import { ButtonDismissPrimary } from '@relate-by-ui/buttons';
 
 const ModalHeader = ({ className, title, icon }: { title: string; icon?: string; className?: string }) => {
@@ -91,7 +91,7 @@ const ModalWrapper = ({
   checkbox,
   buttons,
   semanticModal,
-}: RelateByUIModal) => {
+}: RelateByUIModalTypes) => {
   const modalClassName = ['relate-by-ui-modal'];
   if (semanticModal.className) {
     modalClassName.push(semanticModal.className);
@@ -159,7 +159,7 @@ const StyledModal = styled(ModalWrapper)`
   border-radius: 2px;
 `;
 
-const RelateByUIModal = (props: RelateByUIModal) => {
+const RelateByUIModal = (props: RelateByUIModalTypes) => {
   return <StyledModal {...props} />;
 };
 

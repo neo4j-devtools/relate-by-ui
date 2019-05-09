@@ -1,19 +1,17 @@
-import React from 'react';
 import { configure, addDecorator } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import '@relate-by-ui/css/semantic/dist/relate-by.min.css';
+import '../../css/semantic/dist/relate-by.css';
 
-// automatically import all files ending in *.stories.js
-const req = require.context('../stories', true, /\.stories\.js$/);
+const req = require.context('../stories', true, /\.stories\.ts(x)$/);
 
 addDecorator(withInfo);
-addDecorator(storyFn => (
-  <div className="ui container" style={{ margin: '3rem 0 5rem 0' }}>
-    {storyFn()}
-  </div>
-));
+// addDecorator(storyFn => (
+//   <div className="ui container" style={{ margin: '3rem 0 5rem 0' }}>
+//     {storyFn()}
+//   </div>
+// ));
 
 configure(() => {
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach(req);
 }, module);

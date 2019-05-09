@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { withInfo } from '@storybook/addon-info';
 
-import { Modal as OriginalModal } from '@relate-by-ui/modal';
-import { ButtonActionPrimary } from '@relate-by-ui/buttons';
+import { Modal as OriginalModal } from '../../../modal/src';
+import { ButtonActionPrimary } from '../../../buttons/src';
 
 import { storiesOf } from '@storybook/react';
 
 const stories = storiesOf('Modules', module);
 
-const Modal = props => {
+const Modal = (props: any) => {
   const [open, setModalState] = useState(false);
 
   props.semanticModal.open = open;
