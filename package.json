@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "tsc": "tsc",
+    "init": "lerna link && lerna bootstrap && lerna build",
+    "build": "tsc",
     "watch": "lerna run watch --stream --parallel",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"packages/**/*.js\" \"packages/**/*.jsx\"",
     "lint": "tslint --project tsconfig.json",

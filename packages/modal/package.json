@@ -24,7 +24,7 @@
     "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
     "watch": "tsc -w",
     "test": "jest --no-cache --coverage --config jest.config.js",
     "dev": "jest --no-cache --config jest.config.js --watch",
