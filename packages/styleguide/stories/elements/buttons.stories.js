@@ -17,12 +17,12 @@ import {
 
 import { storiesOf } from '@storybook/react';
 
-const stories = storiesOf('Element/Button', module);
+const stories = storiesOf('Elements', module);
 
 stories.add(
   'Buttons',
   () => (
-    <div className="ui" style={{ margin: '3rem 0 5rem 0' }}>
+    <div className="ui">
       <h1 className="ui dividing header">Buttons</h1>
       <h2 className="ui dividing header">Primary</h2>
       <div className="ui segment">
@@ -75,7 +75,7 @@ stories.add(
   ),
   {
     info: {
-      text: `Primary.`,
+      text: `The button components.`,
     },
   },
 );

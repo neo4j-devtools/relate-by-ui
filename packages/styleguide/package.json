@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "storybook": "start-storybook -s ./static "
+    "storybook": "start-storybook -p 1910 -s ./static "
   },
   "keywords": [],
   "author": "",

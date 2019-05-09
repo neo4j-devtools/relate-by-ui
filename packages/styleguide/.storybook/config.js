@@ -7,12 +7,13 @@ import '@relate-by-ui/css/semantic/dist/relate-by.min.css';
 // automatically import all files ending in *.stories.js
 const req = require.context('../stories', true, /\.stories\.js$/);
 
-addDecorator(withInfo); //
+addDecorator(withInfo);
+addDecorator(storyFn => (
+  <div className="ui container" style={{ margin: '3rem 0 5rem 0' }}>
+    {storyFn()}
+  </div>
+));
 
-addDecorator(storyFn => <div className="ui container">{storyFn()}</div>);
-
-function loadStories() {
+configure(() => {
   req.keys().forEach(filename => req(filename));
-}
-
-configure(loadStories, module);
+}, module);
