@@ -28630,8 +28630,8 @@ a.ui.card:hover,
   z-index: 5;
   background: #FFFFFF;
   border: none;
-  -webkit-box-shadow: 0px 3px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
-  box-shadow: 0px 3px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
+  -webkit-box-shadow: 0px 2px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
+  box-shadow: 0px 2px 3px 0px #BCBDBD, 0px 0px 0px 1px #D4D4D5;
   -webkit-transform: translateY(-3px);
   transform: translateY(-3px);
 }
@@ -28645,15 +28645,15 @@ a.ui.card:hover,
 .ui.red.cards > .card,
 .ui.cards > .red.card,
 .ui.red.card {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #DB2828, 0px 2px 12px 0px #D4D4D5;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #DB2828, 0px 2px 12px 0px #D4D4D5;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #ff6769, 0px 2px 12px 0px #D4D4D5;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #ff6769, 0px 2px 12px 0px #D4D4D5;
 }
 
 .ui.red.cards > .card:hover,
 .ui.cards > .red.card:hover,
 .ui.red.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #d01919, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #d01919, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #ff4d50, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #ff4d50, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Orange */
@@ -28668,8 +28668,8 @@ a.ui.card:hover,
 .ui.orange.cards > .card:hover,
 .ui.cards > .orange.card:hover,
 .ui.orange.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #f26202, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #f26202, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #f26202, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #f26202, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Yellow */
@@ -28684,8 +28684,8 @@ a.ui.card:hover,
 .ui.yellow.cards > .card:hover,
 .ui.cards > .yellow.card:hover,
 .ui.yellow.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #eaae00, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #eaae00, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #eaae00, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #eaae00, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Olive */
@@ -28700,8 +28700,8 @@ a.ui.card:hover,
 .ui.olive.cards > .card:hover,
 .ui.cards > .olive.card:hover,
 .ui.olive.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #a7bd0d, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #a7bd0d, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #a7bd0d, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #a7bd0d, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Green */
@@ -28709,15 +28709,15 @@ a.ui.card:hover,
 .ui.green.cards > .card,
 .ui.cards > .green.card,
 .ui.green.card {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #21BA45, 0px 2px 12px 0px #D4D4D5;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #21BA45, 0px 2px 12px 0px #D4D4D5;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #38d399, 0px 2px 12px 0px #D4D4D5;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #38d399, 0px 2px 12px 0px #D4D4D5;
 }
 
 .ui.green.cards > .card:hover,
 .ui.cards > .green.card:hover,
 .ui.green.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #16ab39, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #16ab39, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #24cd8e, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #24cd8e, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Teal */
@@ -28732,8 +28732,8 @@ a.ui.card:hover,
 .ui.teal.cards > .card:hover,
 .ui.cards > .teal.card:hover,
 .ui.teal.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #009c95, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #009c95, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #009c95, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #009c95, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Blue */
@@ -28741,15 +28741,15 @@ a.ui.card:hover,
 .ui.blue.cards > .card,
 .ui.cards > .blue.card,
 .ui.blue.card {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #2185D0, 0px 2px 12px 0px #D4D4D5;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #2185D0, 0px 2px 12px 0px #D4D4D5;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #45bff8, 0px 2px 12px 0px #D4D4D5;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #45bff8, 0px 2px 12px 0px #D4D4D5;
 }
 
 .ui.blue.cards > .card:hover,
 .ui.cards > .blue.card:hover,
 .ui.blue.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #1678c2, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #1678c2, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #24b9ff, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #24b9ff, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Violet */
@@ -28764,8 +28764,8 @@ a.ui.card:hover,
 .ui.violet.cards > .card:hover,
 .ui.cards > .violet.card:hover,
 .ui.violet.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #5829bb, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #5829bb, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #5829bb, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #5829bb, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Purple */
@@ -28780,8 +28780,8 @@ a.ui.card:hover,
 .ui.purple.cards > .card:hover,
 .ui.cards > .purple.card:hover,
 .ui.purple.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #9627ba, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #9627ba, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #9627ba, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #9627ba, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Pink */
@@ -28796,8 +28796,8 @@ a.ui.card:hover,
 .ui.pink.cards > .card:hover,
 .ui.cards > .pink.card:hover,
 .ui.pink.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #e61a8d, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #e61a8d, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #e61a8d, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #e61a8d, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Brown */
@@ -28812,8 +28812,8 @@ a.ui.card:hover,
 .ui.brown.cards > .card:hover,
 .ui.cards > .brown.card:hover,
 .ui.brown.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #975b33, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #975b33, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #975b33, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #975b33, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Grey */
@@ -28828,8 +28828,8 @@ a.ui.card:hover,
 .ui.grey.cards > .card:hover,
 .ui.cards > .grey.card:hover,
 .ui.grey.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #838383, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #838383, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #838383, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #838383, 0px 2px 3px 0px #BCBDBD;
 }
 
 /* Black */
@@ -28844,8 +28844,8 @@ a.ui.card:hover,
 .ui.black.cards > .card:hover,
 .ui.cards > .black.card:hover,
 .ui.black.card:hover {
-  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #27292a, 0px 3px 3px 0px #BCBDBD;
-  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #27292a, 0px 3px 3px 0px #BCBDBD;
+  -webkit-box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #27292a, 0px 2px 3px 0px #BCBDBD;
+  box-shadow: 0px 0px 0px 1px #D4D4D5, 0px 4px 0px 0px #27292a, 0px 2px 3px 0px #BCBDBD;
 }
 
 /*--------------
@@ -30675,7 +30675,7 @@ a.ui.card:hover,
 .ui.red.statistics .statistic > .value,
 .ui.statistics .red.statistic > .value,
 .ui.red.statistic > .value {
-  color: #DB2828;
+  color: #ff6769;
 }
 
 .ui.orange.statistics .statistic > .value,
@@ -30699,7 +30699,7 @@ a.ui.card:hover,
 .ui.green.statistics .statistic > .value,
 .ui.statistics .green.statistic > .value,
 .ui.green.statistic > .value {
-  color: #21BA45;
+  color: #38d399;
 }
 
 .ui.teal.statistics .statistic > .value,
@@ -30711,7 +30711,7 @@ a.ui.card:hover,
 .ui.blue.statistics .statistic > .value,
 .ui.statistics .blue.statistic > .value,
 .ui.blue.statistic > .value {
-  color: #2185D0;
+  color: #45bff8;
 }
 
 .ui.violet.statistics .statistic > .value,
@@ -30761,7 +30761,7 @@ a.ui.card:hover,
 .ui.inverted.red.statistics .statistic > .value,
 .ui.statistics .inverted.red.statistic > .value,
 .ui.inverted.red.statistic > .value {
-  color: #FF695E;
+  color: #ff6769;
 }
 
 .ui.inverted.orange.statistics .statistic > .value,
@@ -30785,7 +30785,7 @@ a.ui.card:hover,
 .ui.inverted.green.statistics .statistic > .value,
 .ui.statistics .inverted.green.statistic > .value,
 .ui.inverted.green.statistic > .value {
-  color: #2ECC40;
+  color: #38d399;
 }
 
 .ui.inverted.teal.statistics .statistic > .value,
@@ -30797,7 +30797,7 @@ a.ui.card:hover,
 .ui.inverted.blue.statistics .statistic > .value,
 .ui.statistics .inverted.blue.statistic > .value,
 .ui.inverted.blue.statistic > .value {
-  color: #54C8FF;
+  color: #45bff8;
 }
 
 .ui.inverted.violet.statistics .statistic > .value,
@@ -31814,7 +31814,7 @@ a.ui.card:hover,
 
 .ui.toggle.checkbox input:checked ~ .box:before,
 .ui.toggle.checkbox input:checked ~ label:before {
-  background-color: #E03997 !important;
+  background-color: #45bff8 !important;
 }
 
 .ui.toggle.checkbox input:checked ~ .box:after,
@@ -31833,7 +31833,7 @@ a.ui.card:hover,
 
 .ui.toggle.checkbox input:focus:checked ~ .box:before,
 .ui.toggle.checkbox input:focus:checked ~ label:before {
-  background-color: #e10f85 !important;
+  background-color: #15b5ff !important;
 }
 
 /*******************************
@@ -35839,7 +35839,7 @@ a.ui.nag {
 ---------------*/
 
 .ui.progress.success .bar {
-  background-color: #21BA45 !important;
+  background-color: #38d399 !important;
 }
 
 .ui.progress.success .bar,
@@ -35875,7 +35875,7 @@ a.ui.nag {
 ---------------*/
 
 .ui.progress.error .bar {
-  background-color: #DB2828 !important;
+  background-color: #ff6769 !important;
 }
 
 .ui.progress.error .bar,
@@ -35975,7 +35975,7 @@ a.ui.nag {
 }
 
 .ui.inverted.progress.success > .label {
-  color: #21BA45;
+  color: #38d399;
 }
 
 .ui.inverted.progress.warning > .label {
@@ -35983,7 +35983,7 @@ a.ui.nag {
 }
 
 .ui.inverted.progress.error > .label {
-  color: #DB2828;
+  color: #ff6769;
 }
 
 /*--------------
@@ -36048,11 +36048,11 @@ a.ui.nag {
 /* Red */
 
 .ui.red.progress .bar {
-  background-color: #DB2828;
+  background-color: #ff6769;
 }
 
 .ui.red.inverted.progress .bar {
-  background-color: #FF695E;
+  background-color: #ff6769;
 }
 
 /* Orange */
@@ -36088,11 +36088,11 @@ a.ui.nag {
 /* Green */
 
 .ui.green.progress .bar {
-  background-color: #21BA45;
+  background-color: #38d399;
 }
 
 .ui.green.inverted.progress .bar {
-  background-color: #2ECC40;
+  background-color: #38d399;
 }
 
 /* Teal */
@@ -36108,11 +36108,11 @@ a.ui.nag {
 /* Blue */
 
 .ui.blue.progress .bar {
-  background-color: #2185D0;
+  background-color: #45bff8;
 }
 
 .ui.blue.inverted.progress .bar {
-  background-color: #54C8FF;
+  background-color: #45bff8;
 }
 
 /* Violet */
@@ -36647,7 +36647,7 @@ a.ui.nag {
 
 .ui.search > .results .result .price {
   float: right;
-  color: #21BA45;
+  color: #38d399;
 }
 
 /*--------------
@@ -36825,7 +36825,7 @@ a.ui.nag {
 
 .ui.search.selection > .icon.input > .remove.icon:hover {
   opacity: 1;
-  color: #DB2828;
+  color: #ff6769;
 }
 
 /*--------------
