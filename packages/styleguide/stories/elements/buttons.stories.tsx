@@ -23,9 +23,8 @@ stories.add(
   'Buttons',
   () => (
     <div className="ui">
-      <h1 className="ui dividing header">Buttons</h1>
       <h2 className="ui dividing header">Primary</h2>
-      <div className="ui segment">
+      <div>
         <p className="ui container">
           <ButtonActionPrimary title="Action" />
           <ButtonApprovePrimary title="Approve" />
@@ -41,7 +40,7 @@ stories.add(
       </div>
 
       <h2 className="ui dividing header">Secondary</h2>
-      <div className="ui segment">
+      <div>
         <p className="ui container">
           <ButtonActionSecondary title="Action" />
           <ButtonApproveSecondary title="Approve" />
@@ -57,7 +56,7 @@ stories.add(
       </div>
 
       <h2 className="ui dividing header">Text</h2>
-      <div className="ui segment">
+      <div>
         <p className="ui container">
           <ButtonActionText title="Action" />
           <ButtonApproveText title="Approve" />
@@ -76,6 +75,7 @@ stories.add(
   {
     info: {
       text: `The button components.`,
+      inline: true,
     },
   },
 );

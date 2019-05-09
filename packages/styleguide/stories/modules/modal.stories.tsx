@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
 
-import { Modal as OriginalModal } from '../../../modal/src';
+import { Modal as OriginalModal, RelateByUIModalPropTypes } from '../../../modal/src';
 import { ButtonActionPrimary } from '../../../buttons/src';
 
 import { storiesOf } from '@storybook/react';
 
 const stories = storiesOf('Modules', module);
 
-const Modal = (props: any) => {
+const Modal = (props: RelateByUIModalPropTypes) => {
   const [open, setModalState] = useState(false);
 
   props.semanticModal.open = open;
   props.semanticModal.trigger = <ButtonActionPrimary title="Open modal" onClick={() => setModalState(true)} />;
   props.semanticModal.onClose = () => setModalState(false);
 
-  return (
-    <div className="ui">
-      <h1 className="ui dividing header">Modal</h1>
-      <OriginalModal {...props}>{props.children}</OriginalModal>
-    </div>
-  );
+  return <OriginalModal {...props}>{props.children}</OriginalModal>;
 };
 
 stories.add(
@@ -38,6 +33,7 @@ stories.add(
   {
     info: {
       text: `The modal component.`,
+      inline: true,
     },
   },
 );
