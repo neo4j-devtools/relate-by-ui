@@ -17,9 +17,9 @@ This repository will be filled with new components whenever the UX team releases
 Initialize all the sub-packages:
 
 ```
-lerna link
-lerna bootstrap
-lerna build
-...?
+yarn install && yarn lerna-init
 ```
-
+or
+```
+npm install && npm run lerna-init
+```

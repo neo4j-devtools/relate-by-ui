@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "lerna-init": "lerna link && lerna bootstrap && lerna build",
+    "lerna-init": "lerna link && lerna bootstrap && lerna run build",
     "build": "tsc",
     "watch": "lerna run watch --stream --parallel",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"packages/**/*.js\" \"packages/**/*.jsx\"",
     "lint": "tslint --project tsconfig.json",
-    "publish": "npm run test && lerna run tsc && npm run preparePublish && lerna publish && rm -rf .npmrc",
-    "verify": "lerna run test && lerna run tsc",
+    "publish": "npm run test && lerna run build && npm run preparePublish && lerna publish && rm -rf .npmrc",
+    "verify": "lerna run test && lerna run build",
     "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc"
   },
   "devDependencies": {

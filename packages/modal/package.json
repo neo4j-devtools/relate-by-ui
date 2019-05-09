@@ -19,9 +19,9 @@
   },
   "peerDependencies": {
     "@relate-by-ui/buttons": "*",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "semantic-ui-react": "^0.86.0"
+    "react": "16",
+    "react-dom": "16",
+    "semantic-ui-react": "*"
   },
   "scripts": {
     "build": "tsc",
