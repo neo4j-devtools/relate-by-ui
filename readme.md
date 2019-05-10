@@ -3,8 +3,8 @@
 </p>
 
 <p align="center" style="font-size: 1.2rem;">
-  Neo4j UI components<br />
-  <strong>!! This is very much a work in progress !!</strong>
+  styles, components and guidelines for building a Neo4j Graph App<br />
+  <i>:construction: work in progress :construction:</i>
 </p>
 
 ---
