@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Modal as OriginalModal, RelateByUIModalPropTypes } from '../../../modal/src';
-import { ButtonActionPrimary } from '../../../buttons/src';
+import { Modal as OriginalModal, RelateByUIModalPropTypes } from '../../../packages/modal/src';
+import { ButtonActionPrimary } from '../../../packages/buttons/src';
 
 import { storiesOf } from '@storybook/react';
 

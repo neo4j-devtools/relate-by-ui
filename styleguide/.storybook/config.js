@@ -3,7 +3,7 @@ import React from 'react';
 import { configure, addDecorator } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
-import '../../css/semantic/dist/relate-by.css';
+import '../../packages/css/semantic/dist/relate-by.css';
 
 const req = require.context('../stories', true, /\.stories\.ts(x)$/);
 
