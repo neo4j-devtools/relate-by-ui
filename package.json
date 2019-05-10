@@ -5,6 +5,8 @@
   "scripts": {
     "lerna-init": "lerna link && lerna bootstrap && lerna run build",
     "build": "tsc",
+    "styleguide-build": "git checkout gh-pages && cd styleguide && yarn build-storybook",
+    "styleguide-publish": "npm run styleguide-build && ./bin/gh-pages styleguide/storybook-static",
     "watch": "lerna run watch --stream --parallel",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"packages/**/*.js\" \"packages/**/*.jsx\"",
     "lint": "tslint --project tsconfig.json",
