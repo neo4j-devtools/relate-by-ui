@@ -5,10 +5,9 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Element/Header', module);
+const typeStories = storiesOf('Element/Header/Types', module);
 
-
-stories.add('Page Headers', () => (
+typeStories.add('Page Headers', () => (
   <div className="ui segment">
     <h1 className="ui header">First header</h1>
       <TextBlock color='#E0E0E0' rows={4} />
@@ -24,7 +23,7 @@ stories.add('Page Headers', () => (
 ));
 
 
-stories.add('Content Headers', () => (
+typeStories.add('Content Headers', () => (
   <div class="ui segment">
     <div class="ui huge header">Huge Header</div>
       <TextBlock color='#E0E0E0' rows={4} />
@@ -40,7 +39,7 @@ stories.add('Content Headers', () => (
 ));
 
 
-stories.add('Icon Headers', () => (
+typeStories.add('Icon Headers', () => (
   <div className="ui segment">
     <h2 class="ui icon header">
       <i class="settings icon"></i>
@@ -59,7 +58,7 @@ stories.add('Icon Headers', () => (
 ));
 
 
-stories.add('Sub Headers', () => (
+typeStories.add('Sub Headers', () => (
   <div className="ui segments">
     <div class="ui segment">
       <h2 class="ui sub header">
@@ -96,7 +95,9 @@ stories.add('Sub Headers', () => (
 ));
 
 
-stories.add('Content: Image', () => (
+const contentStories = storiesOf('Element/Header/Content', module);
+
+contentStories.add('Image', () => (
   <div className="ui segments">
     <div class="ui segment">
       <h2 class="ui header">
@@ -128,7 +129,7 @@ stories.add('Content: Image', () => (
 ));
 
 
-stories.add('Content: Icon', () => (
+contentStories.add('Icon', () => (
   <div className="ui segments">
     <div class="ui segment">
       <h2 class="ui header">
@@ -153,7 +154,7 @@ stories.add('Content: Icon', () => (
 ));
 
 
-stories.add('Content: Subheader', () => (
+contentStories.add('Subheader', () => (
   <div className="ui segments">
     <div class="ui segment">
       <h2 class="ui header">
@@ -188,15 +189,18 @@ stories.add('Content: Subheader', () => (
 ));
 
 
-stories.add('Disabled', () => (
+const stateStories = storiesOf('Element/Header/States', module);
+
+stateStories.add('Disabled', () => (
   <div class="ui segment">
     <div class="ui disabled header">Disabled Header</div>
     <TextBlock color='#E0E0E0' rows={4} />
   </div>
 ));
 
+const variationStories = storiesOf('Element/Header/Variations', module);
 
-stories.add('Variations: Dividing', () => (
+variationStories.add('Dividing', () => (
   <div class="ui segment">
     <TextBlock color='#E0E0E0' rows={4} />
     <h3 class="ui dividing header">
@@ -206,7 +210,7 @@ stories.add('Variations: Dividing', () => (
   </div>
 ));
 
-stories.add('Variations: Block', () => (
+variationStories.add('Block', () => (
   <div class="ui segment">
     <h3 class="ui block header">
       Block Header
@@ -216,7 +220,7 @@ stories.add('Variations: Block', () => (
 ));
 
 
-stories.add('Variations: Attached', () => (
+variationStories.add('Attached', () => (
   <div class="ui segment">
     <h3 class="ui top attached header">
       Top Attached
@@ -237,7 +241,7 @@ stories.add('Variations: Attached', () => (
 ));
 
 
-stories.add('Variations: Floating', () => (
+variationStories.add('Floating', () => (
   <div class="ui clearing segment">
     <h3 class="ui right floated header">
       Go Forward
@@ -248,7 +252,7 @@ stories.add('Variations: Floating', () => (
   </div>
 ));
 
-stories.add('Variations: Text Alignment', () => (
+variationStories.add('Text Alignment', () => (
   <div class="ui segment">
     <h3 class="ui right aligned header">
       Right
@@ -266,7 +270,7 @@ stories.add('Variations: Text Alignment', () => (
 ));
 
 
-stories.add('Variations: Colored', () => (
+variationStories.add('Colored', () => (
   <div class="ui clearing segment">
     <h4 class="ui red header">Red</h4>
     <h4 class="ui orange header">Orange</h4>
@@ -284,7 +288,7 @@ stories.add('Variations: Colored', () => (
 ));
 
 
-stories.add('Variations: Inverted', () => (
+variationStories.add('Inverted', () => (
   <div class="ui inverted segment">
     <h4 class="ui red inverted header">Red</h4>
     <h4 class="ui orange inverted header">Orange</h4>

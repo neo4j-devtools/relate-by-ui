@@ -4,10 +4,9 @@ import { storiesOf } from '@storybook/react';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import * as faker from "faker";
 
-const stories = storiesOf('Element/Input', module);
+const typeStories = storiesOf('Element/Input/Types', module);
 
-
-stories.add('States:Focus', () => (
+typeStories.add('Focus', () => (
   <div className="ui segment">
     <div class="ui input focus">
       <input type="text" placeholder="Search..."/>
@@ -16,7 +15,9 @@ stories.add('States:Focus', () => (
 ));
 
 
-stories.add('States:Loading', () => (
+const stateStories = storiesOf('Element/Input/States', module);
+
+stateStories.add('Loading', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui left icon input loading">
@@ -33,7 +34,7 @@ stories.add('States:Loading', () => (
   </div>
 ));
 
-stories.add('States:Disabled', () => (
+stateStories.add('Disabled', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui disabled input">
@@ -54,7 +55,7 @@ stories.add('States:Disabled', () => (
   </div>
 ));
 
-stories.add('States:Error', () => (
+stateStories.add('Error', () => (
   <div className="ui segment">
     <div class="ui input error">
       <input type="text" placeholder="Search..."/>
@@ -62,7 +63,9 @@ stories.add('States:Error', () => (
   </div>
 ));
 
-stories.add('Variations:Icon', () => (
+const variationStories = storiesOf('Element/Input/Variations', module);
+
+variationStories.add('Icon', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui icon input">
@@ -92,7 +95,7 @@ stories.add('Variations:Icon', () => (
 ));
 
 
-stories.add('Variations:Labeled', () => (
+variationStories.add('Labeled', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui labeled input">
@@ -159,7 +162,7 @@ stories.add('Variations:Labeled', () => (
   </div>
 ));
 
-stories.add('Variations:Action', () => (
+variationStories.add('Action', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui action input">
@@ -222,7 +225,7 @@ stories.add('Variations:Action', () => (
 ));
 
 
-stories.add('Variations:Transparent', () => (
+variationStories.add('Transparent', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui transparent input">
@@ -245,7 +248,7 @@ stories.add('Variations:Transparent', () => (
 ));
 
 
-stories.add('Variations:Inverted', () => (
+variationStories.add('Inverted', () => (
   <div className="ui segment">
     <div class="ui inverted segment">
       <div class="ui inverted input">
@@ -265,7 +268,7 @@ stories.add('Variations:Inverted', () => (
   </div>
 ));
 
-stories.add('Variations:Fluid', () => (
+variationStories.add('Fluid', () => (
   <div className="ui segment">
     <div class="ui fluid icon input">
       <input type="text" placeholder="Search a very wide input..."/>
@@ -279,7 +282,7 @@ stories.add('Variations:Fluid', () => (
 ));
 
 
-stories.add('Variations:Size', () => (
+variationStories.add('Size', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui mini icon input">
@@ -321,7 +324,7 @@ stories.add('Variations:Size', () => (
 ));
 
 
-stories.add('Variations:Password', () => (
+typeStories.add('Password', () => (
   <div className="ui segment">
     <div class="ui input">
       <input type="password" placeholder={faker.internet.password()}/>

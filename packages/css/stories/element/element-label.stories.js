@@ -4,10 +4,9 @@ import { storiesOf } from '@storybook/react';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import * as faker from "faker";
 
-const stories = storiesOf('Element/Label', module);
+const typeStories = storiesOf('Element/Label/Types', module);
 
-
-stories.add('Label', () => (
+typeStories.add('Label', () => (
   <div className="ui segment">
     <div class="ui label">
       <i class="mail icon"></i> 23
@@ -15,7 +14,7 @@ stories.add('Label', () => (
   </div>
 ));
 
-stories.add('Image', () => (
+typeStories.add('Image', () => (
   <div className="ui segments">
     <div className="ui segment">
       <a class="ui image label">
@@ -68,7 +67,7 @@ stories.add('Image', () => (
   </div>
 ));
 
-stories.add('Pointing', () => (
+typeStories.add('Pointing', () => (
   <div className="ui segments">
     <div className="ui segment">
       <form class="ui fluid form">
@@ -135,7 +134,7 @@ stories.add('Pointing', () => (
   </div>
 ));
 
-stories.add('Corner', () => (
+typeStories.add('Corner', () => (
   <div className="ui segment">
     <div class="ui two column grid">
       <div class="column">
@@ -159,7 +158,7 @@ stories.add('Corner', () => (
 ));
 
 
-stories.add('Tag', () => (
+typeStories.add('Tag', () => (
   <div className="ui segment">
     <a class="ui tag label">New</a>
     <a class="ui red tag label">Upcoming</a>
@@ -168,7 +167,7 @@ stories.add('Tag', () => (
 ));
 
 
-stories.add('Ribbon', () => (
+typeStories.add('Ribbon', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui two column grid">
@@ -214,7 +213,7 @@ stories.add('Ribbon', () => (
   </div>
 ));
 
-stories.add('Attached', () => (
+typeStories.add('Attached', () => (
   <div class="ui cards">
     <div class="card">
       <div class="ui top attached label">HTML</div>
@@ -255,7 +254,7 @@ stories.add('Attached', () => (
   </div>
 ));
 
-stories.add('Horizontal', () => (
+typeStories.add('Horizontal', () => (
   <div className="ui segment">
     <div class="ui divided selection list">
       <a class="item">
@@ -278,7 +277,7 @@ stories.add('Horizontal', () => (
   </div>
 ));
 
-stories.add('Floating', () => (
+typeStories.add('Floating', () => (
   <div className="ui segment">
     <div class="ui compact menu">
       <a class="item">
@@ -293,8 +292,9 @@ stories.add('Floating', () => (
   </div>
 ));
 
+const contentStories = storiesOf('Element/Label/Content', module);
 
-stories.add('Content:Detail', () => (
+contentStories.add('Detail', () => (
   <div className="ui segment">
     <div class="ui label">
       Dogs
@@ -303,7 +303,7 @@ stories.add('Content:Detail', () => (
   </div>
 ));
 
-stories.add('Content:Icon', () => (
+contentStories.add('Icon', () => (
   <div className="ui segment">
     <a class="ui label">
       <i class="mail icon"></i>
@@ -316,7 +316,7 @@ stories.add('Content:Icon', () => (
   </div>
 ));
 
-stories.add('Content:Image', () => (
+contentStories.add('Image', () => (
   <div className="ui segment">
     <a class="ui label">
       <img class="ui right spaced avatar image" src="/images/avatar/avatar_1.png"/>
@@ -330,7 +330,7 @@ stories.add('Content:Image', () => (
 ));
 
 
-stories.add('Content:Link', () => (
+contentStories.add('Link', () => (
   <div className="ui segment">
     <a class="ui label">
       <i class="mail icon"></i> 23
@@ -344,7 +344,9 @@ stories.add('Content:Link', () => (
   </div>
 ));
 
-stories.add('Variations:Circular', () => (
+const variationStories = storiesOf('Element/Label/Variations', module);
+
+variationStories.add('Circular', () => (
   <div className="ui segment">
     <a class="ui red circular label">2</a>
     <a class="ui orange circular label">2</a>
@@ -376,7 +378,7 @@ stories.add('Variations:Circular', () => (
   </div>
 ));
 
-stories.add('Variations:Basic', () => (
+variationStories.add('Basic', () => (
   <div className="ui segment">
     <a class="ui basic label">Basic</a>
     <a class="ui pointing basic label">Pointing</a>
@@ -389,7 +391,7 @@ stories.add('Variations:Basic', () => (
   </div>
 ));
 
-stories.add('Variations:Colored', () => (
+variationStories.add('Colored', () => (
   <div className="ui segment">
     <a class="ui red label">Red</a>
     <a class="ui orange label">Orange</a>
@@ -408,7 +410,7 @@ stories.add('Variations:Colored', () => (
 ));
 
 
-stories.add('Variations:Size', () => (
+variationStories.add('Size', () => (
   <div className="ui segment">
     <div class="ui mini label">
       Mini
@@ -437,7 +439,9 @@ stories.add('Variations:Size', () => (
   </div>
 ));
 
-stories.add('Group:Size', () => (
+const groupStories = storiesOf('Element/Label/Groups', module);
+
+groupStories.add('Size', () => (
   <div className="ui segment">
     <div class="ui huge labels">
       <div class="ui label">
@@ -457,7 +461,7 @@ stories.add('Group:Size', () => (
 ));
 
 
-stories.add('Group:Colored', () => (
+groupStories.add('Colored', () => (
   <div className="ui segment">
     <div class="ui blue labels">
       <a class="ui label">
@@ -480,7 +484,7 @@ stories.add('Group:Colored', () => (
   </div>
 ));
 
-stories.add('Group:Tag', () => (
+groupStories.add('Tag', () => (
   <div className="ui segment">
     <div class="ui tag labels">
       <a class="ui label">
@@ -503,7 +507,7 @@ stories.add('Group:Tag', () => (
 ));
 
 
-stories.add('Group:Circular', () => (
+groupStories.add('Circular', () => (
   <div className="ui segment">
     <div class="ui circular labels">
       <a class="ui label">

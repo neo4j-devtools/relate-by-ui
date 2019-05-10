@@ -6,10 +6,9 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 
-const stories = storiesOf('Element/Divider', module);
+const typeStories = storiesOf('Element/Divider/Types', module);
 
-
-stories.add('Divider', () => (
+typeStories.add('Divider', () => (
   <div className="ui segment">
     <TextBlock color='#E0E0E0' rows={4} />
     <div class="ui divider" />
@@ -18,7 +17,7 @@ stories.add('Divider', () => (
 ));
 
 
-stories.add('Vertical Divider', () => (
+typeStories.add('Vertical Divider', () => (
   <div className="ui segment">
     <div class="ui segment">
       <div class="ui two column very relaxed grid">
@@ -37,7 +36,7 @@ stories.add('Vertical Divider', () => (
 ));
 
 
-stories.add('Horizontal Divider', () => (
+typeStories.add('Horizontal Divider', () => (
   <div className="ui segment">
     <h4 class="ui horizontal divider header">
       <i class="tag icon"></i>
@@ -71,7 +70,9 @@ stories.add('Horizontal Divider', () => (
   </div>
 ));
 
-stories.add('Inverted', () => (
+const variationStories = storiesOf('Element/Divider/Variations', module);
+
+variationStories.add('Inverted', () => (
   <div class="ui inverted segment">
   <TextBlock color='#E0E0E0' rows={4} />
     <div class="ui inverted divider"></div>
@@ -82,7 +83,7 @@ stories.add('Inverted', () => (
   </div>
 ));
 
-stories.add('Fitted', () => (
+variationStories.add('Fitted', () => (
   <div class="ui segment">
     {faker.lorem.lines(8)}
     <div class="ui fitted divider"></div>
@@ -91,7 +92,7 @@ stories.add('Fitted', () => (
 ));
 
 
-stories.add('Hidden', () => (
+variationStories.add('Hidden', () => (
   <div class="ui segment">
     <h3 class="ui header">Section One</h3>
     <TextBlock color='#E0E0E0' rows={3} />
@@ -101,7 +102,7 @@ stories.add('Hidden', () => (
   </div>
 ));
 
-stories.add('Section', () => (
+variationStories.add('Section', () => (
   <div class="ui segment">
     <h3 class="ui header">Section One</h3>
     <TextBlock color='#E0E0E0' rows={3} />
@@ -112,7 +113,7 @@ stories.add('Section', () => (
 ));
 
 
-stories.add('Clearing', () => (
+variationStories.add('Clearing', () => (
   <div class="ui segment">
     <h2 class="ui right floated header">Floated Content</h2>
     <div class="ui clearing divider"></div>

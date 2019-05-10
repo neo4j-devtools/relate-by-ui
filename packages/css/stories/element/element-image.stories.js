@@ -4,10 +4,9 @@ import { storiesOf } from '@storybook/react';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import * as faker from "faker";
 
-const stories = storiesOf('Element/Image', module);
+const typeStories = storiesOf('Element/Image/Types', module);
 
-
-stories.add('Image', () => (
+typeStories.add('Image', () => (
   <div className="ui segments">
     <div className="ui segment">
       <img class="ui small image" src="/images/wireframe/image-square.png"/>
@@ -27,7 +26,7 @@ stories.add('Image', () => (
   </div>
 ));
 
-stories.add('Image Link', () => (
+typeStories.add('Image Link', () => (
   <div className="ui segment">
     <a href="https://google.com" class="ui medium image">
       <img src="/images/wireframe/image-text.png"/>
@@ -36,50 +35,54 @@ stories.add('Image Link', () => (
 ));
 
 
-stories.add('States:Hidden', () => (
+const stateStories = storiesOf('Element/Image/States', module);
+
+stateStories.add('Hidden', () => (
   <div className="ui segment">
     <img class="hidden ui image" src="/images/wireframe/image.png"/>
   </div>
 ));
 
-stories.add('States:Disabled', () => (
+stateStories.add('Disabled', () => (
   <div className="ui segment">
     <img class="disabled medium ui image" src="/images/wireframe/image.png"/>
   </div>
 ));
 
-stories.add('Variations:Avatar', () => (
+const variationStories = storiesOf('Element/Image/Variations', module);
+
+variationStories.add('Avatar', () => (
   <div className="ui segment">
     <img class="ui avatar image" src="/images/wireframe/square-image.png"/>
     <span>Username</span>
   </div>
 ));
 
-stories.add('Variations:Bordered', () => (
+variationStories.add('Bordered', () => (
   <div className="ui segment">
     <img class="ui medium bordered image" src="/images/wireframe/white-image.png"/>
   </div>
 ));
 
-stories.add('Variations:Fluid', () => (
+variationStories.add('Fluid', () => (
   <div className="ui segment">
     <img class="ui fluid image" src="/images/wireframe/image.png"/>
   </div>
 ));
 
-stories.add('Variations:Rounded', () => (
+variationStories.add('Rounded', () => (
   <div className="ui segment">
     <img class="ui medium rounded image" src="/images/wireframe/square-image.png"/>
   </div>
 ));
 
-stories.add('Variations:Circular', () => (
+variationStories.add('Circular', () => (
   <div className="ui segment">
     <img class="ui medium circular image" src="/images/wireframe/square-image.png"/>
   </div>
 ));
 
-stories.add('Variations:Vertically Aligned', () => (
+variationStories.add('Vertically Aligned', () => (
   <div className="ui segment">
     <img class="ui top aligned tiny image" src="/images/wireframe/square-image.png"/>
     <span>Top Aligned</span>
@@ -93,7 +96,7 @@ stories.add('Variations:Vertically Aligned', () => (
 ));
 
 
-stories.add('Variations:Centered', () => (
+variationStories.add('Centered', () => (
   <div class="ui segment">
     <img class="ui centered medium image" src="/images/wireframe/image.png"/>
     <p>{faker.lorem.lines(8)}</p>
@@ -104,7 +107,7 @@ stories.add('Variations:Centered', () => (
 ));
 
 
-stories.add('Variations:Spaced', () => (
+variationStories.add('Spaced', () => (
   <div className="ui segments">
     <div class="ui segment">
       <p>{faker.lorem.words(4)} <img class="ui mini spaced image" src="/images/wireframe/image.png"/>
@@ -117,7 +120,7 @@ stories.add('Variations:Spaced', () => (
   </div>
 ));
 
-stories.add('Variations:Floated', () => (
+variationStories.add('Floated', () => (
   <div class="ui segment">
     <img class="ui small left floated image" src="/images/wireframe/text-image.png"/>
     <p>{faker.lorem.lines(12)}</p>
@@ -127,7 +130,7 @@ stories.add('Variations:Floated', () => (
   </div>
 ));
 
-stories.add('Variations:Size', () => (
+variationStories.add('Size', () => (
   <div className="ui segments">
     <div className="ui segment">
       <table class="ui definition table">
@@ -193,7 +196,9 @@ stories.add('Variations:Size', () => (
   </div>
 ));
 
-stories.add('Groups:Size', () => (
+const groupStories = storiesOf('Element/Image/Groups', module);
+
+groupStories.add('Size', () => (
   <div className="ui segments">
     <div className="ui segment">
       <div class="ui tiny images">
@@ -212,4 +217,4 @@ stories.add('Groups:Size', () => (
       </div>
     </div>
   </div>
-))
+));
