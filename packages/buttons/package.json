@@ -1,9 +1,22 @@
 {
   "name": "@relate-by-ui/buttons",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neo4j-apps/relate-by-ui"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest --no-cache --coverage --config jest.config.js",
+    "dev": "jest --no-cache --config jest.config.js --watch",
+    "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
+    "prepublishOnly": "npm run preparePublish",
+    "postpublish": "rm -f .npmrc"
+  },
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10"
@@ -20,15 +33,6 @@
     "react": "16",
     "react-dom": "16",
     "semantic-ui-react": "*"
-  },
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest --no-cache --coverage --config jest.config.js",
-    "dev": "jest --no-cache --config jest.config.js --watch",
-    "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
-    "prepublishOnly": "npm run preparePublish",
-    "postpublish": "rm -f .npmrc"
   },
   "directories": {
     "lib": "lib",

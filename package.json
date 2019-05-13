@@ -1,7 +1,12 @@
 {
   "name": "relate-by-ui",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neo4j-apps/relate-by-ui"
+  },
   "scripts": {
     "lerna-init": "lerna link && lerna bootstrap && lerna run build",
     "build": "tsc",
@@ -13,6 +18,10 @@
     "publish": "npm run test && lerna run build && npm run preparePublish && lerna publish && rm -rf .npmrc",
     "verify": "lerna run test && lerna run build",
     "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "semantic-ui-react": "^0.86.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.6",
@@ -28,9 +37,5 @@
     "ts-jest": "^24.0.0",
     "tslint-config-prettier": "^1.16.0",
     "typescript": "^3.3.3"
-  },
-  "dependencies": {
-    "react": "^16.8.4",
-    "semantic-ui-react": "^0.86.0"
   }
 }

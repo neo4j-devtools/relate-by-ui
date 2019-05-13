@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "style": "semantic/dist/relate-by.min.css",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neo4j-apps/relate-by-ui"
+  },
   "scripts": {
     "dev": "cd semantic && gulp",
     "build": "cd semantic && gulp build",
     "watch": "cd semantic && gulp watch",
     "storybook": "start-storybook -s ./static "
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "faker": "^4.1.0",
     "react": "^16.8.6",
