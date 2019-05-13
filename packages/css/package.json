@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "style": "semantic/dist/relate-by.min.css",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/neo4j-apps/relate-by-ui"
