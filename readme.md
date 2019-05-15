@@ -3,7 +3,7 @@
 </p>
 
 <p align="center" style="font-size: 1.2rem;">
-  styles, components and guidelines for building a Neo4j Graph App<br />
+  Styles, components and guidelines for building a Neo4j Graph App<br />
   <i>:construction: work in progress :construction:</i>
 </p>
 
