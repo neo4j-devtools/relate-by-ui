@@ -3,7 +3,7 @@ import 'jest-dom/extend-expect';
 import React, { useState } from 'react';
 import { render, fireEvent } from 'react-testing-library';
 import { Modal } from '../src';
-import { ButtonConfirm } from '@relate-by-ui/buttons';
+import { ButtonActionPrimary } from '@relate-by-ui/buttons';
 import 'jest-dom/extend-expect';
 
 const TestModal = (props: any) => {
@@ -23,10 +23,10 @@ const TestModal = (props: any) => {
       semanticModal={{
         className: 'test-semantic-modal',
         open,
-        trigger: <ButtonConfirm title="Open modal" onClick={() => modalState(true)} />,
+        trigger: <ButtonActionPrimary title="Open modal" onClick={() => modalState(true)} />,
         onClose: () => modalState(false),
       }}
-      buttons={buttons && <ButtonConfirm title="Close modal" onClick={() => modalState(false)} />}
+      buttons={buttons && <ButtonActionPrimary title="Close modal" onClick={() => modalState(false)} />}
     >
       This is the modal content
     </Modal>
