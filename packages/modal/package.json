@@ -20,7 +20,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
-    "@relate-by-ui/buttons": "^0.0.0"
+    "@relate-by-ui/buttons": "^1.0.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.6",

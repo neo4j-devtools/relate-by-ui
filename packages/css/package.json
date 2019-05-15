@@ -21,8 +21,7 @@
     "faker": "^4.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-placeholder": "^3.0.2",
-    "semantic-ui": "^2.4.2"
+    "react-placeholder": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
