@@ -15,7 +15,7 @@
     "watch": "lerna run watch --stream --parallel",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"packages/**/*.js\" \"packages/**/*.jsx\"",
     "lint": "tslint --project tsconfig.json",
-    "publish": "lerna run test && lerna run build && npm run publish:prepare && lerna publish && rm -rf .npmrc",
+    "publish:all": "lerna run test && lerna run build && npm run publish:prepare && lerna publish && rm -rf .npmrc",
     "publish:prepare": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
     "verify": "lerna run test && lerna run build"
   },
