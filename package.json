@@ -10,14 +10,14 @@
   "scripts": {
     "lerna-init": "lerna link && lerna bootstrap && lerna run build",
     "build": "tsc",
-    "styleguide-build": "git checkout gh-pages && cd styleguide && yarn build-storybook",
-    "styleguide-publish": "npm run styleguide-build && ./bin/gh-pages styleguide/storybook-static",
+    "styleguide:build": "git checkout gh-pages && cd styleguide && yarn build:storybook",
+    "styleguide:publish": "npm run styleguide-build && ./bin/gh-pages styleguide/storybook-static",
     "watch": "lerna run watch --stream --parallel",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"packages/**/*.js\" \"packages/**/*.jsx\"",
     "lint": "tslint --project tsconfig.json",
-    "publish": "npm run test && lerna run build && npm run preparePublish && lerna publish && rm -rf .npmrc",
-    "verify": "lerna run test && lerna run build",
-    "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc"
+    "publish": "lerna run test && lerna run build && npm run publish:prepare && lerna publish && rm -rf .npmrc",
+    "publish:prepare": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
+    "verify": "lerna run test && lerna run build"
   },
   "dependencies": {
     "react": "^16.8.4",

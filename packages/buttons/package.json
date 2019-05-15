@@ -13,9 +13,9 @@
     "watch": "tsc -w",
     "test": "jest --no-cache --coverage --config jest.config.js",
     "dev": "jest --no-cache --config jest.config.js --watch",
-    "preparePublish": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
-    "prepublishOnly": "npm run preparePublish",
-    "postpublish": "rm -f .npmrc"
+    "publish:prepare": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
+    "publish:prepublish": "npm run preparePublish",
+    "publish:postpublish": "rm -f .npmrc"
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",

@@ -12,7 +12,10 @@
     "dev": "cd semantic && gulp",
     "build": "cd semantic && gulp build",
     "watch": "cd semantic && gulp watch",
-    "storybook": "start-storybook -s ./static "
+    "storybook": "start-storybook -s ./static ",
+    "publish:prepare": "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc",
+    "publish:prepublish": "npm run preparePublish",
+    "publish:postpublish": "rm -f .npmrc"
   },
   "dependencies": {
     "faker": "^4.1.0",
