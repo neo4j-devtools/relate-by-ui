@@ -36,5 +36,10 @@
     "babel-loader": "^8.0.5",
     "gulp": "^3.9.1",
     "gulp-help": "^1.6.1"
-  }
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/",
+    "access": "public"
+  },
+  "gitHead": "2747497864f644851c48afef07a8d055518ec1e1"
 }

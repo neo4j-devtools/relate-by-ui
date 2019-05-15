@@ -36,5 +36,8 @@
     "ts-jest": "^24.0.0",
     "tslint-config-prettier": "^1.16.0",
     "typescript": "^3.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
