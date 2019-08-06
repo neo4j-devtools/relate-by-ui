@@ -65,7 +65,7 @@ export const SavedScriptsListItemDisplayName = styled.div`
 export const SavedScriptsFolderMain = styled.div`
   padding-bottom: 16px;
   
-  &:first-child {
+  &:first-of-type {
     padding-top: 16px;
   }
 `;
@@ -107,7 +107,7 @@ export const SavedScriptsFolderCollapseIcon = styled.span`
 export const SavedScriptsButtonWrapper = styled.div`
   min-width: 21px;
   
-  > button:not(:last-child) {
+  > button:not(:last-of-type) {
     margin-right: 5px;
   }
 `;

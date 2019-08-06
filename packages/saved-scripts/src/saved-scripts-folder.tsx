@@ -73,9 +73,9 @@ export default function SavedScriptsFolder({
   if (isRoot) {
     return (
       <SavedScriptsFolderMain ref={dropRef} className='saved-scripts-folder saved-scripts-folder--root'>
-        {map(sortedScripts, (script) => (
+        {map(sortedScripts, (script, index) => (
           <SavedScriptsListItem
-            key={`my-script-${script.id}`}
+            key={`my-script-${script.id || index}`}
             isStatic={isStatic}
             script={script}
             onSelectScript={onSelectScript}
@@ -126,9 +126,9 @@ export default function SavedScriptsFolder({
       </SavedScriptsFolderHeader>
       {expanded ? (
         <SavedScriptsFolderBody className='saved-scripts-folder__body'>
-          {map(sortedScripts, (script) => (
+          {map(sortedScripts, (script, index) => (
             <SavedScriptsListItem
-              key={`my-script-${script.id}`}
+              key={`my-script-${script.id || index}`}
               isStatic={isStatic}
               script={script}
               onSelectScript={onSelectScript}
