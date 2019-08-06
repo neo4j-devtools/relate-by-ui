@@ -1,0 +1,142 @@
+.saved-scripts {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Static content */
+.saved-scripts__body {
+    padding: 0 24px;
+    flex: 1;
+}
+
+.saved-scripts__body-section {
+    margin-bottom: 12px;
+}
+
+.saved-scripts__header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #424650;
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 39px;
+    position: relative;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px;
+}
+
+.saved-scripts-list-item {
+    padding: 5px 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.saved-scripts-list-item__display-name {
+    flex: 1;
+    user-select: none;
+    cursor: pointer;
+    color: #bcc0c9;
+    font-size: 13px;
+    padding: 1px 0;
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color ease-in-out 0.3s;
+}
+
+.saved-scripts-list-item:hover .saved-scripts-list-item__display-name {
+    color: inherit;
+}
+
+.saved-scripts-folder {
+    padding-bottom: 16px;
+}
+
+.saved-scripts-folder:first-child {
+    padding-top: 16px;
+}
+
+.saved-scripts-folder__header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px
+}
+
+.saved-scripts-folder__body {
+    margin-left: 15px;
+}
+
+.saved-scripts-folder__label {
+    flex: 1;
+    margin-right: 10px;
+    user-select: none;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.saved-scripts-folder__collapse-icon {
+    margin-right: 10px;
+    width: 8px;
+    display: inline-block;
+}
+
+/* Buttons */
+.saved-scripts__button-wrapper {
+    min-width: 21px;
+}
+
+.saved-scripts__button {
+    color: #bcc0c9;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 3px;
+    transition: color ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+.saved-scripts__button:hover {
+    color: inherit;
+}
+
+.saved-scripts__button-wrapper > button:not(:last-child) {
+    margin-right: 5px;
+}
+
+.saved-scripts__new-folder-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.saved-scripts__edit-button {
+    min-width: 26px;
+    visibility: hidden;
+}
+
+.saved-scripts__remove-button:not(.saved-scripts__remove-button--danger) {
+    min-width: 26px;
+}
+
+.saved-scripts__remove-button--danger, .saved-scripts__remove-button--danger:hover {
+    color: #df4d3b;
+}
+
+.saved-scripts-folder__header:hover .saved-scripts__edit-button,
+.saved-scripts-list-item:hover .saved-scripts__edit-button {
+    visibility: visible;
+}
+
+/* input fields */
+.saved-scripts-folder__label-input, .saved-scripts-list-item__name-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-weight: normal;
+    margin-right: 5px;
+}
