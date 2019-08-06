@@ -10,6 +10,13 @@ import SavedScriptsExecButton from './saved-scripts-exec-button';
 import SavedScriptsEditButton from './saved-scripts-edit-button';
 import SavedScriptsRemoveButton from './saved-scripts-remove-button';
 
+import {
+  SavedScriptsButtonWrapper,
+  SavedScriptsInput,
+  SavedScriptsListItemDisplayName,
+  SavedScriptsListItemMain,
+} from './saved-scripts.styled';
+
 export interface ISavedScriptsListItemProps {
   isStatic?: boolean,
   script: IScript,
@@ -36,9 +43,9 @@ export default function SavedScriptsListItem({
   const [blurRef] = useCustomBlur(() => setIsEditing(false));
 
   return (
-    <div ref={blurRef} className='saved-scripts-list-item'>
+    <SavedScriptsListItemMain ref={blurRef} className='saved-scripts-list-item'>
       {isEditing ? (
-        <input
+        <SavedScriptsInput
           className='saved-scripts-list-item__name-input'
           type='text'
           autoFocus
@@ -49,15 +56,15 @@ export default function SavedScriptsListItem({
           onChange={({ target }) => setLabelInput(target.value)}
         />
       ) : (
-        <div
+        <SavedScriptsListItemDisplayName
           ref={dragRef}
           className='saved-scripts-list-item__display-name'
           onClick={() => !isEditing && onSelectScript(script)}
         >
           {displayName}
-        </div>
+        </SavedScriptsListItemDisplayName>
       )}
-      <div className='saved-scripts__button-wrapper'>
+      <SavedScriptsButtonWrapper className='saved-scripts__button-wrapper'>
         {isStatic || isEditing ? null : (
           <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)}/>
         )}
@@ -67,7 +74,7 @@ export default function SavedScriptsListItem({
         {script.isSuggestion || isEditing ? null : (
           <SavedScriptsExecButton onExec={() => onExecScript(script)}/>
         )}
-      </div>
-    </div>
+      </SavedScriptsButtonWrapper>
+    </SavedScriptsListItemMain>
   );
 }

@@ -19,6 +19,16 @@ import {
   ExpandMenuRightIcon,
 } from './icons';
 
+import {
+  SavedScriptsButtonWrapper,
+  SavedScriptsFolderBody,
+  SavedScriptsFolderCollapseIcon,
+  SavedScriptsFolderHeader,
+  SavedScriptsFolderLabel,
+  SavedScriptsFolderMain,
+  SavedScriptsInput,
+} from './saved-scripts.styled';
+
 export interface ISavedScriptsFolderProps {
   isRoot?: boolean,
   scriptsNamespace: string,
@@ -62,7 +72,7 @@ export default function SavedScriptsFolder({
 
   if (isRoot) {
     return (
-      <div ref={dropRef} className='saved-scripts-folder saved-scripts-folder--root'>
+      <SavedScriptsFolderMain ref={dropRef} className='saved-scripts-folder saved-scripts-folder--root'>
         {map(sortedScripts, (script) => (
           <SavedScriptsListItem
             key={`my-script-${script.id}`}
@@ -76,15 +86,15 @@ export default function SavedScriptsFolder({
             onRemoveScript={onRemoveScript}
           />
         ))}
-      </div>
+      </SavedScriptsFolderMain>
     );
   }
 
   return (
-    <div ref={dropRef} className='saved-scripts-folder'>
-      <div ref={blurRef} className='saved-scripts-folder__header'>
+    <SavedScriptsFolderMain ref={dropRef} className='saved-scripts-folder'>
+      <SavedScriptsFolderHeader ref={blurRef} className='saved-scripts-folder__header'>
         {isEditing ? (
-          <input
+          <SavedScriptsInput
             className='saved-scripts-folder__label-input'
             type='text'
             autoFocus
@@ -95,27 +105,27 @@ export default function SavedScriptsFolder({
             onChange={({ target }) => setLabelInput(target.value)}
           />
         ) : (
-          <div
+          <SavedScriptsFolderLabel
             className='saved-scripts-folder__label'
             onClick={() => setExpanded(!expanded)}
           >
-            <span className='saved-scripts-folder__collapse-icon'>
+            <SavedScriptsFolderCollapseIcon className='saved-scripts-folder__collapse-icon'>
               {expanded ? <CollapseMenuIcon/> : <ExpandMenuRightIcon/>}
-            </span>
+            </SavedScriptsFolderCollapseIcon>
             {omitScriptPathPrefix(scriptsNamespace, folderName)}
-          </div>
+          </SavedScriptsFolderLabel>
         )}
-        <div className='saved-scripts__button-wrapper'>
+        <SavedScriptsButtonWrapper className='saved-scripts__button-wrapper'>
           {isStatic || isEditing ? null : (
             <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)}/>
           )}
           {isStatic || !isEditing ? null : (
             <SavedScriptsRemoveButton onRemove={() => onRemoveFolder(scripts)}/>
           )}
-        </div>
-      </div>
+        </SavedScriptsButtonWrapper>
+      </SavedScriptsFolderHeader>
       {expanded ? (
-        <div className='saved-scripts-folder__body'>
+        <SavedScriptsFolderBody className='saved-scripts-folder__body'>
           {map(sortedScripts, (script) => (
             <SavedScriptsListItem
               key={`my-script-${script.id}`}
@@ -129,8 +139,8 @@ export default function SavedScriptsFolder({
               onRemoveScript={onRemoveScript}
             />
           ))}
-        </div>
+        </SavedScriptsFolderBody>
       ) : null}
-    </div>
+    </SavedScriptsFolderMain>
   );
 }

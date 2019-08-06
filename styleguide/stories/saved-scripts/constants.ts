@@ -1,4 +1,5 @@
-export const STATIC_SCRIPTS_NAMESPACE = '/foo';
+export const STATIC_SCRIPTS_NAMESPACE = '/foo/';
+
 export const STATIC_SCRIPTS = [
   {
     path: `${STATIC_SCRIPTS_NAMESPACE}Basic Queries`,

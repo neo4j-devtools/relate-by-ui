@@ -1,6 +1,8 @@
 import React, { ReactEventHandler, useState } from 'react';
 import { Icon } from 'semantic-ui-react';
 
+import { SavedScriptsButton } from './saved-scripts.styled';
+
 export interface ISavedScriptsRemoveButtonProps {
   onRemove: ReactEventHandler
 }
@@ -11,31 +13,31 @@ export default function SavedScriptsRemoveButton({ onRemove }: ISavedScriptsRemo
   if (isConfirming) {
     return (
       <>
-        <button
+        <SavedScriptsButton
           className="saved-scripts__button saved-scripts__remove-button saved-scripts__remove-button--danger"
           title="Remove"
           onClick={onRemove}
         >
           <Icon name="trash alternate outline"/>
-        </button>
-        <button
+        </SavedScriptsButton>
+        <SavedScriptsButton
           className="saved-scripts__button saved-scripts__cancel-remove-button"
           title="Cancel"
           onClick={() => setIsConfirming(false)}
         >
           <Icon name="delete"/>
-        </button>
+        </SavedScriptsButton>
       </>
     );
   }
 
   return (
-    <button
+    <SavedScriptsButton
       className="saved-scripts__button saved-scripts__remove-button"
       title="Remove"
       onClick={() => setIsConfirming(true)}
     >
       <Icon name="trash alternate outline"/>
-    </button>
+    </SavedScriptsButton>
   );
 }

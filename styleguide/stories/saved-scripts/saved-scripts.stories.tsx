@@ -1,12 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import SavedScripts from '../../../packages/saved-scripts/src';
 import { STATIC_SCRIPTS, STATIC_SCRIPTS_NAMESPACE } from './constants';
 
 const stories = storiesOf('Saved Scripts', module);
-
-const handlerFactory = (name: string) => (...args: any[]) => alert(`${name}:\n${args.map((arg) => JSON.stringify(arg)).join(',\n')}`);
 
 stories.add(
   'Saved Scripts default',
@@ -14,12 +13,12 @@ stories.add(
     <SavedScripts
       scripts={STATIC_SCRIPTS.filter(({ isSuggestion }) => !isSuggestion)}
       scriptsNamespace={STATIC_SCRIPTS_NAMESPACE}
-      onSelectScript={handlerFactory('onSelectScript')}
-      onExecScript={handlerFactory('onExecScript')}
-      onExportScripts={handlerFactory('onExportScripts')}
-      onRemoveScript={handlerFactory('onRemoveScript')}
-      onUpdateFolder={handlerFactory('onUpdateFolder')}
-      onRemoveFolder={handlerFactory('onRemoveFolder')}/>
+      onSelectScript={action('onSelectScript')}
+      onExecScript={action('onExecScript')}
+      onExportScripts={action('onExportScripts')}
+      onRemoveScript={action('onRemoveScript')}
+      onUpdateFolder={action('onUpdateFolder')}
+      onRemoveFolder={action('onRemoveFolder')}/>
   ),
 );
 
@@ -30,12 +29,12 @@ stories.add(
       title="My custom title"
       scripts={STATIC_SCRIPTS.filter(({ isSuggestion }) => !isSuggestion)}
       scriptsNamespace={STATIC_SCRIPTS_NAMESPACE}
-      onSelectScript={handlerFactory('onSelectScript')}
-      onExecScript={handlerFactory('onExecScript')}
-      onExportScripts={handlerFactory('onExportScripts')}
-      onRemoveScript={handlerFactory('onRemoveScript')}
-      onUpdateFolder={handlerFactory('onUpdateFolder')}
-      onRemoveFolder={handlerFactory('onRemoveFolder')}/>
+      onSelectScript={action('onSelectScript')}
+      onExecScript={action('onExecScript')}
+      onExportScripts={action('onExportScripts')}
+      onRemoveScript={action('onRemoveScript')}
+      onUpdateFolder={action('onUpdateFolder')}
+      onRemoveFolder={action('onRemoveFolder')}/>
   ),
 );
 
@@ -46,11 +45,11 @@ stories.add(
       isStatic
       scripts={STATIC_SCRIPTS}
       scriptsNamespace={STATIC_SCRIPTS_NAMESPACE}
-      onSelectScript={handlerFactory('onSelectScript')}
-      onExecScript={handlerFactory('onExecScript')}
-      onExportScripts={handlerFactory('onExportScripts')}
-      onRemoveScript={handlerFactory('onRemoveScript')}
-      onUpdateFolder={handlerFactory('onUpdateFolder')}
-      onRemoveFolder={handlerFactory('onRemoveFolder')}/>
+      onSelectScript={action('onSelectScript')}
+      onExecScript={action('onExecScript')}
+      onExportScripts={action('onExportScripts')}
+      onRemoveScript={action('onRemoveScript')}
+      onUpdateFolder={action('onUpdateFolder')}
+      onRemoveFolder={action('onRemoveFolder')}/>
   ),
 );

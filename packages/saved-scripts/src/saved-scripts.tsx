@@ -12,7 +12,13 @@ import SavedScriptsFolder from './saved-scripts-folder';
 import SavedScriptsNewFolderButton from './saved-scripts-new-folder-button';
 import SavedScriptsExportButton from './saved-scripts-export-button';
 
-import './saved-scripts.css';
+import {
+  SavedScriptsMain,
+  SavedScriptsBody,
+  SavedScriptsBodySection,
+  SavedScriptsHeader,
+  SavedScriptsButtonWrapper,
+} from './saved-scripts.styled';
 
 export interface ISavedScriptsProps {
   title?: string;
@@ -57,13 +63,13 @@ export default function SavedScripts(props: ISavedScriptsProps) {
   );
 
   return (
-    <div className="saved-scripts">
+    <SavedScriptsMain className="saved-scripts">
       <DndProvider backend={HTML5Backend}>
-        <div className="saved-scripts__body">
-          <div className="saved-scripts__body-section">
-            <h5 className="saved-scripts__header">
+        <SavedScriptsBody className="saved-scripts__body">
+          <SavedScriptsBodySection className="saved-scripts__body-section">
+            <SavedScriptsHeader className="saved-scripts__header">
               {title}
-              <div className="saved-scripts__button-wrapper">
+              <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
                 {isStatic ? null : (
                   <>
                     <SavedScriptsExportButton onExport={() => onExportScripts()}/>
@@ -73,8 +79,8 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                     />
                   </>
                 )}
-              </div>
-            </h5>
+              </SavedScriptsButtonWrapper>
+            </SavedScriptsHeader>
             <SavedScriptsFolder
               isRoot
               isStatic={isStatic}
@@ -122,10 +128,10 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                 onRemoveFolder={() => removeEmptyFolder(folderName)}
               />
             ))}
-          </div>
-        </div>
+          </SavedScriptsBodySection>
+        </SavedScriptsBody>
       </DndProvider>
-    </div>
+    </SavedScriptsMain>
   );
 }
 
