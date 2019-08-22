@@ -74,7 +74,7 @@ stories.add(
   ),
   {
     info: {
-      text: `The button components.`,
+      text: `The Button components.`,
       inline: true,
     },
   },

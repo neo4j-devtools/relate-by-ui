@@ -44,7 +44,7 @@ stories.add(
   ),
   {
     info: {
-      text: `The modal component.`,
+      text: `The Modal component.`,
       inline: true,
     },
   },
