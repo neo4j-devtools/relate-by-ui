@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import { RelateByUIButton } from './Types';
+import { RelateByUIButtonPropTypes } from '.';
 
-const ButtonTemplate = ({ title, className, onClick, icon, basic, color, disabled, loading }: RelateByUIButton) => {
+const ButtonTemplate = ({ title, className, onClick, icon, basic, color, disabled, loading }: RelateByUIButtonPropTypes) => {
   const classNames = ['relate-by-ui-button'];
   if (className) {
     classNames.push(className);
