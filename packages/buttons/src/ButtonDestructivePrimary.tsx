@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Button from './ButtonTemplate';
-import { RelateByUIButton } from './Types';
+import { RelateByUIButtonPropTypes } from '.';
 
-const ButtonDestructivePrimary = (props: RelateByUIButton) => {
-  const newProps: RelateByUIButton = { ...props };
+const ButtonDestructivePrimary = (props: RelateByUIButtonPropTypes) => {
+  const newProps: RelateByUIButtonPropTypes = { ...props };
 
   newProps.primary = true;
   newProps.positive = true;

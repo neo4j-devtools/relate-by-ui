@@ -11,7 +11,7 @@ import ButtonDismissPrimary from './ButtonDismissPrimary';
 import ButtonDismissSecondary from './ButtonDismissSecondary';
 import ButtonDismissText from './ButtonDismissText';
 
-import { RelateByUIButton as RelateByUIButtonPropTypes } from './Types';
+import { RelateByUIButtonPropTypes } from './Types';
 
 export {
   ButtonActionPrimary,
