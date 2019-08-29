@@ -7,6 +7,3 @@ export {
   sortAndGroupScriptsByPath,
   omitScriptPathPrefix,
 } from './saved-scripts.utils';
-export {
-  arrayHasItems,
-} from './generic.utils';
