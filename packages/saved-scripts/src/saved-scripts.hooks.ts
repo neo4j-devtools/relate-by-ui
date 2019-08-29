@@ -173,7 +173,7 @@ export function useCustomBlur(onBlur: AnyFunc) {
     return () => {
       document.removeEventListener('mousedown', clickHandler);
     };
-  });
+  }, []);
 
   return [ref];
 }

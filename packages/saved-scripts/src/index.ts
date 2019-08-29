@@ -5,6 +5,7 @@ export {
   addScriptPathPrefix,
   getScriptDisplayName,
   sortAndGroupScriptsByPath,
+  omitScriptPathPrefix,
 } from './saved-scripts.utils';
 export {
   arrayHasItems,
