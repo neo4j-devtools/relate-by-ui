@@ -13,8 +13,11 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   notify: false,
   notifyMode: 'always',
-  testMatch: ['**/__tests__/*.+(ts|tsx|js)'],
+  testMatch: ['**/__tests__/*.+(ts|tsx|js)', '**/src/**/*.test.+(ts|tsx|js)'],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
+  moduleNameMapper: {
+    "^lodash-es$": "lodash"
+  }
 };
