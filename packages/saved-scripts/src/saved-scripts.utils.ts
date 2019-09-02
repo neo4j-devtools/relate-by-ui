@@ -39,7 +39,7 @@ export function getScriptDisplayName({ name, contents }: IScript) {
   }
 
   return startsWith(firstLine, COMMENT_PREFIX)
-    ? firstLine.slice(COMMENT_PREFIX.length)
+    ? trim(firstLine.slice(COMMENT_PREFIX.length))
     : firstLine;
 }
 
@@ -115,9 +115,9 @@ export function getSubLevelFolders(namespace: string, folders: ScriptFolder[]) {
  * @return    {string}
  */
 export function getEmptyFolderDefaultPath(namespace: string, allFolderPaths: string[]) {
-  const defaultPath = `${namespace}New folder`;
+  const defaultPath = `${namespace}New Folder`;
 
-  if (!includes(allFolderPaths, defaultPath)) return defaultPath
+  if (!includes(allFolderPaths, defaultPath)) return defaultPath;
 
   const numericalSuffixes = compact(map(allFolderPaths, (path) => {
     const numberEOL = path.match(/\d+$/);

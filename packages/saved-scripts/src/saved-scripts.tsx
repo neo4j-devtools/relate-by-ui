@@ -101,9 +101,9 @@ export default function SavedScripts(props: ISavedScriptsProps) {
               onUpdateFolder={onUpdateFolder}
               onRemoveFolder={Function.prototype}
             />
-            {map(sortedSubFolders, ([folderName, subScripts], index) => (
+            {map(sortedSubFolders, ([folderName, subScripts]) => (
               <SavedScriptsFolder
-                key={`my-folder-${index}`}
+                key={`my-folder-${folderName}`}
                 isStatic={isStatic}
                 scriptsNamespace={scriptsNamespace}
                 allFolderNames={allFolderNames}

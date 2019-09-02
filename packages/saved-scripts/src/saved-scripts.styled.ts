@@ -64,10 +64,6 @@ export const SavedScriptsListItemDisplayName = styled.div`
 
 export const SavedScriptsFolderMain = styled.div`
   padding-bottom: 16px;
-  
-  &:first-of-type {
-    padding-top: 16px;
-  }
 `;
 
 export const SavedScriptsFolderHeader = styled.div`

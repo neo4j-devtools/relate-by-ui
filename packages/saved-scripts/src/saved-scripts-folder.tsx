@@ -88,7 +88,7 @@ function SavedScriptsFolder({
 
   if (isRoot) {
     return connectDropTarget!(
-      <div>
+      <div style={{paddingTop: 16}}>
         <SavedScriptsFolderMain className='saved-scripts-folder saved-scripts-folder--root'>
           {map(sortedScripts, (script, index) => (
             <SavedScriptsListItem
@@ -110,7 +110,7 @@ function SavedScriptsFolder({
 
   return connectDropTarget!(<div>
       <SavedScriptsFolderMain className='saved-scripts-folder'>
-        <SavedScriptsFolderHeader ref={blurRef} className='saved-scripts-folder__header'>
+        <SavedScriptsFolderHeader title={folderName} ref={blurRef} className='saved-scripts-folder__header'>
           {isEditing ? (
             <SavedScriptsInput
               className='saved-scripts-folder__label-input'
