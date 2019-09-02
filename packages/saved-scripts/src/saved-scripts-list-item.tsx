@@ -1,10 +1,11 @@
 import React from 'react';
+import { DragSource } from 'react-dnd';
 
 import { AnyFunc, IScript } from './types';
 
 import { ENTER_KEY_CODE } from './saved-scripts.constants';
-import {getScriptDisplayName} from './saved-scripts.utils';
-import { useCustomBlur, useScriptDrag, useNameUpdate } from './saved-scripts.hooks';
+import { getScriptDisplayName } from './saved-scripts.utils';
+import { useCustomBlur, useNameUpdate } from './saved-scripts.hooks';
 
 import SavedScriptsExecButton from './saved-scripts-exec-button';
 import SavedScriptsEditButton from './saved-scripts-edit-button';
@@ -24,22 +25,33 @@ export interface ISavedScriptsListItemProps {
   onExecScript: AnyFunc,
   onUpdateScript: AnyFunc,
   onRemoveScript: AnyFunc,
+  connectDragSource?: AnyFunc
 }
 
-export default function SavedScriptsListItem({
+export default DragSource<ISavedScriptsListItemProps>(
+  ({ script }) => script.path,
+  {
+    beginDrag: ({ script }) => script,
+  },
+  (connect) => ({
+    connectDragSource: connect.dragSource(),
+  }),
+)(SavedScriptsListItem);
+
+function SavedScriptsListItem({
   isStatic,
   script,
   onSelectScript,
   onExecScript,
   onUpdateScript,
   onRemoveScript,
+  connectDragSource,
 }: ISavedScriptsListItemProps) {
   const displayName = getScriptDisplayName(script);
   const [isEditing, nameValue, setIsEditing, setLabelInput] = useNameUpdate(
     displayName,
     name => onUpdateScript(script, { name }),
   );
-  const [dragRef] = useScriptDrag(script);
   const [blurRef] = useCustomBlur(() => setIsEditing(false));
 
   return (
@@ -56,13 +68,12 @@ export default function SavedScriptsListItem({
           onChange={({ target }) => setLabelInput(target.value)}
         />
       ) : (
-        <SavedScriptsListItemDisplayName
-          ref={dragRef}
+        connectDragSource!(<div><SavedScriptsListItemDisplayName
           className='saved-scripts-list-item__display-name'
           onClick={() => !isEditing && onSelectScript(script)}
         >
           {displayName}
-        </SavedScriptsListItemDisplayName>
+        </SavedScriptsListItemDisplayName></div>)
       )}
       <SavedScriptsButtonWrapper className='saved-scripts__button-wrapper'>
         {isStatic || isEditing ? null : (

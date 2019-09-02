@@ -3,7 +3,7 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { map, first, last, sortBy, lowerCase, compact } from 'lodash-es';
 
-import { AnyFunc, IScript } from './types';
+import { AnyFunc, IScript, NewFolderPathGenerator } from './types';
 
 import { arrayHasItems } from './generic.utils';
 import { useEmptyFolders, useScriptsFolders } from './saved-scripts.hooks';
@@ -19,12 +19,14 @@ import {
   SavedScriptsHeader,
   SavedScriptsButtonWrapper,
 } from './saved-scripts.styled';
+import { getEmptyFolderDefaultPath } from './saved-scripts.utils';
 
 export interface ISavedScriptsProps {
   title?: string;
   isStatic?: boolean;
   scriptsNamespace: string;
   scripts: IScript[];
+  newFolderPathGenerator?: NewFolderPathGenerator;
   onSelectScript: AnyFunc;
   onExportScripts: AnyFunc;
   onExecScript: AnyFunc;
@@ -39,9 +41,10 @@ export default function SavedScripts(props: ISavedScriptsProps) {
     isStatic,
     scriptsNamespace,
     scripts,
+    newFolderPathGenerator,
+    onSelectScript,
     onExportScripts,
     onExecScript,
-    onSelectScript,
     onRemoveScript,
     onUpdateFolder,
     onRemoveFolder,
@@ -55,7 +58,11 @@ export default function SavedScripts(props: ISavedScriptsProps) {
     addEmptyFolder,
     updateEmptyFolder,
     removeEmptyFolder,
-  ] = useEmptyFolders(scriptsNamespace, allSavedFolderNames);
+  ] = useEmptyFolders(
+    scriptsNamespace,
+    newFolderPathGenerator || getEmptyFolderDefaultPath,
+    allSavedFolderNames
+  );
   const allFolderNames = [...allSavedFolderNames, ...emptyFolders];
   const sortedSubFolders = sortBy(subFolders, folder =>
     // lodash-es typings cant handle tuples
@@ -94,9 +101,9 @@ export default function SavedScripts(props: ISavedScriptsProps) {
               onUpdateFolder={onUpdateFolder}
               onRemoveFolder={Function.prototype}
             />
-            {map(sortedSubFolders, ([folderName, subScripts]) => (
+            {map(sortedSubFolders, ([folderName, subScripts], index) => (
               <SavedScriptsFolder
-                key={`my-folder-${folderName}`}
+                key={`my-folder-${index}`}
                 isStatic={isStatic}
                 scriptsNamespace={scriptsNamespace}
                 allFolderNames={allFolderNames}
@@ -120,9 +127,9 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                 onSelectScript={Function.prototype}
                 onExecScript={Function.prototype}
                 onRemoveScript={Function.prototype}
-                onUpdateFolder={(folderScripts, { path }) =>
+                onUpdateFolder={(folderScripts: IScript[], { path }: any) =>
                   arrayHasItems(folderScripts)
-                    ? onUpdateFolder(folderScripts, { path })
+                    ? onUpdateFolder(folderScripts, { isNewFolder: true, path })
                     : updateEmptyFolder(folderName, path)
                 }
                 onRemoveFolder={() => removeEmptyFolder(folderName)}

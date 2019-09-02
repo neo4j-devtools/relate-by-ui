@@ -9,6 +9,9 @@ import {
   entries,
   groupBy,
   without,
+  includes,
+  compact,
+  map
 } from 'lodash-es';
 
 import { IScript, ScriptFolder } from './types';
@@ -107,9 +110,24 @@ export function getSubLevelFolders(namespace: string, folders: ScriptFolder[]) {
 
 /**
  * Returns the default path for an empty folder
- * @param     {string}    namespace
+ * @param     {string}      namespace
+ * @param     {string[]}    allFolderPaths
  * @return    {string}
  */
-export function getEmptyFolderDefaultPath(namespace: string) {
-  return `${namespace}New folder`;
+export function getEmptyFolderDefaultPath(namespace: string, allFolderPaths: string[]) {
+  const defaultPath = `${namespace}New folder`;
+
+  if (!includes(allFolderPaths, defaultPath)) return defaultPath
+
+  const numericalSuffixes = compact(map(allFolderPaths, (path) => {
+    const numberEOL = path.match(/\d+$/);
+
+    if (!numberEOL) return '';
+
+    return parseInt(head(numberEOL)!)
+  }));
+
+  const highestSuffix = head(sortBy(numericalSuffixes, (v) => -v)) || 0;
+
+  return `${defaultPath} ${highestSuffix + 1}`
 }

@@ -9,3 +9,5 @@ export interface IScript {
 export type AnyFunc = Function | ((...args: any[]) => any);
 
 export type ScriptFolder = [string, IScript[]];
+
+export type NewFolderPathGenerator = (namespace: string, allFolderPaths: string[]) => string;
