@@ -1,5 +1,5 @@
 import {
-  addScriptPathPrefix,
+  addScriptPathPrefix, getEmptyFolderDefaultPath,
   getRootLevelFolder,
   getScriptDisplayName,
   getSubLevelFolders,
@@ -19,6 +19,10 @@ describe('saved-scripts.utils', () => {
     };
     const scriptNoNameWithComment = {
       contents: '//Comment\nBar baz',
+      path: 'apa',
+    };
+    const scriptNoNameWithCommentWhiteSpace = {
+      contents: '//   Comment\nBar baz',
       path: 'apa',
     };
     const scriptWithNameNoComment = {
@@ -46,6 +50,10 @@ describe('saved-scripts.utils', () => {
 
     test('Uses comment as name when available', () => {
       expect(getScriptDisplayName(scriptNoNameWithComment)).toBe('Comment');
+    });
+
+    test('Uses comment as name when available, stripping leading whitespace', () => {
+      expect(getScriptDisplayName(scriptNoNameWithCommentWhiteSpace)).toBe('Comment');
     });
 
     test('Uses name as name when available', () => {
@@ -139,4 +147,24 @@ describe('saved-scripts.utils', () => {
       ]);
     });
   });
+
+  describe('getEmptyFolderDefaultPath', () => {
+    const namespace = '/foo/';
+
+    test('Generates default path when no folders exists', () => {
+      expect(getEmptyFolderDefaultPath(namespace, [])).toBe('/foo/New Folder')
+    });
+
+    test('Generates default path when no folders with same path exists', () => {
+      expect(getEmptyFolderDefaultPath(namespace, ['/foo/bar'])).toBe('/foo/New Folder')
+    });
+
+    test('Generates default path with numerical suffix when folder with same path exists', () => {
+      expect(getEmptyFolderDefaultPath(namespace, ['/foo/New Folder', '/foo/bar'])).toBe('/foo/New Folder 1')
+    });
+
+    test('Generates default path with sufficiently incremented numerical suffix when folder with same path and suffix exists', () => {
+      expect(getEmptyFolderDefaultPath(namespace, ['/foo/New Folder', '/foo/bar', '/foo/New Folder 4'])).toBe('/foo/New Folder 5')
+    });
+  })
 });

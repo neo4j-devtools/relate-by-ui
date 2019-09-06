@@ -1,30 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
 import {
-  filter,
   indexOf,
   join,
-  map,
   slice,
-  startsWith,
   without,
 } from 'lodash-es';
 
-import { AnyFunc, IScript, ScriptFolder } from './types';
+import { AnyFunc, IScript, ScriptFolder, NewFolderPathGenerator } from './types';
 
 import {
   getRootLevelFolder,
   getSubLevelFolders,
   sortAndGroupScriptsByPath,
-  getEmptyFolderDefaultPath,
 } from './saved-scripts.utils';
 import { arrayHasItems } from './generic.utils';
 
 /**
  * Maintains a state of script folders, separated into root and sub folders
- * @param     {string}                                                namespace
- * @param     {IScript[]}                                             scripts
- * @return    {[ScriptFolder, ScriptFolder[]]}                           root and sub folders
+ * @param     {string}                            namespace
+ * @param     {IScript[]}                         scripts
+ * @return    {[ScriptFolder, ScriptFolder[]]}                root and sub folders
  */
 export function useScriptsFolders(namespace: string, scripts: IScript[]): [ScriptFolder | null, ScriptFolder[]] {
   const [sortedScriptGroups, setSortedScriptGroups] = useState(
@@ -69,25 +64,14 @@ export function useNameUpdate(name: string, onUpdate: AnyFunc): [boolean, string
 /**
  * Maintains a state of empty folders
  * @param   {string}                                      namespace
+ * @param   {NewFolderPathGenerator}                      pathGenerator
  * @param   {string[]}                                    allSavedFolderNames
  * @return  {[string[], AnyFunc, AnyFunc, AnyFunc]}
  */
-export function useEmptyFolders(namespace: string, allSavedFolderNames: string[]): [string[], boolean, AnyFunc, AnyFunc, AnyFunc] {
+export function useEmptyFolders(namespace: string, pathGenerator: NewFolderPathGenerator, allSavedFolderNames: string[]): [string[], boolean, AnyFunc, AnyFunc, AnyFunc] {
   const [emptyFolders, setEmptyFolders] = useState([] as string[]);
   const canAddFolder = !arrayHasItems(emptyFolders);
-  const defaultPath = getEmptyFolderDefaultPath(namespace);
-  const addEmptyFolder = () => {
-    const allUntitled = filter(allSavedFolderNames, name =>
-      startsWith(name, defaultPath),
-    );
-
-    if (arrayHasItems(allUntitled)) {
-      setEmptyFolders([...emptyFolders, `${defaultPath} ${allUntitled.length}`]);
-      return;
-    }
-
-    setEmptyFolders([...emptyFolders, defaultPath]);
-  };
+  const addEmptyFolder = () => setEmptyFolders([...emptyFolders, pathGenerator(namespace, allSavedFolderNames)]);
   const removeEmptyFolder = (path: string) => setEmptyFolders(without(emptyFolders, path));
   const updateEmptyFolder = (oldPath: string, newPath: string) => {
     const index = indexOf(emptyFolders, oldPath);
@@ -113,43 +97,6 @@ export function useEmptyFolders(namespace: string, allSavedFolderNames: string[]
     updateEmptyFolder,
     removeEmptyFolder,
   ];
-}
-
-/**
- * Enables moving scripts using react-dnd
- * @param     {IScript}                        script
- * @return    {[MutableRefObject]}
- */
-export function useScriptDrag(script: IScript) {
-  const ref = useRef(null);
-  const [, drag] = useDrag({
-    item: { type: script.path, id: script.id },
-  });
-
-  drag(ref);
-
-  return [ref];
-}
-
-/**
- * Enables dropping scripts into folders
- * @param     {string}                        folderName
- * @param     {string[]}                      allFolderNames
- * @param     {AnyFunc}                       onUpdateFolder
- * @return    {[MutableRefObject, boolean]}
- */
-export function useFolderDrop(folderName: string, allFolderNames: string[], onUpdateFolder: AnyFunc) {
-  const ref = useRef(null);
-  const [, drop] = useDrop({
-    accept: map(allFolderNames, name => name),
-    drop(item) {
-      onUpdateFolder([item], { path: folderName });
-    },
-  });
-
-  drop(ref);
-
-  return [ref];
 }
 
 /**
