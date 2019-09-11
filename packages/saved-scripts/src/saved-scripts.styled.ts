@@ -1,16 +1,12 @@
 import styled from '@emotion/styled';
 
-export const SavedScriptsMain = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+export const SavedScriptsMain = styled.div``;
 
 /**
  * Static content
  */
 export const SavedScriptsBody = styled.div`
   padding: 0 24px;
-  flex: 1;
 `;
 
 export const SavedScriptsBodySection = styled.div`
