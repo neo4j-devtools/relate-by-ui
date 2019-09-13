@@ -17,7 +17,7 @@ export const SavedScriptsHeader = styled.h5`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #424650;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 12px;
   line-height: 39px;
   position: relative;

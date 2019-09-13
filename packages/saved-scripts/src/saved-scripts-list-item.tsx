@@ -68,12 +68,13 @@ function SavedScriptsListItem({
           onChange={({ target }) => setLabelInput(target.value)}
         />
       ) : (
-        connectDragSource!(<div><SavedScriptsListItemDisplayName
+        <SavedScriptsListItemDisplayName
           className='saved-scripts-list-item__display-name'
           onClick={() => !isEditing && onSelectScript(script)}
         >
-          {displayName}
-        </SavedScriptsListItemDisplayName></div>)
+          {connectDragSource!(<span>
+            {displayName}
+          </span>)}</SavedScriptsListItemDisplayName>
       )}
       <SavedScriptsButtonWrapper className='saved-scripts__button-wrapper'>
         {isStatic || isEditing ? null : (
