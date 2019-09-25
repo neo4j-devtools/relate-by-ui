@@ -1,3 +1,3 @@
 export default function arrayHasItems(arr: any[]) {
-  return arr.length > 0;
+  return Array.isArray(arr) && arr.length > 0;
 }

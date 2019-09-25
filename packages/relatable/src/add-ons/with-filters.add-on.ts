@@ -2,24 +2,29 @@ import { useMemo } from 'react';
 import { useFilters } from 'react-table';
 import { values } from 'lodash-es';
 
-import { TableComponent, TableAddOnReturn } from '../relatable.types';
+import { FilterSetter, TableAddOnReturn } from '../relatable.types';
 
-import { DefaultFilter } from '../components/filter-fields';
-import Filters from '../components/filters';
-import isDefined from '../utils/is-defined';
+import { DefaultFilter, IFilterFieldProps } from '../components/filters';
 
 export interface IWithFiltersOptions {
-  defaultFilter?: TableComponent;
-  onSetFilter?: (id: string, value: any) => void;
+  defaultFilter?: React.FC<IFilterFieldProps>;
+  onFilterChange?: FilterSetter;
+
+  // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
   filters?: any;
 }
 
 export default function withFilters(options: IWithFiltersOptions = {}): TableAddOnReturn {
-  const { defaultFilter, filters, onSetFilter: onSetCustomFilter, ...rest } = options;
-  const stateParams = isDefined(filters) ? { filters } : {};
+  const {
+    defaultFilter,
+    filters,
+    onFilterChange: onCustomFilterChange,
+    ...rest
+  } = options;
+  const stateParams = filters ? { filters } : {};
   const tableParams = {
     ...rest,
-    onSetCustomFilter,
+    onCustomFilterChange,
     defaultColumn: {
       Filter: options.defaultFilter || DefaultFilter,
     },
@@ -32,10 +37,9 @@ export default function withFilters(options: IWithFiltersOptions = {}): TableAdd
       defaultColumn: {
         ...defaultColumn,
         ...tableParams.defaultColumn,
-      }
+      },
     }), [defaultColumn, ...values(rest)]),
     () => useMemo(() => stateParams, [filters]),
     useFilters,
-    Filters,
   ];
 }

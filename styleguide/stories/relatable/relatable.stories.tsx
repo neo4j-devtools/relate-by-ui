@@ -1,13 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Relatable, {
-  withFilters,
-  withSorting,
-  withPagination,
-} from '../../../packages/relatable/src';
-import { COLUMNS, ROWS } from '../../../packages/relatable/src/constants';
+import Relatable, { SORT_ACTIONS, Pagination, Table, Toolbar } from '../../../packages/relatable/src';
+import { COLUMNS, ROWS, FLAT_COLUMNS, CUSTOM_COLUMNS, CUSTOM_ROWS } from '../../../packages/relatable/src/constants';
 
 const stories = storiesOf('Relatable', module);
 const onStateChangeHandler = action('onStateChange');
@@ -18,6 +14,17 @@ stories.add(
     <Relatable
       columns={COLUMNS}
       data={ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable height constrained',
+  () => (
+    <div style={{ maxHeight: 500, overflow: 'scroll' }}>
+      <Relatable
+        columns={COLUMNS}
+        data={ROWS}/>
+    </div>
   ),
 );
 
@@ -95,18 +102,67 @@ stories.add(
 );
 
 stories.add(
-  'Relatable from hook',
+  'Relatable filterable sortable paginated inverted striped compact',
   () => (
-    <FromHook
+    <Relatable
+      filterable
+      sortable
+      paginated
+      inverted
+      striped
+      compact
       columns={COLUMNS}
       data={ROWS}/>
   ),
 );
 
 stories.add(
-  'Relatable from hook async data',
+  'Relatable filterable sortable paginated flat',
   () => (
-    <FromHookAsync
+    <Relatable
+      filterable
+      sortable
+      paginated
+      columns={FLAT_COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
+
+stories.add(
+  'Relatable filterable sortable paginated custom data',
+  () => (
+    <Relatable
+      filterable
+      sortable
+      paginated
+      columns={CUSTOM_COLUMNS}
+      data={CUSTOM_ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable with options',
+  () => (
+    <BasicOptions
+      columns={COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable advanced',
+  () => (
+    <Advanced
+      columns={COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable async data',
+  () => (
+    <AsyncTable
       columns={COLUMNS}
       data={ROWS}/>
   ),
@@ -116,73 +172,70 @@ stories.add(
 /**
  * Sample Components
  */
-function FromHook({ columns, data }: any) {
-  const addOns = [
-    withFilters(),
-    withSorting(),
-    withPagination(),
-  ];
 
-  if (!Relatable) return null;
+function BasicOptions({ columns, data }: any) {
+  const [filters, onFilterChange] = useOnFilterChange();
 
-  return <Relatable columns={columns} data={data} addOns={addOns} onStateChange={console.log}>
-    {({ Table, Filters, Paginator }) => (
-      <>
-        <Filters/>
-        <Table/>
-        <Paginator/>
-      </>
-    )}
+  return <Relatable
+    filterable={{ filters, onFilterChange }}
+    sortable
+    paginated
+    columns={columns}
+    data={data}/>;
+}
+
+function Advanced({ columns, data }: any) {
+  return <Relatable
+    columns={columns}
+    data={data}
+    filterable
+    sortable
+    paginated
+    onStateChange={onStateChangeHandler}>
+      <Toolbar/>
+      <Table/>
+      <Pagination/>
   </Relatable>;
 }
 
-const PAGE_SIZE = 20;
+function AsyncTable({ columns, data }: any) {
+  const [loading, asyncData, onStateChange] = useAsyncData(data);
+  const [filters, onFilterChange] = useOnFilterChange();
+  const [sortBy, onSortChange] = useOnSortChange();
+  const [pageIndex, pageSize, pageCount, onPageChange, onPageSizeChange] = useOnPaginationChange(data);
+  const filterOptions = {
+    filters,
+    onFilterChange,
+  };
+  const sortOptions = {
+    sortBy,
+    onSortChange,
+  };
+  const paginationOptions = {
+    manualPagination: true,
+    pageCount,
+    pageSize,
+    onPageSizeChange,
+    pageIndex,
+    onPageChange,
+  };
 
-function FromHookAsync({ columns, data }: any) {
-  const [pageSize, onSetPageSize] = useState(PAGE_SIZE);
-  const [pageIndex, onSetPage] = useState(0);
+  return <Relatable
+    columns={columns}
+    data={asyncData}
+    filterable={filterOptions}
+    sortable={sortOptions}
+    paginated={paginationOptions}
+    onStateChange={onStateChange}>
+      <Toolbar/>
+      <Table loading={loading} expectedRowCount={pageSize}/>
+      <Pagination/>
+  </Relatable>;
+}
+
+function useAsyncData(data: any[]): [boolean, any[], (state: any) => void] {
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({});
-  const [sortBy, setSortBy] = useState<any[]>([]);
   const [asyncData, setAsyncRows] = useState<any[]>([]);
-  const pageCount = Math.ceil(data.length / pageSize);
-  const onSetFilter = useCallback(({id}, val) => {
-    if (val === undefined) {
-      const clone = { ...filters };
-
-      delete clone[id];
-
-      setFilters(clone);
-      return;
-    }
-
-    setFilters({
-      ...filters,
-      [id]: val,
-    });
-  }, [filters]);
-  const onSetSort = useCallback((column) => {
-    const withoutColumn = sortBy.filter(({ id }) => id !== column.id);
-
-    if (column.isSorted && column.sortDescFirst !== column.isSortedDesc) {
-      setSortBy(withoutColumn);
-      return;
-    }
-
-    setSortBy([...withoutColumn, {
-      id: column.id,
-      desc: !column.isSorted
-        ? Boolean(column.sortDescFirst)
-        : !Boolean(column.sortDescFirst),
-    }]);
-  }, [sortBy]);
-
-  const addOns = [
-    withFilters({ filters, onSetFilter }),
-    withSorting({ sortBy, onSetSort }),
-    withPagination({ manualPagination: true, pageCount, pageSize, onSetPageSize, pageIndex, onSetPage }),
-  ];
-
   const onStateChange = useCallback((state) => {
     const { pageIndex, pageSize } = state;
 
@@ -196,17 +249,59 @@ function FromHookAsync({ columns, data }: any) {
     }, 2000);
   }, []);
 
-  if (!Relatable) return null;
+  return [loading, asyncData, onStateChange];
+}
 
-  return <Relatable columns={columns} data={asyncData} addOns={addOns} onStateChange={onStateChange}>
-    {({ Table, Filters, Paginator }) => (
-      <>
-        <Filters/>
-        <Table loading={loading} expectedRowCount={pageSize} setSort={() => null}/>
-        <Paginator/>
-      </>
-    )}
-  </Relatable>;
+const PAGE_SIZE = 20;
+
+function useOnPaginationChange(data: any[]): [number, number, number, (page: number) => void, (size: number) => void] {
+  const [pageIndex, onPageChange] = useState(0);
+  const [pageSize, onPageSizeChange] = useState(PAGE_SIZE);
+  const pageCount = Math.ceil(data.length / pageSize);
+
+  return [pageIndex, pageSize, pageCount, onPageChange, onPageSizeChange];
+}
+
+function useOnSortChange(): [any, (column: any, action: string) => void] {
+  const [sortBy, setSortBy] = useState<any[]>([]);
+  const onSortChange = useCallback((column, action) => {
+    const withoutColumn = sortBy.filter(({ id }) => id !== column.id);
+
+    if (action === SORT_ACTIONS.SORT_CLEAR) {
+      setSortBy(withoutColumn);
+      return;
+    }
+
+    setSortBy([...withoutColumn, {
+      id: column.id,
+      desc: action === SORT_ACTIONS.SORT_DESC,
+    }]);
+  }, [sortBy]);
+
+  return [sortBy, onSortChange];
+}
+
+function useOnFilterChange(): [any, (columns: any[], val: any) => void] {
+  const [filters, setFilters] = useState({});
+  const onFilterChange = useCallback((columns, val) => {
+    if (val === undefined) {
+      const clone: { [key: string]: any } = { ...filters };
+
+      columns.forEach(({ id }: any) => {
+        delete clone[id];
+      });
+
+      setFilters(clone);
+      return;
+    }
+
+    setFilters(columns.reduce((agg: any, { id }: any) => ({
+      ...agg,
+      [id]: val,
+    }), filters));
+  }, [filters]);
+
+  return [filters, onFilterChange];
 }
 
 function getPageData(data: any[], pageIndex: number, pageSize: number) {

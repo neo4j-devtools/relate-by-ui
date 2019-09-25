@@ -1,58 +1,73 @@
-import React, { ReactElement } from 'react';
+import React, { PropsWithChildren } from 'react';
 
-import { StateContext } from '../../constants';
-import { getRelatableAddOns } from '../../utils/get-relatable-add-ons';
-import { useRelatableState } from './relatable.hooks';
-import { ITableProps } from '../table/table';
-import { TableAddOnReturn } from '../../relatable.types';
+import { IWithPaginationOptions } from '../../add-ons/with-pagination.add-on';
+import { IWithSortingOptions } from '../../add-ons/with-sorting.add-on';
+import { IWithFiltersOptions } from '../../add-ons/with-filters.add-on';
 
-export type TableComponent = React.FC<any>;
+import { RelatableActionContext, RelatableStateContext } from '../../states';
+import { useRelatableActions, useRelatableState } from './relatable.hooks';
 
-export type TableComponents = {
-  Table: TableComponent,
-  [name: string]: TableComponent
-};
+import Table, { ITableProps } from '../table/table';
+import Toolbar from '../toolbar/toolbar';
+import Pagination from '../pagination';
 
-// @todo: eh?
-export interface IRelatableProps extends ITableProps {
+export interface IRelatableProps {
+  // see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usetable
   columns: any[];
   data: any[];
-  addOns?: TableAddOnReturn[];
-  children?: (components: TableComponents) => ReactElement;
-  onStateChange?: (state: any) => any;
   defaultColumn?: any;
-  paginated?: boolean;
-  sortable?: boolean;
-  filterable?: boolean;
+
+  // Relatable state change handler
+  onStateChange?: (state: any) => any;
+
+  // add on options
+  paginated?: boolean | IWithPaginationOptions;
+  sortable?: boolean | IWithSortingOptions;
+  filterable?: boolean | IWithFiltersOptions;
 }
 
-export default function Relatable(props: IRelatableProps) {
-  if (props.children && typeof props.children === 'function') {
-    return <RelatableContext {...props}/>
+// when used without children, Table props are passed along as well
+export interface IRelatableBasicProps extends IRelatableProps, ITableProps {
+}
+
+export interface IRelatableChildrenProps extends PropsWithChildren<IRelatableProps> {
+}
+
+export default function Relatable(props: IRelatableChildrenProps | IRelatableBasicProps): JSX.Element {
+  // @ts-ignore
+  const { children } = props;
+
+  if (children) {
+    return <RelatableState {...props}/>;
   }
 
-  return <RelatableBasic {...props}/>
+  return <RelatableBasic {...props}/>;
 }
 
-export function RelatableBasic(props: IRelatableProps) {
-  const { columns, data, defaultColumn, paginated, filterable, loading, expectedRowCount } = props;
-  const addOns = getRelatableAddOns(props);
+function RelatableBasic(props: IRelatableBasicProps): JSX.Element {
+  const { columns, data, defaultColumn, paginated, sortable, filterable, ...rest } = props;
 
-  return <RelatableContext columns={columns} data={data} addOns={addOns} defaultColumn={defaultColumn}>
-    {({Table, Filters, Paginator}: TableComponents) => {
-      return <>
-        {filterable && <Filters/>}
-        <Table loading={loading} expectedRowCount={expectedRowCount}/>
-        {paginated && <Paginator/>}
-      </>
-    }}
-  </RelatableContext>;
+  return <RelatableState {...props}>
+    {(sortable || filterable) && <Toolbar/>}
+    <Table {...rest} />
+    {paginated && <Pagination/>}
+  </RelatableState>;
 }
 
-export function RelatableContext({ columns, data, addOns, onStateChange, children }: IRelatableProps) {
-  const [components, tableProps] = useRelatableState({columns, data, onStateChange, addOns});
+function RelatableState({children, ...rest}: IRelatableChildrenProps): JSX.Element {
+  const tableProps = useRelatableState(rest);
 
-  return <StateContext.Provider value={tableProps}>
-    {children(components)}
-  </StateContext.Provider>;
+  return <RelatableStateContext.Provider value={tableProps}>
+    <RelatableActions>
+      {children}
+    </RelatableActions>
+  </RelatableStateContext.Provider>;
+}
+
+function RelatableActions({children}: any) {
+  const actionsState = useRelatableActions();
+
+  return <RelatableActionContext.Provider value={actionsState}>
+    {children}
+  </RelatableActionContext.Provider>
 }

@@ -2,27 +2,30 @@ import { useMemo } from 'react';
 import { useSortBy } from 'react-table';
 import { values } from 'lodash-es';
 
-import { TableAddOnReturn } from '../relatable.types';
-import isDefined from '../utils/is-defined';
+import { SortSetter, TableAddOnReturn } from '../relatable.types';
 
 export interface IWithSortingOptions {
-  // https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
+  onSortChange?: SortSetter;
+
+  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
   manualSorting?: boolean;
+  // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
   sortBy?: any[];
-  onSetSort?: (column: any) => void;
-  // @todo: add 'filters' state override
 }
 
 export default function withSorting(options: IWithSortingOptions = {}): TableAddOnReturn {
-  const { sortBy, onSetSort, ...rest } = options;
-  const stateParams = isDefined(sortBy)
+  const { sortBy, onSortChange, ...tableParams } = options;
+  const stateParams = sortBy
     ? { sortBy }
     : {};
 
   return [
     withSorting.name,
-    () => useMemo(() => ({ ...rest, onSetCustomSort: onSetSort }), [onSetSort, ...values(rest)]),
-    () => useMemo(() => (stateParams), [sortBy]),
+    () => useMemo(() => ({
+      ...tableParams,
+      onCustomSortChange: onSortChange,
+    }), [onSortChange, ...values(tableParams)]),
+    () => useMemo(() => stateParams, [sortBy]),
     useSortBy,
   ];
 }

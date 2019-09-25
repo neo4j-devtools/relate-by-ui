@@ -1,23 +1,28 @@
-import { Dispatch, useEffect, useMemo } from 'react';
+import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTable, useTableState } from 'react-table';
-import { assign, flatMap, head, map, pick, reduce, slice, values } from 'lodash-es';
+import { assign, compact, head, map, pick, reduce, values } from 'lodash-es';
 
-import { TableComponent } from '../../relatable.types';
-import { IRelatableProps, TableComponents } from './relatable';
+import { IRelatableProps } from './relatable';
 
-import Table from '../table/table';
+import { ON_STATE_CHANGE_TRIGGERS } from '../../constants';
+import { getRelatableAddOns } from '../../utils/get-relatable-add-ons';
 
-export function useRelatableState({ columns, data, addOns, onStateChange }: IRelatableProps): [TableComponents, any] {
-  // prepare enhancers and extract return values
-  const addOnNames = map(addOns, head);
+export function useRelatableActions(): [string | null, Dispatch<string>, Dispatch<void>] {
+  const [action, setAction] = useState<string | null>(null);
+  const clearAction = useCallback(() => setAction(null), [setAction]);
+
+  return [action, setAction, clearAction];
+}
+
+export function useRelatableState(props: IRelatableProps): any {
+  const { columns, data, onStateChange } = props;
+
+  // prepare add-ons and extract return values
+  const addOns = getRelatableAddOns(props);
+  const availableActions = compact(map(addOns, head));
   const tableParamFactories = map(addOns, (prep) => prep[1]);
   const tableStateFactories = map(addOns, (prep) => prep[2]);
   const reactTableHooks = map(addOns, (prep) => prep[3]);
-  // @todo: typings
-  const addOnComponents = flatMap(addOns, (prep) => slice(prep, 4) as TableComponent[]);
-  const components = reduce(addOnComponents, (agg, next) => assign(agg, {
-    [next.name]: next,
-  }), { Table });
 
   // hoist and override react-table state
   const tableState = useOnStateChange(tableStateFactories, onStateChange);
@@ -27,7 +32,7 @@ export function useRelatableState({ columns, data, addOns, onStateChange }: IRel
     columns,
     data,
     state: tableState,
-    defaultColumn: {}
+    defaultColumn: {},
   });
   const contextValue = useTable(
     tableParams,
@@ -35,14 +40,12 @@ export function useRelatableState({ columns, data, addOns, onStateChange }: IRel
   );
 
   // add additional values for context
-  const tableProps = {
+  return {
     ...contextValue,
-    addOnNames,
+    availableActions,
     // @todo: figure out a cleaner way of detecting and passing rows to use based on addOns used
     _rowsToUse: contextValue.page || contextValue.rows,
   };
-
-  return [components, tableProps];
 }
 
 export function useOnStateChange(tableStateFactories: any[], onStateChange?: (state: any) => any) {
@@ -51,8 +54,7 @@ export function useOnStateChange(tableStateFactories: any[], onStateChange?: (st
   const newState = reduce(tableStateFactories, (agg, fac) => assign(agg, fac(agg) || {}), originalState);
   const overriddenState = useMemo<[any, Dispatch<any>]>(() => [newState, setTableState], tableStateArr);
   const [tableState] = overriddenState;
-  // @todo: move to constant, used to define what can be seen "outside"
-  const toOutside = pick(tableState, ['pageIndex', 'pageSize', 'sortBy', 'filters', 'groupBy']);
+  const toOutside = pick(tableState, ON_STATE_CHANGE_TRIGGERS);
 
   // callback
   useEffect(() => {

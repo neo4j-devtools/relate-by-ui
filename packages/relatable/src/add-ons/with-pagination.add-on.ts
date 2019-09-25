@@ -2,33 +2,45 @@ import { useMemo } from 'react';
 import { usePagination } from 'react-table';
 import { pick, values } from 'lodash-es';
 
-import { TableAddOnReturn } from '../relatable.types';
-import Paginator from '../components/paginator';
+import { PageSetter, PageSizeSetter, TableAddOnReturn } from '../relatable.types';
+
+import { DEFAULT_PAGE_SIZE_OPTIONS } from '../constants';
 
 export interface IWithPaginationOptions {
-  // see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
+  onPageChange?: PageSetter;
+  onPageSizeChange?: PageSizeSetter;
+  pageSizeOptions?: number[];
+
+  // react-table state overrides https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
   pageSize?: number;
   pageIndex?: number;
+
+  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
   pageCount?: number;
-  manualPagination?: true;
+  manualPagination?: boolean;
   disablePageResetOnDataChange?: boolean;
-  onSetPage?: (pageIndex: number) => void;
-  onSetPageSize?: (size: number) => void;
 }
 
 export default function withPagination(options: IWithPaginationOptions = {}): TableAddOnReturn {
-  const { pageSize, pageIndex, onSetPageSize, onSetPage, ...rest } = options;
-  const stateProps = pick(options, ['pageSize', 'pageIndex']);
+  const {
+    pageSize,
+    pageIndex,
+    onPageSizeChange,
+    onPageChange,
+    pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
+    ...tableParams
+  } = options;
+  const stateParams = pick(options, ['pageSize', 'pageIndex']);
 
   return [
-    withPagination.name,
+    null,
     () => useMemo(() => ({
-      ...rest,
-      onSetCustomPageSize: onSetPageSize,
-      onSetCustomPage: onSetPage,
-    }), [onSetPageSize, onSetPage, ...values(rest)]),
-    () => useMemo(() => stateProps, values(stateProps)),
+      ...tableParams,
+      customPageSizeOptions: pageSizeOptions,
+      onCustomPageSizeChange: onPageSizeChange,
+      onCustomPageChange: onPageChange,
+    }), [onPageSizeChange, onPageChange, ...values(tableParams)]),
+    () => useMemo(() => stateParams, values(stateParams)),
     usePagination,
-    Paginator,
   ];
 }

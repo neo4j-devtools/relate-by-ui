@@ -5,26 +5,26 @@ import { withFilters, withPagination, withSorting } from '../add-ons';
 
 /**
  * Adds enhancers based on boolean props
- * @param     {Object}            props
- * @param     {boolean}           props.filterable
- * @param     {boolean}           props.sortable
- * @param     {boolean}           props.paginated
- * @return    {TableComponents}
+ * @param     {Object}                                  props
+ * @param     {boolean | IWithFiltersOptions}           props.filterable
+ * @param     {boolean | IWithSortingOptions}           props.sortable
+ * @param     {boolean | IWithPaginationOptions}        props.paginated
+ * @return    {TableAddOnReturn[]}
  */
 export function getRelatableAddOns({ filterable, sortable, paginated }: IRelatableProps): TableAddOnReturn[] {
-  const enhancers: TableAddOnReturn[] = [];
+  const addOns: TableAddOnReturn[] = [];
 
   if (filterable) {
-    enhancers.push(withFilters());
+    addOns.push(withFilters(filterable !== true ? filterable : {}));
   }
 
   if (sortable) {
-    enhancers.push(withSorting());
+    addOns.push(withSorting(sortable !== true ? sortable : {}));
   }
 
   if (paginated) {
-    enhancers.push(withPagination());
+    addOns.push(withPagination(paginated !== true ? paginated : {}));
   }
 
-  return enhancers;
+  return addOns;
 }
