@@ -8,29 +8,35 @@ import arrayHasItems from '../../utils/array-has-items';
 import { withFilters } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
+import { Filter } from '../renderers';
+import { getToolbarStateClass } from '../../utils/column-state-classes';
 
 export default function FiltersToolbar() {
   const { flatColumns: columns, state: [{ filters }], onCustomFilterChange } = useRelatableStateContext();
-  const [selectedToolbar, setToolbar, clearToolbar] = useRelatableToolbarContext();
+  const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const appliedFilters = entries(filters);
+  const isFiltered = arrayHasItems(appliedFilters);
 
   return <ToolbarPopup
     name={withFilters.name}
     content={<FiltersPopup
       columns={columns}
+      selectedToolbarAction={selectedToolbarAction}
       appliedFilters={appliedFilters}
       onCustomFilterChange={onCustomFilterChange}/>}
-    selectedToolbar={selectedToolbar}
+    selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
     <Menu.Item name="filter" onClick={() => setToolbar(withFilters.name)}>
-      <Icon name='filter'/>
-      {arrayHasItems(appliedFilters) && <Label>{appliedFilters.length}</Label>}
+      <Icon name='filter' className="relatable__toolbar-icon"/>
+      Filters
+      {isFiltered &&
+      <Label className={isFiltered ? getToolbarStateClass('filterValue') : ''}>{appliedFilters.length}</Label>}
     </Menu.Item>
   </ToolbarPopup>;
 }
 
-function FiltersPopup({ columns, appliedFilters, onCustomFilterChange }: any) {
-  const [showForm, setShowForm] = useState(false);
+function FiltersPopup({ columns, selectedToolbarAction, appliedFilters, onCustomFilterChange }: any) {
+  const [showForm, setShowForm] = useState(Boolean(selectedToolbarAction.column));
 
   return <div className="relatable__toolbar-filters-popup">
     {arrayHasItems(appliedFilters) && <>
@@ -59,8 +65,11 @@ function FiltersPopup({ columns, appliedFilters, onCustomFilterChange }: any) {
     </>}
 
     {showForm
-      ?
-      <FiltersForm columns={columns} onCustomFilterChange={onCustomFilterChange} onClose={() => setShowForm(false)}/>
+      ? <FiltersForm
+        columns={columns}
+        selectedToolbarAction={selectedToolbarAction}
+        onCustomFilterChange={onCustomFilterChange}
+        onClose={() => setShowForm(false)}/>
       : <Button onClick={() => setShowForm(true)} inverted icon color="green" title="Add filter">
         Add filter <Icon name="plus"/>
       </Button>
@@ -68,8 +77,10 @@ function FiltersPopup({ columns, appliedFilters, onCustomFilterChange }: any) {
   </div>;
 }
 
-function FiltersForm({ columns, onCustomFilterChange, onClose }: any) {
-  const firstId = get(head(columns), 'id', undefined);
+function FiltersForm({ columns, selectedToolbarAction, onCustomFilterChange, onClose }: any) {
+  const firstId = selectedToolbarAction.column
+    ? selectedToolbarAction.column.id
+    : get(head(columns), 'id', undefined);
   const [filterValue, onFilterValueChange] = useState<any>();
   const [selectedColumnId, setSelectedColumnId] = useState<any>(firstId);
   const selectedColumn = find(columns, ({ id }) => id === selectedColumnId);
@@ -98,7 +109,7 @@ function FiltersForm({ columns, onCustomFilterChange, onClose }: any) {
           value={selectedColumnId}
           onChange={(_, { value }) => setSelectedColumnId(value)}/>
       </Form.Field>
-      <SelectedColumnFilter column={selectedColumn} onChange={onFilterValueChange}/>
+      <Filter column={selectedColumn} onChange={onFilterValueChange}/>
       <Button
         inverted
         icon
@@ -118,19 +129,4 @@ function FiltersForm({ columns, onCustomFilterChange, onClose }: any) {
       </Button>
     </Form.Group>
   </Form>;
-}
-
-export interface ISelectedColumnFilterProps {
-  column: any; // react-table column
-  onChange: (val: any) => void;
-}
-
-function SelectedColumnFilter({ column, onChange }: ISelectedColumnFilterProps) {
-  if (!column) return null;
-
-  const { Filter } = column;
-
-  return <Form.Field>
-    <Filter column={column} onChange={onChange}/>
-  </Form.Field>;
 }

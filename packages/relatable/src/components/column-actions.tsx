@@ -2,26 +2,41 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { includes } from 'lodash-es';
 
-import { SORT_ACTIONS } from '../relatable.types';
+import { GROUP_ACTIONS, SORT_ACTIONS } from '../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../states';
-import { withFilters, withSorting } from '../add-ons';
+import { withFilters, withGrouping, withSorting } from '../add-ons';
 
 export interface IColumnActionsProps {
   column: any;
 }
 
 export default function ColumnActions({ column }: IColumnActionsProps) {
-  const { availableActions, onCustomSortChange } = useRelatableStateContext();
+  const { availableActions, onCustomSortChange, onCustomGroupChange } = useRelatableStateContext();
   const [, setRelatableToolbar] = useRelatableToolbarContext();
 
-  return <Dropdown text={column.render('Header')}>
+  return <Dropdown text={column.render('Header')} fluid>
     <Dropdown.Menu>
+      {includes(availableActions, withGrouping.name) && (
+        <Dropdown.Item
+          text="Group by"
+          icon="group"
+          onClick={() => {
+            setRelatableToolbar(withGrouping.name, column);
+
+            if (onCustomGroupChange) {
+              onCustomGroupChange(column, GROUP_ACTIONS.GROUP_SET);
+              return;
+            }
+
+            column.toggleGroupBy(true);
+          }}/>
+      )}
       {includes(availableActions, withFilters.name) && (
         <Dropdown.Item
           text="Filter"
           icon="tags"
-          onClick={() => setRelatableToolbar(withFilters.name)}/>
+          onClick={() => setRelatableToolbar(withFilters.name, column)}/>
       )}
       {includes(availableActions, withSorting.name) && (
         <>
@@ -30,7 +45,7 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
             text="Clear sort"
             icon="dont"
             onClick={() => {
-              setRelatableToolbar(withSorting.name);
+              setRelatableToolbar(withSorting.name, column);
 
               if (onCustomSortChange) {
                 onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR);
@@ -43,7 +58,7 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
             text="Sort Desc"
             icon="sort content descending"
             onClick={() => {
-              setRelatableToolbar(withSorting.name);
+              setRelatableToolbar(withSorting.name, column);
 
               if (onCustomSortChange) {
                 onCustomSortChange(column, SORT_ACTIONS.SORT_DESC);
@@ -56,7 +71,7 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
             text="Sort Asc"
             icon="sort content ascending"
             onClick={() => {
-              setRelatableToolbar(withSorting.name);
+              setRelatableToolbar(withSorting.name, column);
 
               if (onCustomSortChange) {
                 onCustomSortChange(column, SORT_ACTIONS.SORT_ASC);

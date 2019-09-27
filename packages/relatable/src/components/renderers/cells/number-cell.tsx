@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default function NumberCell({ cell }: any) {
+import { ICellProps } from '../index';
+
+export default function NumberCell({ cell }: ICellProps) {
   const { value = '' } = cell;
 
   return <span className="relatable__table-number-cell">

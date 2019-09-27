@@ -5,6 +5,8 @@ export type ReactTableHook = (...args: any[]) => any // @todo: better typings
 export type TableParamFactory = (params: any) => any
 export type TableStateFactory = (state: any) => any
 export type TableAddOnReturn = [string | null, TableParamFactory, TableStateFactory, ReactTableHook]
+export type ToolbarAction = {name: string, column?: any}
+export type ToolbarActionDispatch = (name: string, column?: any) => void
 
 /**
  * Externally exposed types
@@ -17,4 +19,9 @@ export enum SORT_ACTIONS {
   SORT_CLEAR = 'SORT_CLEAR',
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
+}
+export type GroupSetter = (column: any, action: GROUP_ACTIONS) => void;
+export enum GROUP_ACTIONS {
+  GROUP_CLEAR = 'GROUP_CLEAR',
+  GROUP_SET = 'GROUP_SET',
 }

@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Popup } from 'semantic-ui-react';
 
-export function ToolbarPopup({ children = null, contents, name, selectedToolbar, ...rest }: any) {
-  const isOpen = selectedToolbar === name;
+export function ToolbarPopup({ children = null, content, name, selectedToolbarAction, ...rest }: PropsWithChildren<any>) {
+  const isOpen = selectedToolbarAction && selectedToolbarAction.name === name;
 
   return <Popup
     {...rest}
     on="click"
     open={isOpen}
     position="bottom left"
-    children={contents}
+    children={content}
     trigger={children}/>;
 }

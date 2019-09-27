@@ -90,9 +90,20 @@ stories.add(
 );
 
 stories.add(
-  'Relatable filterable sortable paginated',
+  'Relatable groupable ',
   () => (
     <Relatable
+      groupable
+      columns={COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable groupable filterable sortable paginated',
+  () => (
+    <Relatable
+      groupable
       filterable
       sortable
       paginated
@@ -191,6 +202,7 @@ function Advanced({ columns, data }: any) {
     filterable
     sortable
     paginated
+    groupable
     onStateChange={onStateChangeHandler}>
       <Toolbar/>
       <Table/>

@@ -1,9 +1,10 @@
 import { assign, reduce } from 'lodash-es';
 import { loremIpsum } from 'lorem-ipsum';
 
-import { DateCell, JSONCell, NumberCell, TextCell } from './components/cells';
+import { DateCell, JSONCell, NumberCell, TextCell } from './components/renderers';
 
 export const DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 30, 40, 50];
+export const DEFAULT_AGGREGATE_OPTIONS = ['sum', 'count'];
 export const ON_STATE_CHANGE_TRIGGERS = ['pageIndex', 'pageSize', 'sortBy', 'filters'];
 export const SEMANTIC_TABLE_PROPS = [
   'attached',
@@ -23,6 +24,20 @@ export const SEMANTIC_TABLE_PROPS = [
   'textAlign',
   'verticalAlign',
 ];
+
+export const TOOLBAR_STATE_CLASSES = {
+  isGrouped: 'rgb(245,166,35)',
+  filterValue: 'rgb(253,118,110)',
+  isSorted: 'rgb(109,206,157)',
+  isSelected: 'rgb(104,189,244)', // @todo: this is not implemented
+};
+
+export const COLUMN_STATE_CLASSES = {
+  isSorted: 'rgba(109,206,157,0.10)',
+  filterValue: 'rgba(253,118,110,0.10)',
+  isGrouped: 'rgba(245,166,35,0.10)',
+  isSelected: 'rgba(104,189,244,0.10)', // @todo: this is not implemented
+};
 
 /**
  * DUMMY DATA BELOW

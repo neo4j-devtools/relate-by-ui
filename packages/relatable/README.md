@@ -143,9 +143,12 @@ function Pagination(): JSX.Element;
 
 ## Add-ons
 There are currently three add-ons available:
-- [filterable](#filterable)
-- [sortable](#sortable)
-- [paginated](#paginated)
+1. [Filterable](#filterable)
+2. [Groupable](#groupable)
+3. [Sortable](#sortable)
+4. [Paginated](#paginated)
+
+Please note that add-ons are ordinal, as defined by the [react-table API](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md), and subject to the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html).
 
 ### Exposed typings
 [Source](./src/relatable.types.ts)
@@ -159,6 +162,11 @@ export enum SORT_ACTIONS {
   SORT_CLEAR = 'SORT_CLEAR',
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
+}
+export type GroupSetter = (column: any, action: GROUP_ACTIONS) => void;
+export enum GROUP_ACTIONS {
+  GROUP_CLEAR = 'GROUP_CLEAR',
+  GROUP_SET = 'GROUP_SET',
 }
 ```
 
@@ -192,6 +200,42 @@ const FilterableTable = () => <Relatable
   columns={[]}
   data={[]}
   filterable={true || options}
+/>
+```
+
+### Groupable
+[react-table hook](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy)
+
+[Source](./src/add-ons/with-grouping.add-on.ts)
+
+Enables grouping of table rows. Please ensure the [Toolbar](#toolbar) component is rendered in advanced use cases.
+
+#### Parameters:
+```typescript
+import { ICellProps, GroupSetter } from '@relate-by-ui/relatable';
+
+export interface IWithGroupingOptions {
+  defaultAggregate?: string[] | string | ((values: any[]) => any);
+  defaultAggregateCell?: React.FC<ICellProps>;
+  onGroupChange?: GroupSetter;
+
+  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
+  manualGroupBy?: boolean;
+  // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
+  groupBy?: string[];
+}
+```
+
+#### Usage
+```typescript jsx
+import React from 'react';
+import Relatable, {IWithGroupingOptions} from '@relate-by-ui/relatable';
+
+const options: IWithGroupingOptions = {}
+const GroupableTable = () => <Relatable
+  columns={[]}
+  data={[]}
+  groupable={true || options}
 />
 ```
 
@@ -270,15 +314,18 @@ const PaginatedTable = () => <Relatable
 ---
 
 ## Column Enhancements
-The react-table API allows you to specify custom [Cells](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options) and [Filters](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options-2) for columns.
+The react-table API allows you to specify custom [Cells](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options), [Aggregates](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options-3), and [Filters](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options-2) for columns.
 As a courtesy this library provides some standard components for this purpose.
 You can create your own simply by copying the implementation.
 
-### Cell renderers
-- [TextCell](./src/components/cells/text-cell.tsx)
-- [DateCell](./src/components/cells/date-cell.tsx)
-- [NumberCell](./src/components/cells/number-cell.tsx)
-- [JSONCell](./src/components/cells/json-cell.tsx)
+### Cell values
+- [TextCell](./src/components/renderers/cells/text-cell.tsx)
+- [DateCell](./src/components/renderers/cells/date-cell.tsx)
+- [NumberCell](./src/components/renderers/cells/number-cell.tsx)
+- [JSONCell](./src/components/renderers/cells/json-cell.tsx)
 
-### Filters
-- [DefaultFilter](src/components/filters/default-filter.tsx)
+### Aggregate cell values
+- [ValueAggregate](src/components/renderers/aggregates/value-aggregate.tsx)
+
+### Column filter fields
+- [TextFilter](src/components/renderers/filters/text-filter.tsx)

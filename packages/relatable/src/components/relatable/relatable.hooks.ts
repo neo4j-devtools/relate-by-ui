@@ -2,16 +2,21 @@ import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTable, useTableState } from 'react-table';
 import { assign, compact, head, map, pick, reduce, values } from 'lodash-es';
 
+import { ToolbarAction, ToolbarActionDispatch } from '../../relatable.types';
 import { IRelatableProps } from './relatable';
 
 import { ON_STATE_CHANGE_TRIGGERS } from '../../constants';
 import { getRelatableAddOns } from '../../utils/get-relatable-add-ons';
 
-export function useRelatableActions(): [string | null, Dispatch<string>, Dispatch<void>] {
-  const [action, setAction] = useState<string | null>(null);
+export function useRelatableActions(): [ToolbarAction | null, ToolbarActionDispatch, Dispatch<void>] {
+  const [action, setAction] = useState<ToolbarAction | null>(null);
   const clearAction = useCallback(() => setAction(null), [setAction]);
+  const setToolbarAction = useCallback((name, column) => setAction({
+    name,
+    column,
+  }), [setAction]);
 
-  return [action, setAction, clearAction];
+  return [action, setToolbarAction, clearAction];
 }
 
 export function useRelatableState(props: IRelatableProps): any {

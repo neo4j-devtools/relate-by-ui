@@ -4,10 +4,10 @@ import { values } from 'lodash-es';
 
 import { FilterSetter, TableAddOnReturn } from '../relatable.types';
 
-import { DefaultFilter, IFilterFieldProps } from '../components/filters';
+import { TextFilter, IFilterFieldProps } from '../components/renderers';
 
 export interface IWithFiltersOptions {
-  defaultFilter?: React.FC<IFilterFieldProps>;
+  defaultFilterCell?: React.FC<IFilterFieldProps>;
   onFilterChange?: FilterSetter;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
@@ -16,7 +16,7 @@ export interface IWithFiltersOptions {
 
 export default function withFilters(options: IWithFiltersOptions = {}): TableAddOnReturn {
   const {
-    defaultFilter,
+    defaultFilterCell,
     filters,
     onFilterChange: onCustomFilterChange,
     ...rest
@@ -26,7 +26,7 @@ export default function withFilters(options: IWithFiltersOptions = {}): TableAdd
     ...rest,
     onCustomFilterChange,
     defaultColumn: {
-      Filter: options.defaultFilter || DefaultFilter,
+      Filter: defaultFilterCell || TextFilter,
     },
   };
 
@@ -38,7 +38,7 @@ export default function withFilters(options: IWithFiltersOptions = {}): TableAdd
         ...defaultColumn,
         ...tableParams.defaultColumn,
       },
-    }), [defaultColumn, ...values(rest)]),
+    }), [defaultColumn, defaultFilterCell, ...values(rest)]),
     () => useMemo(() => stateParams, [filters]),
     useFilters,
   ];

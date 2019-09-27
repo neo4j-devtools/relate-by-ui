@@ -1,8 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import { IWithPaginationOptions } from '../../add-ons/with-pagination.add-on';
-import { IWithSortingOptions } from '../../add-ons/with-sorting.add-on';
-import { IWithFiltersOptions } from '../../add-ons/with-filters.add-on';
+import { IWithPaginationOptions, IWithSortingOptions, IWithFiltersOptions, IWithGroupingOptions } from '../../add-ons';
 
 import { RelatableActionContext, RelatableStateContext } from '../../states';
 import { useRelatableActions, useRelatableState } from './relatable.hooks';
@@ -10,6 +8,7 @@ import { useRelatableActions, useRelatableState } from './relatable.hooks';
 import Table, { ITableProps } from '../table/table';
 import Toolbar from '../toolbar/toolbar';
 import Pagination from '../pagination';
+import { StyleWrapper } from './relatable.styled';
 
 export interface IRelatableProps {
   // see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usetable
@@ -24,6 +23,7 @@ export interface IRelatableProps {
   paginated?: boolean | IWithPaginationOptions;
   sortable?: boolean | IWithSortingOptions;
   filterable?: boolean | IWithFiltersOptions;
+  groupable?: boolean | IWithGroupingOptions;
 }
 
 // when used without children, Table props are passed along as well
@@ -59,7 +59,9 @@ function RelatableState({children, ...rest}: IRelatableChildrenProps): JSX.Eleme
 
   return <RelatableStateContext.Provider value={tableProps}>
     <RelatableActions>
-      {children}
+      <StyleWrapper className="relatable__style-wrapper">
+        {children}
+      </StyleWrapper>
     </RelatableActions>
   </RelatableStateContext.Provider>;
 }

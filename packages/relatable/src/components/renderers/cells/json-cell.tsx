@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default function JSONCell({ cell }: any) {
+import { ICellProps } from '../index';
+
+export default function JSONCell({ cell }: ICellProps) {
   const { value = '' } = cell;
 
   return <pre className="relatable__table-json-cell">

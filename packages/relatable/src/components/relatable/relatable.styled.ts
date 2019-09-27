@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { join } from 'lodash-es';
+import { createColumnStateClasses, createToolbarStateClasses } from '../../utils/column-state-classes';
 
 export const StyleWrapper = styled.div`
    margin-bottom: 1em;
@@ -20,6 +22,13 @@ export const StyleWrapper = styled.div`
   .relatable__table-json-cell {
     margin: 0;
   }
+  
+  .menu.icon.ui .icon.relatable__toolbar-icon {
+    margin-right: .8em;
+  }
+  
+  ${join(createToolbarStateClasses(), '\n\n')}
+  ${join(createColumnStateClasses(), '\n\n')}
   
   .relatable__table-body-cell-loader {
     height: 18px;

@@ -1,9 +1,9 @@
 import React from 'react'
 import { FormInput } from '@relate-by-ui/form-elements';
 
-import { IFilterFieldProps } from './index';
+import { IFilterFieldProps } from '../index';
 
-export default function DefaultFilter({
+export default function TextFilter({
   column: { Header },
   onChange,
 }: IFilterFieldProps) {

@@ -7,9 +7,10 @@ import arrayHasItems from '../../utils/array-has-items';
 import getSemanticTableProps from '../../utils/get-semantic-table-props';
 import isLastIndex from '../../utils/is-last-index';
 import getRowNumber from '../../utils/get-row-number';
+import { getTableStateClasses } from '../../utils/column-state-classes';
 
-import { StyleWrapper } from './table.styled';
 import ColumnActions from '../column-actions';
+import { Cell } from '../renderers';
 
 export interface ITableProps {
   // used for rendering loading animation and empty rows
@@ -44,65 +45,58 @@ export default function Table({ loading, expectedRowCount, ...rest }: ITableProp
     _rowsToUse: rows, // @todo: handle this more gracefully inside addOns
     prepareRow,
     availableActions,
+    flatColumns
   } = useRelatableStateContext();
   const semanticTableProps = getSemanticTableProps(rest);
+  const stateClasses = getTableStateClasses(flatColumns);
 
   return (
-    <StyleWrapper className="relatable__style-wrapper">
-      <SemanticTable {...getTableProps()} {...semanticTableProps} className="relatable__table">
-        <SemanticTable.Header>
-          {map(headerGroups, (headerGroup, index: number) => (
-            <SemanticTable.Row {...headerGroup.getHeaderGroupProps()}>
-              <SemanticTable.HeaderCell className="relatable__table-header-cell relatable__table-row-number" collapsing>
-                {' '}
+    <SemanticTable {...getTableProps()} {...semanticTableProps} className={`relatable__table ${stateClasses}`}>
+      <SemanticTable.Header>
+        {map(headerGroups, (headerGroup, index: number) => (
+          <SemanticTable.Row {...headerGroup.getHeaderGroupProps()}>
+            <SemanticTable.HeaderCell className="relatable__table-header-cell relatable__table-row-number" collapsing>
+              {' '}
+            </SemanticTable.HeaderCell>
+            {map(headerGroup.headers, (column: any) => (
+              <SemanticTable.HeaderCell
+                {...column.getHeaderProps()}
+                className="relatable__table-header-cell">
+                {isLastIndex(headerGroups, index) && arrayHasItems(availableActions)
+                  ? <ColumnActions column={column}/>
+                  : column.render('Header')
+                }
               </SemanticTable.HeaderCell>
-              {map(headerGroup.headers, (column: any) => (
-                <SemanticTable.HeaderCell
-                  {...column.getHeaderProps()}
-                  className="relatable__table-header-cell">
-                  {isLastIndex(headerGroups, index) && arrayHasItems(availableActions)
-                    ? <ColumnActions column={column} />
-                    : column.render('Header')
-                  }
-                </SemanticTable.HeaderCell>
-              ))}
+            ))}
+          </SemanticTable.Row>
+        ))}
+      </SemanticTable.Header>
+      <SemanticTable.Body>
+        {map(rows, (row, index: number) =>
+          prepareRow(row) || (
+            <SemanticTable.Row {...row.getRowProps()} className="relatable__table-body-row">
+              <SemanticTable.Cell className="relatable__table-body-cell relatable__table-row-number" collapsing>
+                {getRowNumber(index, pageIndex, pageSize)}
+              </SemanticTable.Cell>
+              {!loading && map(row.cells, (cell, i) => <Cell cell={cell} key={`cell-${i}`}/>)}
+              {loading && <SemanticTable.Cell className="relatable__table-body-cell" colSpan="100%">
+                <div className="relatable__table-body-cell-loader"/>
+              </SemanticTable.Cell>}
             </SemanticTable.Row>
-          ))}
-        </SemanticTable.Header>
-        <SemanticTable.Body>
-          {map(rows, (row, index: number) =>
-            prepareRow(row) || (
-              <SemanticTable.Row {...row.getRowProps()} className="relatable__table-body-row">
-                <SemanticTable.Cell className="relatable__table-body-cell relatable__table-row-number" collapsing>
-                  {getRowNumber(index, pageIndex, pageSize)}
-                </SemanticTable.Cell>
-                {!loading && map(row.cells, (cell, i) => (
-                  <SemanticTable.Cell
-                    {...cell.getCellProps()}
-                    className="relatable__table-body-cell"
-                    key={`cell-${i}`}>
-                    {cell.render('Cell')}
-                  </SemanticTable.Cell>
-                ))}
-                {loading && <SemanticTable.Cell className="relatable__table-body-cell" colSpan="100%">
-                  <div className="relatable__table-body-cell-loader"/>
-                </SemanticTable.Cell>}
-              </SemanticTable.Row>
-            ),
-          )}
-          {/* render empty rows when passed expectedRowCount and no data */}
-          {!arrayHasItems(rows) && loading && expectedRowCount
-            ? map(Array(expectedRowCount), (_, index) => (
-              <SemanticTable.Row key={`empty-row-${index}`} className="relatable__table-body-row">
-                <SemanticTable.Cell className="relatable__table-body-cell" colSpan="100%">
-                  <div className="relatable__table-body-cell-loader"/>
-                </SemanticTable.Cell>
-              </SemanticTable.Row>
-            ))
-            : null
-          }
-        </SemanticTable.Body>
-      </SemanticTable>
-    </StyleWrapper>
+          ),
+        )}
+        {/* render empty rows when passed expectedRowCount and no data */}
+        {!arrayHasItems(rows) && loading && expectedRowCount
+          ? map(Array(expectedRowCount), (_, index) => (
+            <SemanticTable.Row key={`empty-row-${index}`} className="relatable__table-body-row">
+              <SemanticTable.Cell className="relatable__table-body-cell" colSpan="100%">
+                <div className="relatable__table-body-cell-loader"/>
+              </SemanticTable.Cell>
+            </SemanticTable.Row>
+          ))
+          : null
+        }
+      </SemanticTable.Body>
+    </SemanticTable>
   );
 }
