@@ -19,6 +19,7 @@ export interface IWithPaginationOptions {
   pageCount?: number;
   manualPagination?: boolean;
   disablePageResetOnDataChange?: boolean;
+  paginateExpandedRows?: boolean;
 }
 
 export default function withPagination(options: IWithPaginationOptions = {}): TableAddOnReturn {

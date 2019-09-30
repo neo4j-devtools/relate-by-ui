@@ -1,11 +1,17 @@
 import React, { PropsWithChildren } from 'react';
 
-import { IWithPaginationOptions, IWithSortingOptions, IWithFiltersOptions, IWithGroupingOptions } from '../../add-ons';
+import {
+  IWithPaginationOptions,
+  IWithSortingOptions,
+  IWithFiltersOptions,
+  IWithGroupingOptions,
+  IWithExpandedOptions,
+} from '../../add-ons';
 
 import { RelatableActionContext, RelatableStateContext } from '../../states';
 import { useRelatableActions, useRelatableState } from './relatable.hooks';
 
-import Table, { ITableProps } from '../table/table';
+import Table, { ITableProps } from '../table';
 import Toolbar from '../toolbar/toolbar';
 import Pagination from '../pagination';
 import { StyleWrapper } from './relatable.styled';
@@ -20,10 +26,11 @@ export interface IRelatableProps {
   onStateChange?: (state: any) => any;
 
   // add on options
-  paginated?: boolean | IWithPaginationOptions;
-  sortable?: boolean | IWithSortingOptions;
   filterable?: boolean | IWithFiltersOptions;
   groupable?: boolean | IWithGroupingOptions;
+  sortable?: boolean | IWithSortingOptions;
+  paginated?: boolean | IWithPaginationOptions;
+  expandable?: boolean | IWithExpandedOptions;
 }
 
 // when used without children, Table props are passed along as well

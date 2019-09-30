@@ -3,8 +3,6 @@ import { join } from 'lodash-es';
 import { createColumnStateClasses, createToolbarStateClasses } from '../../utils/column-state-classes';
 
 export const StyleWrapper = styled.div`
-   margin-bottom: 1em;
-    
   .relatable__table {
     position: relative;
   }
@@ -14,11 +12,28 @@ export const StyleWrapper = styled.div`
     top: 0;
   }
   
-  .relatable__table-row-number {
-    user-select: none;
+  .relatable__table-row-actions {
+    display: none;
   }
   
-  /* @todo: move this? */
+  .relatable__table-row-actions-cell {
+    user-select: none;
+    width: 50px;
+  }
+  
+  .relatable__table-row-actions-cell:hover .relatable__table-row-actions {
+    display: initial;
+  }
+  
+  .relatable__table-row-actions-cell:hover .relatable__table-row-actions ~ .relatable__table-row-number {
+    display: none;
+  }
+  
+  .relatable__row-expander {
+    cursor: pointer;
+    padding: 2px;
+  }
+  
   .relatable__table-json-cell {
     margin: 0;
   }

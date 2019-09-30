@@ -139,6 +139,20 @@ stories.add(
   ),
 );
 
+stories.add(
+  'Relatable filterable groupable sortable paginated expandable flat',
+  () => (
+    <Relatable
+      filterable
+      groupable
+      sortable
+      paginated
+      expandable
+      columns={FLAT_COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
 
 stories.add(
   'Relatable filterable sortable paginated custom data',

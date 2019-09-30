@@ -3,7 +3,7 @@ import { Table as SemanticTable } from 'semantic-ui-react';
 
 import { ICellProps } from './index';
 
-export default function Cell({cell}: ICellProps) {
+export default function BodyCell({cell}: ICellProps) {
   const {render, row} = cell;
 
   return <SemanticTable.Cell

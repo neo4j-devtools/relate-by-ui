@@ -89,7 +89,7 @@ function Relatable(props: IRelatableChildrenProps | IRelatableBasicProps): JSX.E
 ```
 
 ### Table
-[Source](./src/components/table/table.tsx)
+[Source](src/components/table.tsx)
 
 The Table component of the library.
 
@@ -146,6 +146,7 @@ There are currently three add-ons available:
 1. [Filterable](#filterable)
 2. [Groupable](#groupable)
 3. [Sortable](#sortable)
+3. [Expandable](#expandable)
 4. [Paginated](#paginated)
 
 Please note that add-ons are ordinal, as defined by the [react-table API](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md), and subject to the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html).
@@ -272,6 +273,38 @@ const SortableTable = () => <Relatable
 />
 ```
 
+### Expandable
+[react-table hook](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded)
+
+[Source](./src/add-ons/with-expanded.add-on.ts)
+
+Enables expanding rows of table.
+
+#### Parameters:
+```typescript
+import {ExpandedSetter, IRowProps} from '@relate-by-ui/relatable';
+
+export interface IWithExpandedOptions {
+  onExpandedChange?: ExpandedSetter;
+  expandedRowComponent?: React.FC<IRowProps>;
+
+  // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded
+  expanded?: string[];
+}
+```
+
+#### Usage
+```typescript jsx
+import Relatable, {IWithExpandedOptions} from '@relate-by-ui/relatable';
+
+const options: IWithExpandedOptions = {}
+const ExpandableTable = () => <Relatable
+  columns={[]}
+  data={[]}
+  expandable={true || options}
+/>
+```
+
 ### Paginated
 [react-table hook](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination)
 
@@ -296,6 +329,7 @@ export interface IWithPaginationOptions {
   pageCount?: number;
   manualPagination?: boolean;
   disablePageResetOnDataChange?: boolean;
+  paginateExpandedRows?: boolean;
 }
 ```
 

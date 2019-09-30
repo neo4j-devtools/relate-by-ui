@@ -114,7 +114,7 @@ function makeData(columns: any[], count: number = 20) {
 }
 
 function generateColumnValue(column: any) {
-  switch (column.Cell) {
+  switch (column.BodyCell) {
     case DateCell:
       return Math.floor(Date.now() - (Math.random() * 100000));
     case JSONCell:

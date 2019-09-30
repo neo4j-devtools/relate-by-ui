@@ -49,6 +49,7 @@ export function useRelatableState(props: IRelatableProps): any {
     ...contextValue,
     availableActions,
     // @todo: figure out a cleaner way of detecting and passing rows to use based on addOns used
+    _originalColumns: columns,
     _rowsToUse: contextValue.page || contextValue.rows,
   };
 }
