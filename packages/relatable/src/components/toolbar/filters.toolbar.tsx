@@ -71,7 +71,7 @@ function FiltersPopup({ columns, selectedToolbarAction, appliedFilters, onCustom
         onCustomFilterChange={onCustomFilterChange}
         onClose={() => setShowForm(false)}/>
       : <Button onClick={() => setShowForm(true)} inverted icon color="green" title="Add filter">
-        Add filter <Icon name="plus"/>
+        <Icon name="plus"/> Add filter
       </Button>
     }
   </div>;

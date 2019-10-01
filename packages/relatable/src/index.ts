@@ -7,9 +7,9 @@ import {
 
 // base components
 export default Relatable;
-export {default as Table} from './components/table'
-export {default as Toolbar} from './components/toolbar/toolbar'
-export {default as Pagination} from './components/pagination'
+export { default as Table } from './components/table';
+export { default as Toolbar } from './components/toolbar/toolbar';
+export { default as Pagination } from './components/pagination';
 
 // types
 export { IWithPaginationOptions, IWithSortingOptions, IWithFiltersOptions } from './add-ons';

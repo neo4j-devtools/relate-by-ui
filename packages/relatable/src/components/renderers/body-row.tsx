@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Checkbox, Icon, Table as SemanticTable } from 'semantic-ui-react';
-import {  map } from 'lodash-es';
+import { map } from 'lodash-es';
 
 import { useRelatableStateContext } from '../../states';
 import { getRowStateClasses } from '../../utils/relatable-state-classes';
@@ -43,7 +43,7 @@ function RowActions({ row }: any) {
 
     row.toggleExpanded();
   }, [onCustomExpandedChange, row]);
-  const onSelectClick = useCallback(({target}) => {
+  const onSelectClick = useCallback(({ target }) => {
     if (onCustomSelectionChange) {
       onCustomSelectionChange([row], target.value);
 

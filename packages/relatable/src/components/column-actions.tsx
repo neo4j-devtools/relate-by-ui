@@ -15,7 +15,7 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
   const { availableActions, onCustomSortChange, onCustomGroupChange } = useRelatableStateContext();
   const [, setRelatableToolbar] = useRelatableToolbarContext();
 
-  return <Dropdown text={column.render('Header')} fluid>
+  return <Dropdown text={column.render('Header')} fluid className="relatable__column-actions">
     <Dropdown.Menu>
       {includes(availableActions, withGrouping.name) && (
         <Dropdown.Item

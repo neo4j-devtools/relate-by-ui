@@ -10,7 +10,7 @@ export default function Table({ row }: IRowProps): JSX.Element {
   const {
     getTableProps,
     headerGroups,
-    prepareRow
+    prepareRow,
   } = useRelatableStateContext();
   const rows = row.subRows;
 
@@ -41,7 +41,7 @@ export default function Table({ row }: IRowProps): JSX.Element {
               </SemanticTable.Cell>
               {map(row.cells, (cell, i) => <BodyCell cell={cell} key={`cell-${i}`}/>)}
             </SemanticTable.Row>
-          )
+          ),
         )}
       </SemanticTable.Body>
     </SemanticTable>

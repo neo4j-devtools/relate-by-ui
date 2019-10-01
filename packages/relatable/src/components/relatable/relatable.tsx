@@ -63,7 +63,7 @@ function RelatableBasic(props: IRelatableBasicProps): JSX.Element {
   </RelatableState>;
 }
 
-function RelatableState({children, ...rest}: IRelatableChildrenProps): JSX.Element {
+function RelatableState({ children, ...rest }: IRelatableChildrenProps): JSX.Element {
   const tableProps = useRelatableState(rest);
 
   return <RelatableStateContext.Provider value={tableProps}>
@@ -75,10 +75,10 @@ function RelatableState({children, ...rest}: IRelatableChildrenProps): JSX.Eleme
   </RelatableStateContext.Provider>;
 }
 
-function RelatableActions({children}: any) {
+function RelatableActions({ children }: any) {
   const actionsState = useRelatableActions();
 
   return <RelatableActionContext.Provider value={actionsState}>
     {children}
-  </RelatableActionContext.Provider>
+  </RelatableActionContext.Provider>;
 }

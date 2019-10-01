@@ -6,7 +6,7 @@ import { GroupSetter, TableAddOnReturn } from '../relatable.types';
 
 import { DEFAULT_AGGREGATE_OPTIONS } from '../constants';
 
-import {ValueAggregate, ICellProps} from '../components/renderers';
+import { ValueAggregate, ICellProps } from '../components/renderers';
 
 export interface IWithGroupingOptions {
   defaultAggregate?: string[] | string | ((values: any[]) => any);

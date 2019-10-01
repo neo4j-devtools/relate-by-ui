@@ -148,6 +148,7 @@ stories.add(
       sortable
       paginated
       expandable
+      onStateChange={onStateChangeHandler}
       columns={FLAT_COLUMNS}
       data={ROWS}/>
   ),
@@ -174,6 +175,7 @@ stories.add(
       sortable
       paginated
       selectable
+      onStateChange={onStateChangeHandler}
       columns={CUSTOM_COLUMNS}
       data={CUSTOM_ROWS}/>
   ),

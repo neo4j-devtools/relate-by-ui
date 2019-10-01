@@ -31,7 +31,7 @@ export default function Pagination() {
           lastItem={{ disabled: !canNextPage, content: '⟩⟩' }}
           prevItem={{ disabled: !canPreviousPage, content: '⟨' }}
           nextItem={{ disabled: !canNextPage, content: '⟩' }}
-          pageItem={<PaginationPopup activePage={pageIndex + 1} />}
+          pageItem={<PaginationPopup activePage={pageIndex + 1}/>}
         />
       </Form.Field>
     </Form.Group>
@@ -103,5 +103,5 @@ function PaginationForm() {
           onChange={(_, { value }) => pageSizeSetter(value)}/>
       </Form.Group>
     </Form>
-    </>;
+  </>;
 }

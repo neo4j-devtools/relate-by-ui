@@ -68,7 +68,7 @@ function SortingPopup({ columns, sortBy, onCustomSortChange }: any) {
         onCustomSortChange={onCustomSortChange}
         onClose={() => setShowForm(false)}/>
       : <Button onClick={() => setShowForm(true)} inverted icon color="green" title="Add sorting">
-        Add sorting <Icon name="plus"/>
+        <Icon name="plus"/> Add sorting
       </Button>
     }
   </div>;
@@ -113,7 +113,7 @@ function SortingForm({ columns, onCustomSortChange, onClose }: any) {
           options={sortOptions}
           value={selectedSort}
           search
-          searchInput={{autoFocus: true}}
+          searchInput={{ autoFocus: true }}
           onChange={(_, { value }: any) => setSelectedSort(value)}/>
       </Form.Field>
       <Button

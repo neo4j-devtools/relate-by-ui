@@ -68,7 +68,7 @@ function GroupingPopup({ columns, groupBy, onCustomGroupingChange }: any) {
         onCustomGroupingChange={onCustomGroupingChange}
         onClose={() => setShowForm(false)}/>
       : <Button onClick={() => setShowForm(true)} inverted icon color="green" title="Add grouping">
-        Add grouping <Icon name="plus"/>
+        <Icon name="plus"/> Add grouping
       </Button>
     }
   </div>;
@@ -101,7 +101,7 @@ function GroupingForm({ columns, onCustomGroupingChange, onClose }: any) {
           options={columnOptions}
           value={selectedColumnId}
           search
-          searchInput={{autoFocus: true}}
+          searchInput={{ autoFocus: true }}
           onChange={(_, { value }) => setSelectedColumnId(value)}/>
       </Form.Field>
       <Button

@@ -45,7 +45,7 @@ export default function Table({ loading, expectedRowCount, ...rest }: ITableProp
     _rowsToUse: rows, // @todo: handle this more gracefully inside addOns
     prepareRow,
     availableActions,
-    flatColumns
+    flatColumns,
   } = useRelatableStateContext();
   const semanticTableProps = getSemanticTableProps(rest);
   const stateClasses = getTableStateClasses(flatColumns);
@@ -79,7 +79,7 @@ export default function Table({ loading, expectedRowCount, ...rest }: ITableProp
               row={row}
               rowNumber={getRowNumber(index, pageIndex, pageSize)}
               loading={loading}/>
-          )
+          ),
         )}
         {/* render empty rows when passed expectedRowCount and no data */}
         {!arrayHasItems(rows) && loading && expectedRowCount
