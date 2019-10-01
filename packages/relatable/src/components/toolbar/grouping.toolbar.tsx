@@ -3,8 +3,6 @@ import { Button, Divider, Form, Icon, Label, List, Menu } from 'semantic-ui-reac
 import { filter, find, get, head, map } from 'lodash-es';
 import { FormSelect } from '@relate-by-ui/form-elements';
 
-import { GROUP_ACTIONS } from '../../relatable.types';
-
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
@@ -46,7 +44,7 @@ function GroupingPopup({ columns, groupBy, onCustomGroupingChange }: any) {
             <List.Content floated="right">
               <Icon name="close" onClick={() => {
                 if (onCustomGroupingChange) {
-                  onCustomGroupingChange(column, GROUP_ACTIONS.GROUP_CLEAR);
+                  onCustomGroupingChange(column, false);
                   return;
                 }
 
@@ -87,7 +85,7 @@ function GroupingForm({ columns, onCustomGroupingChange, onClose }: any) {
     onClose();
 
     if (onCustomGroupingChange) {
-      onCustomGroupingChange(selectedColumn, GROUP_ACTIONS.GROUP_SET);
+      onCustomGroupingChange(selectedColumn, true);
       return;
     }
 

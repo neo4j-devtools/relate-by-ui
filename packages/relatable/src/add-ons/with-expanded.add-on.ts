@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import { useExpanded } from 'react-table';
 import { values } from 'lodash-es';
 
-import { ExpandedSetter, TableAddOnReturn } from '../relatable.types';
+import { ExpandSetter, TableAddOnReturn } from '../relatable.types';
 import { ExpandedRow, IRowProps } from '../components/renderers';
 
 export interface IWithExpandedOptions {
-  onExpandedChange?: ExpandedSetter;
+  onExpandedChange?: ExpandSetter;
   expandedRowComponent?: React.FC<IRowProps>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded

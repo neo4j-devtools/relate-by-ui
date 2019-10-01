@@ -30,8 +30,8 @@ export interface IRelatableProps {
   filterable?: boolean | IWithFiltersOptions;
   groupable?: boolean | IWithGroupingOptions;
   sortable?: boolean | IWithSortingOptions;
-  paginated?: boolean | IWithPaginationOptions;
   expandable?: boolean | IWithExpandedOptions;
+  paginated?: boolean | IWithPaginationOptions;
   selectable?: boolean | IWithSelectionOptions;
 }
 

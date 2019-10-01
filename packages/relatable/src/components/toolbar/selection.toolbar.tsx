@@ -68,6 +68,5 @@ function SelectionPopup({ rows }: any) {
         </Button>
       </Form.Group>
     </Form>
-
   </div>;
 }

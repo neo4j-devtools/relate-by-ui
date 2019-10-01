@@ -1,7 +1,5 @@
 Relate by UI - Relatable
 --------------------
-An opinionated [react-table](https://github.com/tannerlinsley/react-table) implementation.
-
 This package is part of the [Relate by UI Kit](http://neo4j-apps.github.io/relate-by-ui), an opiniated collection of components and styles based on Semantic UI.
 
 This package provides a thin abstraction over the [react-table API](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md) to facilitate creating performant data tables.
@@ -61,7 +59,15 @@ The base component of the library.
 
 ```typescript
 import {PropsWithChildren} from 'react';
-import {ITableProps, IWithFiltersOptions, IWithSortingOptions, IWithPaginationOptions} from '@relate-by-ui/relatable'
+import {
+  ITableProps,
+  IWithFiltersOptions,
+  IWithGroupingOptions,
+  IWithSortingOptions,
+  IWithPaginationOptions,
+  IWithExpandedOptions,
+  IWithSelectionOptions
+} from '@relate-by-ui/relatable'
 
 export interface IRelatableProps {
   // see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usetable
@@ -73,9 +79,12 @@ export interface IRelatableProps {
   onStateChange?: (state: any) => any;
   
   // add on options
-  paginated?: boolean | IWithPaginationOptions;
-  sortable?: boolean | IWithSortingOptions;
   filterable?: boolean | IWithFiltersOptions;
+  groupable?: boolean | IWithGroupingOptions;
+  sortable?: boolean | IWithSortingOptions;
+  expandable?: boolean | IWithExpandedOptions;
+  paginated?: boolean | IWithPaginationOptions;
+  selectable?: boolean | IWithSelectionOptions;
 }
 
 // when used without children, Table props are passed along as well
@@ -159,18 +168,14 @@ Please note that add-ons are ordinal, as defined by the [react-table API](https:
 export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
 export type FilterSetter = (columns: any[], val?: any) => void;
-export type ExpandedSetter = (rows: any[], expand: boolean) => void;
-export type SelectionSetter = (rows: any[], select: boolean) => void;
+export type GroupSetter = (column: any, group: boolean) => void;
+export type ExpandSetter = (rows: any[], expand: boolean) => void;
+export type SelectSetter = (rows: any[], select: boolean) => void;
 export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
 export enum SORT_ACTIONS {
   SORT_CLEAR = 'SORT_CLEAR',
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
-}
-export type GroupSetter = (column: any, action: GROUP_ACTIONS) => void;
-export enum GROUP_ACTIONS {
-  GROUP_CLEAR = 'GROUP_CLEAR',
-  GROUP_SET = 'GROUP_SET',
 }
 ```
 
@@ -285,10 +290,10 @@ Enables expanding rows of table.
 
 #### Parameters:
 ```typescript
-import {ExpandedSetter, IRowProps} from '@relate-by-ui/relatable';
+import {ExpandSetter, IRowProps} from '@relate-by-ui/relatable';
 
 export interface IWithExpandedOptions {
-  onExpandedChange?: ExpandedSetter;
+  onExpandedChange?: ExpandSetter;
   expandedRowComponent?: React.FC<IRowProps>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded
@@ -357,10 +362,10 @@ Enables selection of table rows. Please ensure the [Toolbar](#toolbar) component
 
 #### Parameters:
 ```typescript
-import { SelectionSetter } from '@relate-by-ui/relatable';
+import { SelectSetter } from '@relate-by-ui/relatable';
 
 export interface IWithSelectionOptions {
-  onSelectionChange?: SelectionSetter;
+  onSelectionChange?: SelectSetter;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
   selectedRows?: string[];

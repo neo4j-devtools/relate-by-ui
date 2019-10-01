@@ -2,7 +2,7 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { includes } from 'lodash-es';
 
-import { GROUP_ACTIONS, SORT_ACTIONS } from '../relatable.types';
+import { SORT_ACTIONS } from '../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../states';
 import { withFilters, withGrouping, withSorting } from '../add-ons';
@@ -25,7 +25,7 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
             setRelatableToolbar(withGrouping.name, column);
 
             if (onCustomGroupChange) {
-              onCustomGroupChange(column, GROUP_ACTIONS.GROUP_SET);
+              onCustomGroupChange(column, true);
               return;
             }
 

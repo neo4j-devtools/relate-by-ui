@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import { useRowSelect } from 'react-table'; // @todo: missing typings
 import { values } from 'lodash-es';
 
-import { SelectionSetter, TableAddOnReturn } from '../relatable.types';
+import { SelectSetter, TableAddOnReturn } from '../relatable.types';
 
 export interface IWithSelectionOptions {
-  onSelectionChange?: SelectionSetter;
+  onSelectionChange?: SelectSetter;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
   selectedRows?: string[];
