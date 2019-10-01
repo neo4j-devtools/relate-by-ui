@@ -167,6 +167,19 @@ stories.add(
 );
 
 stories.add(
+  'Relatable filterable sortable paginated selectable custom data',
+  () => (
+    <Relatable
+      filterable
+      sortable
+      paginated
+      selectable
+      columns={CUSTOM_COLUMNS}
+      data={CUSTOM_ROWS}/>
+  ),
+);
+
+stories.add(
   'Relatable with options',
   () => (
     <BasicOptions

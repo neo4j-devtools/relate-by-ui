@@ -5,11 +5,11 @@ import { FormSelect } from '@relate-by-ui/form-elements';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
+import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withFilters } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
 import { Filter } from '../renderers';
-import { getToolbarStateClass } from '../../utils/column-state-classes';
 
 export default function FiltersToolbar() {
   const { flatColumns: columns, state: [{ filters }], onCustomFilterChange } = useRelatableStateContext();
@@ -107,6 +107,7 @@ function FiltersForm({ columns, selectedToolbarAction, onCustomFilterChange, onC
         <FormSelect
           options={columnOptions}
           value={selectedColumnId}
+          search
           onChange={(_, { value }) => setSelectedColumnId(value)}/>
       </Form.Field>
       <Filter column={selectedColumn} onChange={onFilterValueChange}/>

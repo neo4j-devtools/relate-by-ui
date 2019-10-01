@@ -7,19 +7,19 @@ import { SORT_ACTIONS } from '../../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
+import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withSorting } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
-import { getToolbarStateClass } from '../../utils/column-state-classes';
 
-export default function SortByToolbar() {
+export default function SortingToolbar() {
   const { flatColumns: columns, state: [{ sortBy }], onCustomSortChange } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isSorted = arrayHasItems(sortBy);
 
   return <ToolbarPopup
     name={withSorting.name}
-    content={<SortByPopup
+    content={<SortingPopup
       columns={columns}
       sortBy={sortBy}
       onCustomSortChange={onCustomSortChange}/>}
@@ -33,10 +33,10 @@ export default function SortByToolbar() {
   </ToolbarPopup>;
 }
 
-function SortByPopup({ columns, sortBy, onCustomSortChange }: any) {
+function SortingPopup({ columns, sortBy, onCustomSortChange }: any) {
   const [showForm, setShowForm] = useState(false);
 
-  return <div className="relatable__toolbar-sort-by-popup">
+  return <div className="relatable__toolbar-sorting-popup">
     {arrayHasItems(sortBy) && <>
       <List>
         {map(sortBy, ({ id, desc }) => {
@@ -63,7 +63,7 @@ function SortByPopup({ columns, sortBy, onCustomSortChange }: any) {
     </>}
 
     {showForm
-      ? <SortByForm
+      ? <SortingForm
         columns={columns}
         onCustomSortChange={onCustomSortChange}
         onClose={() => setShowForm(false)}/>
@@ -74,7 +74,7 @@ function SortByPopup({ columns, sortBy, onCustomSortChange }: any) {
   </div>;
 }
 
-function SortByForm({ columns, onCustomSortChange, onClose }: any) {
+function SortingForm({ columns, onCustomSortChange, onClose }: any) {
   const firstId = get(head(columns), 'id', undefined);
   const [selectedSort, setSelectedSort] = useState<string>(SORT_ACTIONS.SORT_DESC);
   const [selectedColumnId, setSelectedColumnId] = useState<any>(firstId);
@@ -99,18 +99,21 @@ function SortByForm({ columns, onCustomSortChange, onClose }: any) {
     selectedColumn.toggleSortBy(selectedSort === SORT_ACTIONS.SORT_DESC);
   }, [onCustomSortChange, selectedColumn, selectedSort]);
 
-  return <Form onSubmit={onSubmit} className="relatable__toolbar-sort-by-form">
+  return <Form onSubmit={onSubmit} className="relatable__toolbar-sorting-form">
     <Form.Group>
       <Form.Field>
         <FormSelect
           options={columnOptions}
           value={selectedColumnId}
+          search
           onChange={(_, { value }) => setSelectedColumnId(value)}/>
       </Form.Field>
       <Form.Field>
         <FormSelect
           options={sortOptions}
           value={selectedSort}
+          search
+          searchInput={{autoFocus: true}}
           onChange={(_, { value }: any) => setSelectedSort(value)}/>
       </Form.Field>
       <Button

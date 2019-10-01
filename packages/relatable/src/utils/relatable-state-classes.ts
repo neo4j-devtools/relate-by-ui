@@ -1,6 +1,6 @@
-import { compact, entries, flatMap, join, kebabCase, keys, map } from 'lodash-es';
+import { compact, entries, flatMap, join, kebabCase, keys, map, reduce } from 'lodash-es';
 
-import { COLUMN_STATE_CLASSES, TOOLBAR_STATE_CLASSES } from '../constants';
+import { COLUMN_STATE_CLASSES, ROW_STATE_CLASSES, TOOLBAR_STATE_CLASSES } from '../constants';
 
 export function createColumnStateClasses() {
   return flatMap(new Array(100), (_, index) => map(entries(COLUMN_STATE_CLASSES), ([state, bgColor]) => `
@@ -10,13 +10,22 @@ export function createColumnStateClasses() {
   `));
 }
 
+export function createRowStateClasses() {
+  return map(entries(ROW_STATE_CLASSES), ([state, bgColor]) => bgColor
+    ? `.${getRowStateClass(state)} {
+        background-color: ${bgColor};
+      }`
+    : '',
+  );
+}
+
 export function createToolbarStateClasses() {
   return map(entries(TOOLBAR_STATE_CLASSES), ([state, bgColor]) => `
     /* need to win over semantic specificity */
     .menu .label.${getToolbarStateClass(state)} {
       background-color: ${bgColor};
     }
-  `)
+  `);
 }
 
 export function getTableStateClasses(columns: any[]) {
@@ -32,6 +41,14 @@ export function getToolbarStateClass(state: string) {
   return `relatable__toolbar-label--${kebabCase(state)}`;
 }
 
+export function getRowStateClasses(row: any) {
+  return reduce(keys(ROW_STATE_CLASSES), (agg, state) => row[state] ? `${agg} ${getRowStateClass(state)}` : agg, '');
+}
+
 function getColumnStateClass(state: string, index: number) {
-  return `relatable__table--${kebabCase(state)}-${index + 1}`;
+  return `relatable__table-column--${kebabCase(state)}-${index + 1}`;
+}
+
+function getRowStateClass(state: string) {
+  return `relatable__table-row--${kebabCase(state)}`;
 }

@@ -6,6 +6,7 @@ import {
   IWithFiltersOptions,
   IWithGroupingOptions,
   IWithExpandedOptions,
+  IWithSelectionOptions,
 } from '../../add-ons';
 
 import { RelatableActionContext, RelatableStateContext } from '../../states';
@@ -31,6 +32,7 @@ export interface IRelatableProps {
   sortable?: boolean | IWithSortingOptions;
   paginated?: boolean | IWithPaginationOptions;
   expandable?: boolean | IWithExpandedOptions;
+  selectable?: boolean | IWithSelectionOptions;
 }
 
 // when used without children, Table props are passed along as well

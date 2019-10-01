@@ -9,6 +9,7 @@ export default function TextFilter({
 }: IFilterFieldProps) {
   return (
     <FormInput
+      input={{autoFocus: true}}
       onChange={({target}) => onChange(target.value || undefined)}
       placeholder={`Filter ${Header}...`}
     />

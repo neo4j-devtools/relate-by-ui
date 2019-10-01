@@ -7,7 +7,7 @@ import arrayHasItems from '../utils/array-has-items';
 import getSemanticTableProps from '../utils/get-semantic-table-props';
 import isLastIndex from '../utils/is-last-index';
 import getRowNumber from '../utils/get-row-number';
-import { getTableStateClasses } from '../utils/column-state-classes';
+import { getTableStateClasses } from '../utils/relatable-state-classes';
 
 import ColumnActions from './column-actions';
 import { BodyRow } from './renderers';

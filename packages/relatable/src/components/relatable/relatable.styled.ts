@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 import { join } from 'lodash-es';
-import { createColumnStateClasses, createToolbarStateClasses } from '../../utils/column-state-classes';
+import {
+  createColumnStateClasses,
+  createRowStateClasses,
+  createToolbarStateClasses,
+} from '../../utils/relatable-state-classes';
 
 export const StyleWrapper = styled.div`
   .relatable__table {
@@ -44,6 +48,7 @@ export const StyleWrapper = styled.div`
   
   ${join(createToolbarStateClasses(), '\n\n')}
   ${join(createColumnStateClasses(), '\n\n')}
+  ${join(createRowStateClasses(), '\n\n')}
   
   .relatable__table-body-cell-loader {
     height: 18px;

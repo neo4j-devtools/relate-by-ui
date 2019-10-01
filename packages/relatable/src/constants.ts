@@ -29,14 +29,17 @@ export const TOOLBAR_STATE_CLASSES = {
   isGrouped: 'rgb(245,166,35)',
   filterValue: 'rgb(253,118,110)',
   isSorted: 'rgb(109,206,157)',
-  isSelected: 'rgb(104,189,244)', // @todo: this is not implemented
+  isSelected: 'rgb(104,189,244)',
 };
 
 export const COLUMN_STATE_CLASSES = {
   isSorted: 'rgba(109,206,157,0.10)',
   filterValue: 'rgba(253,118,110,0.10)',
   isGrouped: 'rgba(245,166,35,0.10)',
-  isSelected: 'rgba(104,189,244,0.10)', // @todo: this is not implemented
+};
+
+export const ROW_STATE_CLASSES = {
+  isSelected: 'rgba(104,189,244,0.10)',
 };
 
 /**
@@ -114,7 +117,7 @@ function makeData(columns: any[], count: number = 20) {
 }
 
 function generateColumnValue(column: any) {
-  switch (column.BodyCell) {
+  switch (column.Cell) {
     case DateCell:
       return Math.floor(Date.now() - (Math.random() * 100000));
     case JSONCell:

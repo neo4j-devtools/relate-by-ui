@@ -1,16 +1,18 @@
 import React, { useCallback } from 'react';
+import { Checkbox, Icon, Table as SemanticTable } from 'semantic-ui-react';
+import {  map } from 'lodash-es';
+
+import { useRelatableStateContext } from '../../states';
+import { getRowStateClasses } from '../../utils/relatable-state-classes';
 
 import { BodyCell, IRowProps } from './index';
-import { Icon, Table as SemanticTable } from 'semantic-ui-react';
-import { map } from 'lodash-es';
-import { useRelatableStateContext } from '../../states';
 
 export default function BodyRow(props: IRowProps) {
   const { row, rowNumber, loading } = props;
   const { isExpanded } = row;
 
   return <>
-    <SemanticTable.Row {...row.getRowProps()} className="relatable__table-body-row">
+    <SemanticTable.Row {...row.getRowProps()} className={getRowClasses(row)}>
       <SemanticTable.Cell className="relatable__table-body-cell relatable__table-row-actions-cell">
         <RowActions row={row}/>
         <span className="relatable__table-row-number">{rowNumber}</span>
@@ -24,24 +26,41 @@ export default function BodyRow(props: IRowProps) {
   </>;
 }
 
-function RowActions({ row }: any) {
-  if (!row.canExpand) return null;
+function getRowClasses(row: any) {
+  return `relatable__table-body-row ${getRowStateClasses(row)}`;
+}
 
-  const { onCustomExpandedChange } = useRelatableStateContext();
-  const onClick = useCallback(() => {
+function RowActions({ row }: any) {
+  if (!row.canExpand && !row.toggleRowSelected) return null;
+
+  const { onCustomExpandedChange, onCustomSelectionChange } = useRelatableStateContext();
+  const onExpandClick = useCallback(() => {
     if (onCustomExpandedChange) {
-      onCustomExpandedChange(row, !row.isExpanded);
+      onCustomExpandedChange([row], !row.isExpanded);
 
       return;
     }
 
     row.toggleExpanded();
   }, [onCustomExpandedChange, row]);
+  const onSelectClick = useCallback(({target}) => {
+    if (onCustomSelectionChange) {
+      onCustomSelectionChange([row], target.value);
+
+      return;
+    }
+
+    row.toggleRowSelected(target.value);
+  }, [onCustomSelectionChange, row]);
 
   return <span className="relatable__table-row-actions">
-    {row.canExpand && <span className="relatable__row-expander" onClick={onClick}>
+    {row.canExpand && <span className="relatable__row-expander" onClick={onExpandClick}>
       <Icon name={row.isExpanded ? 'caret down' : 'caret right'}/>
     </span>}
+    {row.toggleRowSelected && <Checkbox
+      className="relatable__row-selector"
+      checked={row.isSelected}
+      onChange={onSelectClick}/>}
   </span>;
 }
 
@@ -53,7 +72,7 @@ function ExpandedRow(props: IRowProps) {
   return <SemanticTable.Row
     {...rowProps}
     key={`${rowProps.key}-expanded`}
-    className="relatable__table-body-row relatable__table-body-row--expanded">
+    className="relatable__table-body-row relatable__table-body-expanded-row">
     <SemanticTable.Cell className="relatable__table-body-cell" colSpan="100%">
       <CustomExpandedRowComponent {...props}/>
     </SemanticTable.Cell>

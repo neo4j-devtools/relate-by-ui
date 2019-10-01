@@ -15,7 +15,8 @@ export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
 export type FilterSetter = (columns: any[], val?: any) => void;
 export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
-export type ExpandedSetter = (row: any, expand: boolean) => void;
+export type ExpandedSetter = (rows: any[], expand: boolean) => void;
+export type SelectionSetter = (rows: any[], select: boolean) => void;
 export enum SORT_ACTIONS {
   SORT_CLEAR = 'SORT_CLEAR',
   SORT_DESC = 'SORT_DESC',

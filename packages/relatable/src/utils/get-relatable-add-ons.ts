@@ -1,7 +1,7 @@
 import { IRelatableProps } from '../components/relatable/relatable';
 import { TableAddOnReturn } from '../relatable.types';
 
-import { withFilters, withPagination, withSorting, withGrouping, withExpanded } from '../add-ons';
+import { withFilters, withPagination, withSorting, withGrouping, withExpanded, withSelection } from '../add-ons';
 
 /**
  * Adds enhancers based on boolean props
@@ -10,9 +10,10 @@ import { withFilters, withPagination, withSorting, withGrouping, withExpanded } 
  * @param     {boolean | IWithGroupingOptions}          props.groupable
  * @param     {boolean | IWithSortingOptions}           props.sortable
  * @param     {boolean | IWithPaginationOptions}        props.paginated
+ * @param     {boolean | IWithSelectionOptions}         props.selectable
  * @return    {TableAddOnReturn[]}
  */
-export function getRelatableAddOns({ groupable, filterable, sortable, paginated, expandable }: IRelatableProps): TableAddOnReturn[] {
+export function getRelatableAddOns({ groupable, filterable, sortable, paginated, expandable, selectable }: IRelatableProps): TableAddOnReturn[] {
   const addOns: TableAddOnReturn[] = [];
 
   if (filterable) {
@@ -33,6 +34,10 @@ export function getRelatableAddOns({ groupable, filterable, sortable, paginated,
 
   if (paginated) {
     addOns.push(withPagination(paginated !== true ? paginated : {}));
+  }
+
+  if (selectable) {
+    addOns.push(withSelection(selectable !== true ? selectable : {}));
   }
 
   return addOns;

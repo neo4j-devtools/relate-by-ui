@@ -7,19 +7,19 @@ import { GROUP_ACTIONS } from '../../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
+import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withGrouping } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
-import { getToolbarStateClass } from '../../utils/column-state-classes';
 
-export default function GroupByToolbar() {
+export default function GroupingToolbar() {
   const { flatColumns: columns, state: [{ groupBy }], onCustomGroupingChange } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isGrouped = arrayHasItems(groupBy);
 
   return <ToolbarPopup
     name={withGrouping.name}
-    content={<GroupByPopup
+    content={<GroupingPopup
       columns={columns}
       groupBy={groupBy}
       onCustomGroupingChange={onCustomGroupingChange}/>}
@@ -33,10 +33,10 @@ export default function GroupByToolbar() {
   </ToolbarPopup>;
 }
 
-function GroupByPopup({ columns, groupBy, onCustomGroupingChange }: any) {
+function GroupingPopup({ columns, groupBy, onCustomGroupingChange }: any) {
   const [showForm, setShowForm] = useState(false);
 
-  return <div className="relatable__toolbar-group-by-popup">
+  return <div className="relatable__toolbar-grouping-popup">
     {arrayHasItems(groupBy) && <>
       <List>
         {map(groupBy, (id) => {
@@ -63,7 +63,7 @@ function GroupByPopup({ columns, groupBy, onCustomGroupingChange }: any) {
     </>}
 
     {showForm
-      ? <GroupByForm
+      ? <GroupingForm
         columns={columns}
         onCustomGroupingChange={onCustomGroupingChange}
         onClose={() => setShowForm(false)}/>
@@ -74,7 +74,7 @@ function GroupByPopup({ columns, groupBy, onCustomGroupingChange }: any) {
   </div>;
 }
 
-function GroupByForm({ columns, onCustomGroupingChange, onClose }: any) {
+function GroupingForm({ columns, onCustomGroupingChange, onClose }: any) {
   const firstId = get(head(columns), 'id', undefined);
   const [selectedColumnId, setSelectedColumnId] = useState<any>(firstId);
   const selectedColumn = find(columns, ({ id }) => id === selectedColumnId);
@@ -94,12 +94,14 @@ function GroupByForm({ columns, onCustomGroupingChange, onClose }: any) {
     selectedColumn.toggleGroupBy(true);
   }, [onCustomGroupingChange, selectedColumn]);
 
-  return <Form onSubmit={onSubmit} className="relatable__toolbar-group-by-form">
+  return <Form onSubmit={onSubmit} className="relatable__toolbar-grouping-form">
     <Form.Group>
       <Form.Field>
         <FormSelect
           options={columnOptions}
           value={selectedColumnId}
+          search
+          searchInput={{autoFocus: true}}
           onChange={(_, { value }) => setSelectedColumnId(value)}/>
       </Form.Field>
       <Button

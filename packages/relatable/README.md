@@ -148,6 +148,7 @@ There are currently three add-ons available:
 3. [Sortable](#sortable)
 3. [Expandable](#expandable)
 4. [Paginated](#paginated)
+4. [Selectable](#selectable)
 
 Please note that add-ons are ordinal, as defined by the [react-table API](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md), and subject to the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html).
 
@@ -158,6 +159,8 @@ Please note that add-ons are ordinal, as defined by the [react-table API](https:
 export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
 export type FilterSetter = (columns: any[], val?: any) => void;
+export type ExpandedSetter = (rows: any[], expand: boolean) => void;
+export type SelectionSetter = (rows: any[], select: boolean) => void;
 export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
 export enum SORT_ACTIONS {
   SORT_CLEAR = 'SORT_CLEAR',
@@ -330,6 +333,37 @@ export interface IWithPaginationOptions {
   manualPagination?: boolean;
   disablePageResetOnDataChange?: boolean;
   paginateExpandedRows?: boolean;
+}
+```
+
+#### Usage
+```typescript jsx
+import Relatable, {IWithPaginationOptions} from '@relate-by-ui/relatable';
+
+const options: IWithPaginationOptions = {}
+const PaginatedTable = () => <Relatable
+  columns={[]}
+  data={[]}
+  paginated={true || options}
+/>
+```
+
+### Selectable
+[react-table hook](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect)
+
+[Source](./src/add-ons/with-selection.add-on.ts)
+
+Enables selection of table rows. Please ensure the [Toolbar](#toolbar) component is rendered in advanced use cases.
+
+#### Parameters:
+```typescript
+import { SelectionSetter } from '@relate-by-ui/relatable';
+
+export interface IWithSelectionOptions {
+  onSelectionChange?: SelectionSetter;
+
+  // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
+  selectedRows?: string[];
 }
 ```
 
