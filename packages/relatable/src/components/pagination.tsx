@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { Pagination as SemanticPagination, Form, Popup, Label } from 'semantic-ui-react';
+import { Pagination as SemanticPagination, Form, Popup, Label, PaginationProps } from 'semantic-ui-react';
 import { map } from 'lodash-es';
 
 import { useRelatableStateContext } from '../states';
 import { FormSelect } from '@relate-by-ui/form-elements';
 
-export default function Pagination() {
+export default function Pagination(props?: PaginationProps): JSX.Element {
   const {
     canPreviousPage,
     canNextPage,
@@ -32,6 +32,7 @@ export default function Pagination() {
           prevItem={{ disabled: !canPreviousPage, content: '⟨' }}
           nextItem={{ disabled: !canNextPage, content: '⟩' }}
           pageItem={<PaginationPopup activePage={pageIndex + 1}/>}
+          {...props}
         />
       </Form.Field>
     </Form.Group>

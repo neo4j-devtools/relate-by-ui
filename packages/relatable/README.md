@@ -136,7 +136,9 @@ function Table({ loading, expectedRowCount, ...rest }: ITableProps): JSX.Element
 The Toolbar component of the library.
 
 ```typescript
-function Toolbar(): JSX.Element;
+import {MenuProps} from 'semantic-ui-react';
+
+function Toolbar(props?: MenuProps): JSX.Element;
 ```
 
 ### Pagination
@@ -145,7 +147,9 @@ function Toolbar(): JSX.Element;
 The Pagination component of the library.
 
 ```typescript
-function Pagination(): JSX.Element;
+import {PaginationProps} from 'semantic-ui-react';
+
+function Pagination(props?: PaginationProps): JSX.Element;
 ```
 
 ---

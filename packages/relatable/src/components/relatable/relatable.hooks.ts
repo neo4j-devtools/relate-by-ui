@@ -7,6 +7,7 @@ import { IRelatableProps } from './relatable';
 
 import { ON_STATE_CHANGE_TRIGGERS } from '../../constants';
 import { getRelatableAddOns } from '../../utils/get-relatable-add-ons';
+import { TextCell } from '../renderers';
 
 export function useRelatableActions(): [ToolbarAction | null, ToolbarActionDispatch, Dispatch<void>] {
   const [action, setAction] = useState<ToolbarAction | null>(null);
@@ -37,7 +38,9 @@ export function useRelatableState(props: IRelatableProps): any {
     columns,
     data,
     state: tableState,
-    defaultColumn: {},
+    defaultColumn: {
+      Cell: TextCell
+    },
   });
   const contextValue = useTable(
     tableParams,

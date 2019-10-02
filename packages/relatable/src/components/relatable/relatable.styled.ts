@@ -25,6 +25,10 @@ export const StyleWrapper = styled.div`
     width: 50px;
   }
   
+  .relatable__cell-value {
+    user-select: all;
+  }
+  
   .relatable__table-row-actions-cell:hover .relatable__table-row-actions {
     display: initial;
   }

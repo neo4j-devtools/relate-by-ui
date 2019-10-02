@@ -11,6 +11,9 @@ export { default as Table } from './components/table';
 export { default as Toolbar } from './components/toolbar/toolbar';
 export { default as Pagination } from './components/pagination';
 
+// state access hooks
+export {useRelatableStateContext, useRelatableToolbarContext } from './states'
+
 // types
 export { IWithPaginationOptions, IWithSortingOptions, IWithFiltersOptions } from './add-ons';
 export { IRelatableBasicProps, IRelatableChildrenProps, IRelatableProps };
