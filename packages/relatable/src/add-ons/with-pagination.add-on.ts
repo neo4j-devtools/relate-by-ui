@@ -38,6 +38,7 @@ export default function withPagination(options: IWithPaginationOptions = {}): Ta
     () => useMemo(() => ({
       ...tableParams,
       customPageSizeOptions: pageSizeOptions,
+      // @todo: figure out strategy for these
       onCustomPageSizeChange: onPageSizeChange,
       onCustomPageChange: onPageChange,
     }), [onPageSizeChange, onPageChange, ...values(tableParams)]),

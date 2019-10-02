@@ -1,18 +1,19 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Divider, Form, Icon, Label, List, Menu } from 'semantic-ui-react';
-import { entries, filter, find, get, head, map } from 'lodash-es';
 import { FormSelect } from '@relate-by-ui/form-elements';
+import { entries, filter, find, get, head, map } from 'lodash-es';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
+import { isSelectedRowsFilter, makeColumnFilter } from '../../utils/filters';
 import { withFilters } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
 import { Filter } from '../renderers';
 
 export default function FiltersToolbar() {
-  const { flatColumns: columns, state: [{ filters }], onCustomFilterChange } = useRelatableStateContext();
+  const { flatColumns: columns, state: { filters }, onCustomFilterChange } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const appliedFilters = entries(filters);
   const isFiltered = arrayHasItems(appliedFilters);
@@ -46,17 +47,10 @@ function FiltersPopup({ columns, selectedToolbarAction, appliedFilters, onCustom
 
           return <List.Item key={id}>
             <List.Content floated="right">
-              <Icon name="close" onClick={() => {
-                if (onCustomFilterChange) {
-                  onCustomFilterChange([column], undefined);
-                  return;
-                }
-
-                column.setFilter(undefined);
-              }}/>
+              <Icon name="close" onClick={() => onCustomFilterChange([column], undefined)}/>
             </List.Content>
             <List.Content>
-              {column.render('Header')}: {val}
+              <FilterItem column={column} value={val}/>
             </List.Content>
           </List.Item>;
         })}
@@ -91,13 +85,7 @@ function FiltersForm({ columns, selectedToolbarAction, onCustomFilterChange, onC
   }));
   const onSubmit = useCallback(() => {
     onClose();
-
-    if (onCustomFilterChange) {
-      onCustomFilterChange([selectedColumn], filterValue);
-      return;
-    }
-
-    selectedColumn.setFilter(filterValue);
+    onCustomFilterChange([selectedColumn], makeColumnFilter(filterValue));
   }, [onCustomFilterChange, selectedColumn, filterValue]);
 
   return <Form onSubmit={onSubmit} className="relatable__toolbar-filters-form">
@@ -130,4 +118,16 @@ function FiltersForm({ columns, selectedToolbarAction, onCustomFilterChange, onC
       </Button>
     </Form.Group>
   </Form>;
+}
+
+function FilterItem({ column, value }: any) {
+  if (isSelectedRowsFilter(value)) {
+    return <span className="relatable__toolbar-filters-item">
+     {value.value.length} rows from selection.
+    </span>;
+  }
+
+  return <span className="relatable__toolbar-filters-item">
+    {column.render('Header')}: ({value.type}) {value.value}
+  </span>;
 }

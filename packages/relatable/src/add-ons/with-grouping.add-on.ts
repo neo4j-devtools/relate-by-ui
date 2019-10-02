@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useGroupBy } from 'react-table';
 import { values } from 'lodash-es';
 
@@ -22,7 +22,7 @@ export interface IWithGroupingOptions {
 export default function withGrouping(options: IWithGroupingOptions = {}): TableAddOnReturn {
   const {
     groupBy,
-    onGroupChange: onCustomGroupChange,
+    onGroupChange,
     defaultAggregateCell,
     defaultAggregate = DEFAULT_AGGREGATE_OPTIONS,
     ...rest
@@ -30,9 +30,17 @@ export default function withGrouping(options: IWithGroupingOptions = {}): TableA
   const stateParams = groupBy
     ? { groupBy }
     : {};
+  const onCustomGroupingChange: GroupSetter = useCallback((column, group) => {
+    if (onGroupChange) {
+      onGroupChange(column, group);
+      return;
+    }
+
+    column.toggleGroupBy(group);
+  }, [onGroupChange]);
   const tableParams = {
     ...rest,
-    onCustomGroupChange,
+    onCustomGroupingChange,
     defaultColumn: {
       aggregate: defaultAggregate,
       Aggregated: defaultAggregateCell || ValueAggregate,
@@ -47,7 +55,7 @@ export default function withGrouping(options: IWithGroupingOptions = {}): TableA
         ...defaultColumn,
         ...tableParams.defaultColumn,
       },
-    }), [onCustomGroupChange, defaultAggregateCell, ...values(rest)]),
+    }), [onCustomGroupingChange, defaultAggregateCell, defaultAggregate, ...values(rest)]),
     () => useMemo(() => stateParams, [groupBy]),
     useGroupBy,
   ];

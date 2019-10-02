@@ -113,12 +113,13 @@ stories.add(
 );
 
 stories.add(
-  'Relatable filterable sortable paginated inverted striped compact',
+  'Relatable filterable sortable paginated selectable inverted striped compact',
   () => (
     <Relatable
       filterable
       sortable
       paginated
+      selectable
       inverted
       striped
       compact

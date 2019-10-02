@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useExpanded } from 'react-table';
-import { values } from 'lodash-es';
+import { forEach, values } from 'lodash-es';
 
 import { ExpandSetter, TableAddOnReturn } from '../relatable.types';
 import { ExpandedRow, IRowProps } from '../components/renderers';
@@ -18,14 +18,23 @@ export default function withExpanded(options: IWithExpandedOptions = {}): TableA
   const stateParams = expanded
     ? { expanded }
     : {};
+  const onCustomExpandedChange: ExpandSetter = useCallback((rows, expand) => {
+    if (onExpandedChange) {
+      onExpandedChange(rows, expand);
+      return;
+    }
+
+    forEach(rows, (row) => row.toggleExpanded(expand));
+  }, [onExpandedChange]);
 
   return [
     null,
     () => useMemo(() => ({
       ...tableParams,
+      expandSubRows: false,
       CustomExpandedRowComponent: expandedRowComponent,
-      onCustomExpandedChange: onExpandedChange,
-    }), [expandedRowComponent, onExpandedChange, ...values(tableParams)]),
+      onCustomExpandedChange,
+    }), [expandedRowComponent, onCustomExpandedChange, ...values(tableParams)]),
     () => useMemo(() => stateParams, [expanded]),
     useExpanded,
   ];

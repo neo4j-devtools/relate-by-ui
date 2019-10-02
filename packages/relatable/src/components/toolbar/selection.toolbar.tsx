@@ -5,19 +5,21 @@ import { filter } from 'lodash-es';
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
+import { makeSelectedRowsFilter } from '../../utils/filters';
 import { withSelection } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
 
 export default function SelectionToolbar() {
-  const { rows, state: [{ selectedRows }] } = useRelatableStateContext();
+  const { rows, state: { selectedRowPaths } } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
-  const isSelected = arrayHasItems(selectedRows);
+  const isSelected = arrayHasItems(selectedRowPaths);
 
   return <ToolbarPopup
     name={withSelection.name}
     content={<SelectionPopup
       rows={rows}
+      selectedRowPaths={selectedRowPaths}
       selectedToolbarAction={selectedToolbarAction}/>}
     selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
@@ -25,38 +27,38 @@ export default function SelectionToolbar() {
       <Icon name='list ul' className="relatable__toolbar-icon"/>
       Selected
       {isSelected &&
-      <Label className={isSelected ? getToolbarStateClass('isSelected') : ''}>{selectedRows.length}</Label>}
+      <Label className={isSelected ? getToolbarStateClass('isSelected') : ''}>{selectedRowPaths.length}</Label>}
     </Menu.Item>
   </ToolbarPopup>;
 }
 
-function SelectionPopup({ rows }: any) {
-  const { toggleRowSelectedAll, onCustomSelectionChange } = useRelatableStateContext();
+function SelectionPopup({ rows, selectedRowPaths }: any) {
+  const { flatColumns, onCustomSelectionChange, onCustomFilterChange } = useRelatableStateContext();
   const [, , clearToolbar] = useRelatableToolbarContext();
-  const filteredRows = filter(rows, 'isSelected');
+  const selectedRows = filter(rows, 'isSelected');
   const onSelectionClear = useCallback(() => {
     clearToolbar();
-
-    if (onCustomSelectionChange) {
-      onCustomSelectionChange(rows, false);
-
-      return;
-    }
-
-    toggleRowSelectedAll(false);
-  }, [toggleRowSelectedAll, onCustomSelectionChange]);
+    onCustomSelectionChange(selectedRows, false);
+  }, [onCustomSelectionChange, selectedRows]);
+  const onSelectionView = useCallback(() => {
+    if (!onCustomFilterChange) return;
+    clearToolbar();
+    // just use the first column, rows dont care...
+    onCustomFilterChange([flatColumns[0]], makeSelectedRowsFilter(selectedRowPaths));
+  }, [onCustomFilterChange, selectedRowPaths]);
 
   return <div className="relatable__toolbar-selection-popup">
     <Form className="relatable__toolbar-selection-form">
-      <h4>You have selected {filteredRows.length} rows</h4>
+      <h4>You have selected {selectedRows.length} rows</h4>
       <Form.Group>
-        <Button
+        {onCustomFilterChange && <Button
           inverted
           icon
           color="blue"
-          title="">
+          onClick={onSelectionView}
+          title="View selection">
           <Icon name="eye"/> Show
-        </Button>
+        </Button>}
         <Button
           inverted
           icon

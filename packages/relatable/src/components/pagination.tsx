@@ -1,18 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import { Pagination as SemanticPagination, Form, Popup, Label, PaginationProps } from 'semantic-ui-react';
+import { FormSelect } from '@relate-by-ui/form-elements';
 import { map } from 'lodash-es';
 
 import { useRelatableStateContext } from '../states';
-import { FormSelect } from '@relate-by-ui/form-elements';
+import { Omit } from '../relatable.types';
 
-export default function Pagination(props?: PaginationProps): JSX.Element {
+export type IPaginationProps = Omit<PaginationProps, 'totalPages'>
+
+// @ts-ignore
+export default function Pagination(props: IPaginationProps = {}): JSX.Element {
   const {
     canPreviousPage,
     canNextPage,
     pageCount,
     gotoPage,
     onCustomPageChange,
-    state: [{ pageIndex }],
+    state: { pageIndex },
   } = useRelatableStateContext();
   const pageSetter = onCustomPageChange || gotoPage;
 
@@ -61,7 +65,7 @@ function PaginationForm() {
     setPageSize,
     onCustomPageSizeChange,
     onCustomPageChange,
-    state: [{ pageIndex, pageSize }],
+    state: { pageIndex, pageSize },
   } = useRelatableStateContext();
   const activePage = pageIndex + 1;
   const pageSetter = onCustomPageChange || gotoPage;

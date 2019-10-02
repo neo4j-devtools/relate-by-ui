@@ -8,7 +8,7 @@ export default function BodyCell({ cell }: ICellProps) {
 
   return <SemanticTable.Cell
     {...cell.getCellProps()}
-    className="relatable__table-body-cell">
+    className="relatable__table-cell relatable__table-body-cell">
     {(!row.isAggregated || cell.isGrouped) && render('Cell')}
     {row.isAggregated && !cell.isGrouped && render('Aggregated')}
   </SemanticTable.Cell>;

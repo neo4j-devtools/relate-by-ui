@@ -10,8 +10,9 @@ This package provides a thin abstraction over the [react-table API](https://gith
 1. [Basic Usage](#basic-usage)
 2. [Advanced Usage](#advanced-usage)
 3. [Base Components](#base-components)
-4. [Add-ons](#add-ons)
-4. [Column Enhancements](#column-enhancements)
+4. [Exposed Typings](#exposed-typings)
+5. [Add-ons](#add-ons)
+6. [Column Enhancements](#column-enhancements)
 
 ---
 ## Basic usage
@@ -60,6 +61,7 @@ The base component of the library.
 ```typescript
 import {PropsWithChildren} from 'react';
 import {
+  StateChangeHandler,
   ITableProps,
   IWithFiltersOptions,
   IWithGroupingOptions,
@@ -76,7 +78,7 @@ export interface IRelatableProps {
   defaultColumn?: any;
   
   // Relatable state change handler
-  onStateChange?: (state: any) => any;
+  onStateChange?: StateChangeHandler;
   
   // add on options
   filterable?: boolean | IWithFiltersOptions;
@@ -154,24 +156,14 @@ function Pagination(props?: PaginationProps): JSX.Element;
 
 ---
 
-## Add-ons
-There are currently three add-ons available:
-1. [Filterable](#filterable)
-2. [Groupable](#groupable)
-3. [Sortable](#sortable)
-3. [Expandable](#expandable)
-4. [Paginated](#paginated)
-4. [Selectable](#selectable)
-
-Please note that add-ons are ordinal, as defined by the [react-table API](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md), and subject to the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html).
-
-### Exposed typings
+## Exposed typings
 [Source](./src/relatable.types.ts)
 
 ```typescript
+export type StateChangeHandler = (state: any, changedKeys: string[]) => void;
 export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
-export type FilterSetter = (columns: any[], val?: any) => void;
+export type FilterSetter = (columns: any[], value?: FilterValue) => void;
 export type GroupSetter = (column: any, group: boolean) => void;
 export type ExpandSetter = (rows: any[], expand: boolean) => void;
 export type SelectSetter = (rows: any[], select: boolean) => void;
@@ -181,7 +173,38 @@ export enum SORT_ACTIONS {
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
 }
+
+export enum FilterVariants {
+  EQUALS =  'EQUALS',
+  ANY_IN = 'ANY_IN'
+}
+export type ColumnFilter =  {
+  type: 'column',
+  variant?: FilterVariants,
+  value: any
+}
+export type SelectedRowsFilter = { // this is a specific filter for selected rows.
+  type: 'selected-rows',
+  key: 'path',
+  variant: FilterVariants.ANY_IN,
+  value: any[]
+}
+export type FilterValue = ColumnFilter | SelectedRowsFilter;
+
 ```
+
+---
+
+## Add-ons
+There are currently six add-ons available:
+1. [Filterable](#filterable)
+2. [Groupable](#groupable)
+3. [Sortable](#sortable)
+3. [Expandable](#expandable)
+4. [Paginated](#paginated)
+5. [Selectable](#selectable)
+
+Please note that add-ons are ordinal, as defined by the [react-table API](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md), and subject to the [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html).
 
 ### Filterable
 [react-table hook](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters)
@@ -192,12 +215,14 @@ Enables filtering of table. Please ensure the [Toolbar](#toolbar) component is r
 
 #### Parameters:
 ```typescript
-import { IFilterFieldProps, FilterSetter } from '@relate-by-ui/relatable';
+import { IFilterFieldProps, FilterSetter, FilterFunc } from '@relate-by-ui/relatable';
 
 export interface IWithFiltersOptions {
-  defaultFilter?: React.FC<IFilterFieldProps>;
+  defaultFilterCell?: React.FC<IFilterFieldProps>;
   onFilterChange?: FilterSetter;
   
+  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
+  defaultFilter?: string | FilterFunc;
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
   filters?: any;
 }
@@ -372,16 +397,16 @@ export interface IWithSelectionOptions {
   onSelectionChange?: SelectSetter;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
-  selectedRows?: string[];
+  selectedRowPaths?: string[];
 }
 ```
 
 #### Usage
 ```typescript jsx
-import Relatable, {IWithPaginationOptions} from '@relate-by-ui/relatable';
+import Relatable, {IWithSelectionOptions} from '@relate-by-ui/relatable';
 
-const options: IWithPaginationOptions = {}
-const PaginatedTable = () => <Relatable
+const options: IWithSelectionOptions = {}
+const SelectableTable = () => <Relatable
   columns={[]}
   data={[]}
   paginated={true || options}

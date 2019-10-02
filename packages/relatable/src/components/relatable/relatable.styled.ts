@@ -14,27 +14,51 @@ export const StyleWrapper = styled.div`
   .relatable__table-header-cell {
     position: sticky;
     top: 0;
+    z-index: 1;
+  }
+  
+  /* semantic specificity... */
+  .relatable__column-actions.dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: static; /* force dropdown to align to sticky th */
   }
   
   .relatable__table-row-actions {
-    display: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .relatable__table-row-actions {
+    min-height: 45px;
+    min-width: 30px;
+  }
+  
+  .relatable__table-header-cell .relatable__table-row-actions {
+    min-height: 0;
   }
   
   .relatable__table-row-actions-cell {
     user-select: none;
-    width: 50px;
+    position: relative;
   }
   
-  .relatable__cell-value {
-    user-select: all;
+  .relatable__table-row-number, .relatable__table-header-number {
+    opacity: .5;
+    top: 0;
+    left: 0;
+    position: absolute;
+    margin: 0;
+    border-radius: 0;
+    font-size: 8px;
+    border-bottom-right-radius: 0.28571429rem
   }
   
-  .relatable__table-row-actions-cell:hover .relatable__table-row-actions {
-    display: initial;
-  }
-  
-  .relatable__table-row-actions-cell:hover .relatable__table-row-actions ~ .relatable__table-row-number {
-    display: none;
+  .relatable__table-header-number {
+    position: static;
   }
   
   .relatable__row-expander {
@@ -71,7 +95,7 @@ export const StyleWrapper = styled.div`
     width: 70%;
   }
   
-  @-webkit-keyframes relatable__table-moving-gradient {
+  @keyframes relatable__table-moving-gradient {
     0% { background-position: -250px 0; }
     100% { background-position: 250px 0; }
   }

@@ -11,7 +11,7 @@ export const ON_STATE_CHANGE_TRIGGERS = [
   'sortBy',
   'filters',
   'groupBy',
-  'selectedRows',
+  'selectedRowPaths',
   'expanded',
 ];
 export const SEMANTIC_TABLE_PROPS = [

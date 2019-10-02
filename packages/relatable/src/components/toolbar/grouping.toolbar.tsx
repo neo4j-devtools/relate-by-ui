@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Divider, Form, Icon, Label, List, Menu } from 'semantic-ui-react';
-import { filter, find, get, head, map } from 'lodash-es';
 import { FormSelect } from '@relate-by-ui/form-elements';
+import { filter, find, get, head, map } from 'lodash-es';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
@@ -11,7 +11,7 @@ import { withGrouping } from '../../add-ons';
 import { ToolbarPopup } from './toolbar-popup';
 
 export default function GroupingToolbar() {
-  const { flatColumns: columns, state: [{ groupBy }], onCustomGroupingChange } = useRelatableStateContext();
+  const { flatColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isGrouped = arrayHasItems(groupBy);
 
@@ -42,14 +42,7 @@ function GroupingPopup({ columns, groupBy, onCustomGroupingChange }: any) {
 
           return <List.Item key={id}>
             <List.Content floated="right">
-              <Icon name="close" onClick={() => {
-                if (onCustomGroupingChange) {
-                  onCustomGroupingChange(column, false);
-                  return;
-                }
-
-                column.toggleGroupBy(false);
-              }}/>
+              <Icon name="close" onClick={() => onCustomGroupingChange(column, false)}/>
             </List.Content>
             <List.Content>
               {column.render('Header')}
@@ -83,13 +76,7 @@ function GroupingForm({ columns, onCustomGroupingChange, onClose }: any) {
   }));
   const onSubmit = useCallback(() => {
     onClose();
-
-    if (onCustomGroupingChange) {
-      onCustomGroupingChange(selectedColumn, true);
-      return;
-    }
-
-    selectedColumn.toggleGroupBy(true);
+    onCustomGroupingChange(selectedColumn, true);
   }, [onCustomGroupingChange, selectedColumn]);
 
   return <Form onSubmit={onSubmit} className="relatable__toolbar-grouping-form">

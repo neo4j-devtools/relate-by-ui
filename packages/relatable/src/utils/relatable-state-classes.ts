@@ -1,6 +1,7 @@
 import { compact, entries, flatMap, join, kebabCase, keys, map, reduce } from 'lodash-es';
 
 import { COLUMN_STATE_CLASSES, ROW_STATE_CLASSES, TOOLBAR_STATE_CLASSES } from '../constants';
+import { isColumnFilter } from './filters';
 
 export function createColumnStateClasses() {
   return flatMap(new Array(100), (_, index) => map(entries(COLUMN_STATE_CLASSES), ([state, bgColor]) => `
@@ -8,6 +9,10 @@ export function createColumnStateClasses() {
       background-color: ${bgColor};
     }
   `));
+}
+
+export function getRowClasses(row: any) {
+  return `relatable__table-row relatable__table-body-row ${getRowStateClasses(row)}`;
 }
 
 export function createRowStateClasses() {
@@ -29,7 +34,7 @@ export function createToolbarStateClasses() {
 }
 
 export function getTableStateClasses(columns: any[]) {
-  const columnClasses = flatMap(columns, (column, index) => map(keys(COLUMN_STATE_CLASSES), (state) => column[state]
+  const columnClasses = flatMap(columns, (column, index) => map(keys(COLUMN_STATE_CLASSES), (state) => isValidColumnState(column, state)
     ? getColumnStateClass(state, index + 1) // @todo: + 1 due to table numbers
     : '',
   ));
@@ -37,11 +42,20 @@ export function getTableStateClasses(columns: any[]) {
   return join(compact(columnClasses), ' ');
 }
 
+function isValidColumnState(column: any, state: string) {
+  switch (state) {
+    case 'filterValue':
+      return isColumnFilter(column[state]);
+    default:
+      return Boolean(column[state]);
+  }
+}
+
 export function getToolbarStateClass(state: string) {
   return `relatable__toolbar-label--${kebabCase(state)}`;
 }
 
-export function getRowStateClasses(row: any) {
+function getRowStateClasses(row: any) {
   return reduce(keys(ROW_STATE_CLASSES), (agg, state) => row[state] ? `${agg} ${getRowStateClass(state)}` : agg, '');
 }
 

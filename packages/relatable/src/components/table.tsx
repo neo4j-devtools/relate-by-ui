@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Table as SemanticTable } from 'semantic-ui-react';
 import { map } from 'lodash-es';
 
@@ -11,6 +11,7 @@ import { getTableStateClasses } from '../utils/relatable-state-classes';
 
 import ColumnActions from './column-actions';
 import { BodyRow } from './renderers';
+import RowActions from './renderers/row-actions';
 
 export interface ITableProps {
   // used for rendering loading animation and empty rows
@@ -40,28 +41,42 @@ export default function Table({ loading, expectedRowCount, ...rest }: ITableProp
   const {
     getTableProps,
     headerGroups,
-    pageIndex = 0,
-    pageSize = 1,
+    state: {
+      pageIndex = 0,
+      pageSize = 1,
+    },
     _rowsToUse: rows, // @todo: handle this more gracefully inside addOns
     prepareRow,
     availableActions,
     flatColumns,
+    onCustomSelectionChange,
   } = useRelatableStateContext();
   const semanticTableProps = getSemanticTableProps(rest);
   const stateClasses = getTableStateClasses(flatColumns);
+  const onSelectAllClick = useCallback(
+    (select: boolean) => {
+      onCustomSelectionChange(rows, select);
+    },
+    [onCustomSelectionChange, rows],
+  );
 
   return (
     <SemanticTable {...getTableProps()} {...semanticTableProps} className={`relatable__table ${stateClasses}`}>
       <SemanticTable.Header>
         {map(headerGroups, (headerGroup, index: number) => (
-          <SemanticTable.Row {...headerGroup.getHeaderGroupProps()}>
-            <SemanticTable.HeaderCell className="relatable__table-header-cell relatable__table-row-actions-cell">
-              {' '}
+          <SemanticTable.Row
+            {...headerGroup.getHeaderGroupProps()}
+            className="relatable__table-row relatable__table-header-row">
+            <SemanticTable.HeaderCell
+              className="relatable__table-cell relatable__table-header-cell relatable__table-header-actions-cell"
+              collapsing>
+              {isLastIndex(headerGroups, index) &&
+              <RowActions rows={rows} onSelectClick={onCustomSelectionChange && onSelectAllClick}/>}
             </SemanticTable.HeaderCell>
             {map(headerGroup.headers, (column: any) => (
               <SemanticTable.HeaderCell
                 {...column.getHeaderProps()}
-                className="relatable__table-header-cell">
+                className="relatable__table-cell relatable__table-header-cell">
                 {isLastIndex(headerGroups, index) && arrayHasItems(availableActions)
                   ? <ColumnActions column={column}/>
                   : column.render('Header')
@@ -84,8 +99,8 @@ export default function Table({ loading, expectedRowCount, ...rest }: ITableProp
         {/* render empty rows when passed expectedRowCount and no data */}
         {!arrayHasItems(rows) && loading && expectedRowCount
           ? map(Array(expectedRowCount), (_, index) => (
-            <SemanticTable.Row key={`empty-row-${index}`} className="relatable__table-body-row">
-              <SemanticTable.Cell className="relatable__table-body-cell" colSpan="100%">
+            <SemanticTable.Row key={`empty-row-${index}`} className="relatable__table-row relatable__table-body-row">
+              <SemanticTable.Cell className="relatable__table-cell relatable__table-body-cell" colSpan="100%">
                 <div className="relatable__table-body-cell-loader"/>
               </SemanticTable.Cell>
             </SemanticTable.Row>

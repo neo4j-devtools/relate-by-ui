@@ -12,7 +12,7 @@ export interface IColumnActionsProps {
 }
 
 export default function ColumnActions({ column }: IColumnActionsProps) {
-  const { availableActions, onCustomSortChange, onCustomGroupChange } = useRelatableStateContext();
+  const { availableActions, onCustomSortChange, onCustomGroupingChange } = useRelatableStateContext();
   const [, setRelatableToolbar] = useRelatableToolbarContext();
 
   return <Dropdown text={column.render('Header')} fluid className="relatable__column-actions">
@@ -23,13 +23,7 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
           icon="group"
           onClick={() => {
             setRelatableToolbar(withGrouping.name, column);
-
-            if (onCustomGroupChange) {
-              onCustomGroupChange(column, true);
-              return;
-            }
-
-            column.toggleGroupBy(true);
+            onCustomGroupingChange(column, true);
           }}/>
       )}
       {includes(availableActions, withFilters.name) && (
@@ -46,39 +40,21 @@ export default function ColumnActions({ column }: IColumnActionsProps) {
             icon="dont"
             onClick={() => {
               setRelatableToolbar(withSorting.name, column);
-
-              if (onCustomSortChange) {
-                onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR);
-                return;
-              }
-
-              column.clearSorting();
+              onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR);
             }}/>
           <Dropdown.Item
             text="Sort Desc"
             icon="sort content descending"
             onClick={() => {
               setRelatableToolbar(withSorting.name, column);
-
-              if (onCustomSortChange) {
-                onCustomSortChange(column, SORT_ACTIONS.SORT_DESC);
-                return;
-              }
-
-              column.toggleSortBy(true); // @todo: multiSort?
+              onCustomSortChange(column, SORT_ACTIONS.SORT_DESC);
             }}/>
           <Dropdown.Item
             text="Sort Asc"
             icon="sort content ascending"
             onClick={() => {
               setRelatableToolbar(withSorting.name, column);
-
-              if (onCustomSortChange) {
-                onCustomSortChange(column, SORT_ACTIONS.SORT_ASC);
-                return;
-              }
-
-              column.toggleSortBy(false); // @todo: multiSort?
+              onCustomSortChange(column, SORT_ACTIONS.SORT_ASC);
             }}/>
         </>
       )}

@@ -12,7 +12,7 @@ export { default as Toolbar } from './components/toolbar/toolbar';
 export { default as Pagination } from './components/pagination';
 
 // state access hooks
-export {useRelatableStateContext, useRelatableToolbarContext } from './states'
+export { useRelatableStateContext, useRelatableToolbarContext } from './states';
 
 // types
 export { IWithPaginationOptions, IWithSortingOptions, IWithFiltersOptions } from './add-ons';

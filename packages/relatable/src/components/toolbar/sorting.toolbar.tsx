@@ -13,7 +13,7 @@ import { withSorting } from '../../add-ons';
 import { ToolbarPopup } from './toolbar-popup';
 
 export default function SortingToolbar() {
-  const { flatColumns: columns, state: [{ sortBy }], onCustomSortChange } = useRelatableStateContext();
+  const { flatColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isSorted = arrayHasItems(sortBy);
 
@@ -44,14 +44,7 @@ function SortingPopup({ columns, sortBy, onCustomSortChange }: any) {
 
           return <List.Item key={id}>
             <List.Content floated="right">
-              <Icon name="close" onClick={() => {
-                if (onCustomSortChange) {
-                  onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR);
-                  return;
-                }
-
-                column.clearSorting();
-              }}/>
+              <Icon name="close" onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR)}/>
             </List.Content>
             <List.Content>
               {column.render('Header')}: {desc ? 'descending' : 'ascending'}
@@ -90,13 +83,7 @@ function SortingForm({ columns, onCustomSortChange, onClose }: any) {
   ];
   const onSubmit = useCallback(() => {
     onClose();
-
-    if (onCustomSortChange) {
-      onCustomSortChange(selectedColumn, selectedSort);
-      return;
-    }
-
-    selectedColumn.toggleSortBy(selectedSort === SORT_ACTIONS.SORT_DESC);
+    onCustomSortChange(selectedColumn, selectedSort);
   }, [onCustomSortChange, selectedColumn, selectedSort]);
 
   return <Form onSubmit={onSubmit} className="relatable__toolbar-sorting-form">
