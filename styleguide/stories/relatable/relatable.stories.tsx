@@ -3,7 +3,14 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import Relatable, { SORT_ACTIONS, Pagination, Table, Toolbar } from '../../../packages/relatable/src';
-import { COLUMNS, ROWS, FLAT_COLUMNS, CUSTOM_COLUMNS, CUSTOM_ROWS } from '../../../packages/relatable/src/constants';
+import {
+  COLUMNS,
+  ROWS,
+  FLAT_COLUMNS,
+  CUSTOM_COLUMNS,
+  CUSTOM_ROWS,
+  DISABLED_COLUMNS,
+} from '../../../packages/relatable/src/constants';
 
 const stories = storiesOf('Relatable', module);
 const onStateChangeHandler = action('onStateChange');
@@ -141,6 +148,21 @@ stories.add(
 );
 
 stories.add(
+  'Relatable filterable groupable sortable paginated expandable flat disabled',
+  () => (
+    <Relatable
+      filterable
+      groupable
+      sortable
+      paginated
+      expandable
+      onStateChange={onStateChangeHandler}
+      columns={DISABLED_COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
+stories.add(
   'Relatable filterable groupable sortable paginated expandable flat',
   () => (
     <Relatable
@@ -148,6 +170,22 @@ stories.add(
       groupable
       sortable
       paginated
+      expandable
+      onStateChange={onStateChangeHandler}
+      columns={FLAT_COLUMNS}
+      data={ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable filterable groupable sortable selectable paginated expandable flat',
+  () => (
+    <Relatable
+      filterable
+      groupable
+      sortable
+      paginated
+      selectable
       expandable
       onStateChange={onStateChangeHandler}
       columns={FLAT_COLUMNS}

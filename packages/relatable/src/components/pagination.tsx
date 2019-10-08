@@ -3,12 +3,14 @@ import { Pagination as SemanticPagination, Form, Popup, Label, PaginationProps }
 import { FormSelect } from '@relate-by-ui/form-elements';
 import { map } from 'lodash-es';
 
-import { useRelatableStateContext } from '../states';
 import { Omit } from '../relatable.types';
 
-export type IPaginationProps = Omit<PaginationProps, 'totalPages'>
+import { useRelatableStateContext } from '../states';
 
-// @ts-ignore
+export interface IPaginationProps extends Omit<PaginationProps, 'totalPages'>{
+  totalPages?: number;
+}
+
 export default function Pagination(props: IPaginationProps = {}): JSX.Element {
   const {
     canPreviousPage,

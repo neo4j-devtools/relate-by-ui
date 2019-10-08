@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import { usePagination } from 'react-table';
+import { usePagination, UsePaginationOptions } from 'react-table';
 import { pick, values } from 'lodash-es';
 
 import { PageSetter, PageSizeSetter, TableAddOnReturn } from '../relatable.types';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '../constants';
 
-export interface IWithPaginationOptions {
+export interface IWithPaginationOptions<Row extends object = any> extends UsePaginationOptions<Row> {
   onPageChange?: PageSetter;
   onPageSizeChange?: PageSizeSetter;
   pageSizeOptions?: number[];
@@ -14,15 +14,9 @@ export interface IWithPaginationOptions {
   // react-table state overrides https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
   pageSize?: number;
   pageIndex?: number;
-
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
-  pageCount?: number;
-  manualPagination?: boolean;
-  disablePageResetOnDataChange?: boolean;
-  paginateExpandedRows?: boolean;
 }
 
-export default function withPagination(options: IWithPaginationOptions = {}): TableAddOnReturn {
+export default function withPagination<Row extends object = any>(options: IWithPaginationOptions<Row> = {}): TableAddOnReturn {
   const {
     pageSize,
     pageIndex,
@@ -35,6 +29,7 @@ export default function withPagination(options: IWithPaginationOptions = {}): Ta
 
   return [
     null,
+    () => true,
     () => useMemo(() => ({
       ...tableParams,
       customPageSizeOptions: pageSizeOptions,

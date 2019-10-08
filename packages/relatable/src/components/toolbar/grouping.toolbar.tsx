@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Divider, Form, Icon, Label, List, Menu } from 'semantic-ui-react';
+import { Button, Divider, Form, Icon, Label, Menu } from 'semantic-ui-react';
 import { FormSelect } from '@relate-by-ui/form-elements';
 import { filter, find, get, head, map } from 'lodash-es';
 
@@ -9,6 +9,8 @@ import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withGrouping } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
+import { getRelatableAction } from '../../utils/relatable-actions';
+import { columnHasAction } from '../../utils/column-actions';
 
 export default function GroupingToolbar() {
   const { flatColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext();
@@ -20,6 +22,8 @@ export default function GroupingToolbar() {
     content={<GroupingPopup
       columns={columns}
       groupBy={groupBy}
+      onClose={clearToolbar}
+      selectedToolbarAction={selectedToolbarAction}
       onCustomGroupingChange={onCustomGroupingChange}/>}
     selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
@@ -31,45 +35,35 @@ export default function GroupingToolbar() {
   </ToolbarPopup>;
 }
 
-function GroupingPopup({ columns, groupBy, onCustomGroupingChange }: any) {
-  const [showForm, setShowForm] = useState(false);
-
-  return <div className="relatable__toolbar-grouping-popup">
+function GroupingPopup({ columns, groupBy, onClose, selectedToolbarAction, onCustomGroupingChange }: any) {
+  return <div className="relatable__toolbar-popup relatable__toolbar-grouping-popup">
     {arrayHasItems(groupBy) && <>
-      <List>
-        {map(groupBy, (id) => {
-          const column = find(columns, (column) => column.id === id);
+      {map(groupBy, (id) => {
+        const column = find(columns, (column) => column.id === id);
 
-          return <List.Item key={id}>
-            <List.Content floated="right">
-              <Icon name="close" onClick={() => onCustomGroupingChange(column, false)}/>
-            </List.Content>
-            <List.Content>
-              {column.render('Header')}
-            </List.Content>
-          </List.Item>;
-        })}
-      </List>
+        return <Label key={id} className="relatable__toolbar-value">
+          {column.render('Header')}
+          <Icon name="close" onClick={() => onCustomGroupingChange(column, false)}/>
+        </Label>;
+      })}
       <Divider/>
     </>}
-
-    {showForm
-      ? <GroupingForm
-        columns={columns}
-        onCustomGroupingChange={onCustomGroupingChange}
-        onClose={() => setShowForm(false)}/>
-      : <Button onClick={() => setShowForm(true)} inverted icon color="green" title="Add grouping">
-        <Icon name="plus"/> Add grouping
-      </Button>
-    }
+    <GroupingForm
+      columns={columns}
+      selectedToolbarAction={selectedToolbarAction}
+      onCustomGroupingChange={onCustomGroupingChange}
+      onClose={onClose}/>
   </div>;
 }
 
-function GroupingForm({ columns, onCustomGroupingChange, onClose }: any) {
-  const firstId = get(head(columns), 'id', undefined);
+function GroupingForm({ columns, onCustomGroupingChange, selectedToolbarAction, onClose }: any) {
+  const {availableActions} = useRelatableStateContext();
+  const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
+  const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
+  const firstId = get(head(columnsToUse), 'id', undefined);
   const [selectedColumnId, setSelectedColumnId] = useState<any>(firstId);
-  const selectedColumn = find(columns, ({ id }) => id === selectedColumnId);
-  const columnOptions = map(filter(columns, 'canGroupBy'), (column) => ({
+  const selectedColumn = find(columnsToUse, ({ id }) => id === selectedColumnId);
+  const columnOptions = map(filter(columnsToUse, 'canGroupBy'), (column) => ({
     key: column.id,
     value: column.id,
     text: column.Header,
@@ -90,20 +84,12 @@ function GroupingForm({ columns, onCustomGroupingChange, onClose }: any) {
           onChange={(_, { value }) => setSelectedColumnId(value)}/>
       </Form.Field>
       <Button
-        inverted
+        basic
         icon
-        color="blue"
+        color="black"
+        className="relatable__toolbar-popup-button"
         title="Add">
         <Icon name="check"/>
-      </Button>
-      <Button
-        inverted
-        icon
-        color="orange"
-        title="Cancel"
-        type="button"
-        onClick={onClose}>
-        <Icon name="remove"/>
       </Button>
     </Form.Group>
   </Form>;

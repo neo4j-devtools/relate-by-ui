@@ -11,6 +11,8 @@ import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withSorting } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
+import { getRelatableAction } from '../../utils/relatable-actions';
+import { columnHasAction } from '../../utils/column-actions';
 
 export default function SortingToolbar() {
   const { flatColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext();
@@ -22,6 +24,8 @@ export default function SortingToolbar() {
     content={<SortingPopup
       columns={columns}
       sortBy={sortBy}
+      onClose={clearToolbar}
+      selectedToolbarAction={selectedToolbarAction}
       onCustomSortChange={onCustomSortChange}/>}
     selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
@@ -33,46 +37,38 @@ export default function SortingToolbar() {
   </ToolbarPopup>;
 }
 
-function SortingPopup({ columns, sortBy, onCustomSortChange }: any) {
-  const [showForm, setShowForm] = useState(false);
-
-  return <div className="relatable__toolbar-sorting-popup">
+function SortingPopup({ columns, sortBy, onClose, selectedToolbarAction, onCustomSortChange }: any) {
+  return <div className="relatable__toolbar-popup relatable__toolbar-sorting-popup">
     {arrayHasItems(sortBy) && <>
       <List>
         {map(sortBy, ({ id, desc }) => {
           const column = find(columns, (column) => column.id === id);
 
-          return <List.Item key={id}>
-            <List.Content floated="right">
-              <Icon name="close" onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR)}/>
-            </List.Content>
-            <List.Content>
-              {column.render('Header')}: {desc ? 'descending' : 'ascending'}
-            </List.Content>
-          </List.Item>;
+          return <Label key={id} className="relatable__toolbar-value">
+            {column.render('Header')}: {desc ? 'DESC' : 'ASC'}
+            <Icon name="close" onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR)}/>
+          </Label>;
         })}
       </List>
       <Divider/>
     </>}
-
-    {showForm
-      ? <SortingForm
-        columns={columns}
-        onCustomSortChange={onCustomSortChange}
-        onClose={() => setShowForm(false)}/>
-      : <Button onClick={() => setShowForm(true)} inverted icon color="green" title="Add sorting">
-        <Icon name="plus"/> Add sorting
-      </Button>
-    }
+    <SortingForm
+      columns={columns}
+      selectedToolbarAction={selectedToolbarAction}
+      onCustomSortChange={onCustomSortChange}
+      onClose={onClose}/>
   </div>;
 }
 
-function SortingForm({ columns, onCustomSortChange, onClose }: any) {
-  const firstId = get(head(columns), 'id', undefined);
+function SortingForm({ columns, onCustomSortChange, selectedToolbarAction, onClose }: any) {
+  const {availableActions} = useRelatableStateContext();
+  const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
+  const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
+  const firstId = get(head(columnsToUse), 'id', undefined);
   const [selectedSort, setSelectedSort] = useState<string>(SORT_ACTIONS.SORT_DESC);
   const [selectedColumnId, setSelectedColumnId] = useState<any>(firstId);
-  const selectedColumn = find(columns, ({ id }) => id === selectedColumnId);
-  const columnOptions = map(filter(columns, 'canSort'), (column) => ({
+  const selectedColumn = find(columnsToUse, ({ id }) => id === selectedColumnId);
+  const columnOptions = map(filter(columnsToUse, 'canSort'), (column) => ({
     key: column.id,
     value: column.id,
     text: column.Header,
@@ -104,20 +100,12 @@ function SortingForm({ columns, onCustomSortChange, onClose }: any) {
           onChange={(_, { value }: any) => setSelectedSort(value)}/>
       </Form.Field>
       <Button
-        inverted
+        basic
         icon
-        color="blue"
+        color="black"
+        className="relatable__toolbar-popup-button"
         title="Add">
         <Icon name="check"/>
-      </Button>
-      <Button
-        inverted
-        icon
-        color="orange"
-        title="Cancel"
-        type="button"
-        onClick={onClose}>
-        <Icon name="remove"/>
       </Button>
     </Form.Group>
   </Form>;

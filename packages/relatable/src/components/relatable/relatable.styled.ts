@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { join } from 'lodash-es';
 import {
-  createColumnStateClasses,
+  createColumnStateLabelClasses,
   createRowStateClasses,
   createToolbarStateClasses,
 } from '../../utils/relatable-state-classes';
@@ -17,13 +17,35 @@ export const StyleWrapper = styled.div`
     z-index: 1;
   }
   
+  .relatable__expanded-row-table .relatable__table-header-cell {
+    position: static;
+  }
+  
+  .relatable__table-header-cell--has-actions:hover {
+    background-color: #F3F3F3;
+    cursor: pointer;
+  }
+  
   /* semantic specificity... */
   .relatable__column-actions.dropdown {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: static; /* force dropdown to align to sticky th */
   }
+  
+  .relatable__column-actions-header {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .relatable__column-actions-header [class*="relatable__table-column-state"] {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 0;
+    margin-left: 5px;
+  }
+  
+   .relatable__column-actions-header [class*="relatable__table-column-state"]:first-of-type {
+      margin-left: 10px;
+   }
   
   .relatable__table-row-actions {
     display: flex;
@@ -75,7 +97,7 @@ export const StyleWrapper = styled.div`
   }
   
   ${join(createToolbarStateClasses(), '\n\n')}
-  ${join(createColumnStateClasses(), '\n\n')}
+  ${join(createColumnStateLabelClasses(), '\n\n')}
   ${join(createRowStateClasses(), '\n\n')}
   
   .relatable__table-body-cell-loader {

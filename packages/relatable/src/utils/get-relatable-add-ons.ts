@@ -13,7 +13,7 @@ import { withFilters, withPagination, withSorting, withGrouping, withExpanded, w
  * @param     {boolean | IWithSelectionOptions}         props.selectable
  * @return    {TableAddOnReturn[]}
  */
-export function getRelatableAddOns({ groupable, filterable, sortable, paginated, expandable, selectable }: IRelatableProps): TableAddOnReturn[] {
+export default function getRelatableAddOns({ groupable, filterable, sortable, paginated, expandable, selectable }: IRelatableProps): TableAddOnReturn[] {
   const addOns: TableAddOnReturn[] = [];
 
   if (filterable) {

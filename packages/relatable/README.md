@@ -109,6 +109,7 @@ export interface ITableProps {
   // used for rendering loading animation and empty rows
   loading?: boolean;
   expectedRowCount?: number;
+  headless?: boolean;
 
   // semantic ui react props https://react.semantic-ui.com/collections/table/
   attached?: boolean | string;
@@ -140,7 +141,7 @@ The Toolbar component of the library.
 ```typescript
 import {MenuProps} from 'semantic-ui-react';
 
-function Toolbar(props?: MenuProps): JSX.Element;
+function Toolbar(props: MenuProps = {}): JSX.Element;
 ```
 
 ### Pagination
@@ -151,7 +152,13 @@ The Pagination component of the library.
 ```typescript
 import {PaginationProps} from 'semantic-ui-react';
 
-function Pagination(props?: PaginationProps): JSX.Element;
+import {Omit} from './<internal>'
+
+export interface IPaginationProps extends Omit<PaginationProps, 'totalPages'>{
+  totalPages?: number;
+}
+
+function Pagination(props: IPaginationProps = {}): JSX.Element;
 ```
 
 ---
@@ -163,34 +170,42 @@ function Pagination(props?: PaginationProps): JSX.Element;
 export type StateChangeHandler = (state: any, changedKeys: string[]) => void;
 export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
-export type FilterSetter = (columns: any[], value?: FilterValue) => void;
 export type GroupSetter = (column: any, group: boolean) => void;
 export type ExpandSetter = (rows: any[], expand: boolean) => void;
 export type SelectSetter = (rows: any[], select: boolean) => void;
-export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
+
+/* Sorting */
 export enum SORT_ACTIONS {
   SORT_CLEAR = 'SORT_CLEAR',
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
 }
+export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
 
-export enum FilterVariants {
-  EQUALS =  'EQUALS',
+/* Filters */
+export enum FILTER_ACTIONS {
+  FILTER_CLEAR = 'FILTER_CLEAR',
+  FILTER_ADD = 'FILTER_ADD',
+  FILTER_REMOVE = 'FILTER_REMOVE',
+}
+export enum FILTER_VARIANTS {
+  EQUALS = 'EQUALS',
   ANY_IN = 'ANY_IN'
 }
-export type ColumnFilter =  {
+export type ColumnFilter = {
   type: 'column',
-  variant?: FilterVariants,
+  variant?: FILTER_VARIANTS,
   value: any
 }
-export type SelectedRowsFilter = { // this is a specific filter for selected rows.
+export type SelectedRowsFilter = {
   type: 'selected-rows',
   key: 'path',
-  variant: FilterVariants.ANY_IN,
+  variant: FILTER_VARIANTS.ANY_IN,
   value: any[]
 }
 export type FilterValue = ColumnFilter | SelectedRowsFilter;
-
+export type FilterFunc = (rows: any[], columnID: any, value: FilterValue) => any[];
+export type FilterSetter = (column: any, action: FILTER_ACTIONS, values: FilterValue[]) => void
 ```
 
 ---
@@ -215,18 +230,20 @@ Enables filtering of table. Please ensure the [Toolbar](#toolbar) component is r
 
 #### Parameters:
 ```typescript
-import { IFilterFieldProps, FilterSetter, FilterFunc } from '@relate-by-ui/relatable';
+import { UseFiltersOptions } from 'react-table';
+import { IFilterFieldProps, FilterSetter, FilterFunc, FilterValue } from '@relate-by-ui/relatable';
 
-export interface IWithFiltersOptions {
+export interface IWithFiltersOptions<Row extends object = any> extends UseFiltersOptions<Row>{
   defaultFilterCell?: React.FC<IFilterFieldProps>;
+  defaultFilterFunc?: string | FilterFunc;
   onFilterChange?: FilterSetter;
-  
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
-  defaultFilter?: string | FilterFunc;
+
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
-  filters?: any;
+  // with custom filter value array
+  filters?: Record<string, FilterValue[]>;
 }
 ```
+Please note that we depart sligthly from the react-table state API here to enable multiple filters per column.
 
 #### Usage
 ```typescript jsx
@@ -250,17 +267,16 @@ Enables grouping of table rows. Please ensure the [Toolbar](#toolbar) component 
 
 #### Parameters:
 ```typescript
+import { IdType, UseGroupByOptions } from 'react-table';
 import { ICellProps, GroupSetter } from '@relate-by-ui/relatable';
 
-export interface IWithGroupingOptions {
+export interface IWithGroupingOptions<Row extends object = any> extends UseGroupByOptions<Row> {
   defaultAggregate?: string[] | string | ((values: any[]) => any);
   defaultAggregateCell?: React.FC<ICellProps>;
   onGroupChange?: GroupSetter;
 
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
-  manualGroupBy?: boolean;
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
-  groupBy?: string[];
+  groupBy?: IdType<Row>[];
 }
 ```
 
@@ -286,15 +302,14 @@ Enables sorting of table.
 
 #### Parameters:
 ```typescript
+import { SortingRule, UseSortByOptions } from 'react-table';
 import {SortSetter} from '@relate-by-ui/relatable';
 
-export interface IWithSortingOptions {
+export interface IWithSortingOptions<Row extends object = any> extends UseSortByOptions<Row> {
   onSortChange?: SortSetter;
 
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
-  manualSorting?: boolean;
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
-  sortBy?: any[];
+  sortBy?: SortingRule<Row>[];
 }
 ```
 
@@ -319,14 +334,15 @@ Enables expanding rows of table.
 
 #### Parameters:
 ```typescript
+import { IdType, UseExpandedOptions } from 'react-table';
 import {ExpandSetter, IRowProps} from '@relate-by-ui/relatable';
 
-export interface IWithExpandedOptions {
+export interface IWithExpandedOptions<Row extends object = any> extends UseExpandedOptions<Row> {
   onExpandedChange?: ExpandSetter;
   expandedRowComponent?: React.FC<IRowProps>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded
-  expanded?: string[];
+  expanded?: IdType<Row>[];
 }
 ```
 
@@ -351,22 +367,17 @@ Enables pagination of table. Please ensure the [Pagination](#pagination) compone
 
 #### Parameters:
 ```typescript
+import { UsePaginationOptions } from 'react-table';
 import {PageSetter, PageSizeSetter} from '@relate-by-ui/relatable';
 
-export interface IWithPaginationOptions {
+export interface IWithPaginationOptions<Row extends object = any> extends UsePaginationOptions<Row> {
   onPageChange?: PageSetter;
   onPageSizeChange?: PageSizeSetter;
   pageSizeOptions?: number[];
-  
+
   // react-table state overrides https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
   pageSize?: number;
   pageIndex?: number;
-  
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usePagination
-  pageCount?: number;
-  manualPagination?: boolean;
-  disablePageResetOnDataChange?: boolean;
-  paginateExpandedRows?: boolean;
 }
 ```
 
@@ -391,13 +402,14 @@ Enables selection of table rows. Please ensure the [Toolbar](#toolbar) component
 
 #### Parameters:
 ```typescript
+import { IdType, UseRowSelectOptions } from 'react-table';
 import { SelectSetter } from '@relate-by-ui/relatable';
 
-export interface IWithSelectionOptions {
+export interface IWithSelectionOptions<Row extends object = any> extends UseRowSelectOptions<Row> {
   onSelectionChange?: SelectSetter;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
-  selectedRowPaths?: string[];
+  selectedRowPaths?: IdType<Row>[];
 }
 ```
 

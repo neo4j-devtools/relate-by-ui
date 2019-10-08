@@ -1,19 +1,20 @@
 import { useCallback, useMemo } from 'react';
-import { useExpanded } from 'react-table';
+import { IdType, useExpanded, UseExpandedOptions } from 'react-table';
 import { forEach, values } from 'lodash-es';
 
 import { ExpandSetter, TableAddOnReturn } from '../relatable.types';
 import { ExpandedRow, IRowProps } from '../components/renderers';
+import arrayHasItems from '../utils/array-has-items';
 
-export interface IWithExpandedOptions {
+export interface IWithExpandedOptions<Row extends object = any> extends UseExpandedOptions<Row> {
   onExpandedChange?: ExpandSetter;
   expandedRowComponent?: React.FC<IRowProps>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded
-  expanded?: string[];
+  expanded?: IdType<Row>[];
 }
 
-export default function withExpanded(options: IWithExpandedOptions = {}): TableAddOnReturn {
+export default function withExpanded<Row extends object = any>(options: IWithExpandedOptions<Row> = {}): TableAddOnReturn {
   const { expanded, expandedRowComponent = ExpandedRow, onExpandedChange, ...tableParams } = options;
   const stateParams = expanded
     ? { expanded }
@@ -29,6 +30,7 @@ export default function withExpanded(options: IWithExpandedOptions = {}): TableA
 
   return [
     null,
+    ({subRows}) => arrayHasItems(subRows),
     () => useMemo(() => ({
       ...tableParams,
       expandSubRows: false,

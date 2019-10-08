@@ -1,5 +1,20 @@
 import React, { PropsWithChildren } from 'react';
 import { Popup } from 'semantic-ui-react';
+import styled from '@emotion/styled';
+
+const StyleWrapper = styled.div`
+  .relatable__toolbar-popup {
+    min-width: 250px;
+  }
+  
+  .relatable__toolbar-value {
+    margin: 0 5px 5px 0;
+  }
+  
+  .relatable__toolbar-popup .relatable__toolbar-popup-button.button {
+    box-shadow: none;
+  }
+`;
 
 export function ToolbarPopup({ children = null, content, name, selectedToolbarAction, ...rest }: PropsWithChildren<any>) {
   const isOpen = selectedToolbarAction && selectedToolbarAction.name === name;
@@ -9,6 +24,6 @@ export function ToolbarPopup({ children = null, content, name, selectedToolbarAc
     on="click"
     open={isOpen}
     position="bottom left"
-    children={content}
+    children={<StyleWrapper>{content}</StyleWrapper>}
     trigger={children}/>;
 }

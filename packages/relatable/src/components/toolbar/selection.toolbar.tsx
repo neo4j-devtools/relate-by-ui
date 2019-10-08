@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import { Button, Form, Icon, Label, Menu } from 'semantic-ui-react';
 import { filter } from 'lodash-es';
 
+import { FILTER_ACTIONS } from '../../relatable.types';
+
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
@@ -44,10 +46,10 @@ function SelectionPopup({ rows, selectedRowPaths }: any) {
     if (!onCustomFilterChange) return;
     clearToolbar();
     // just use the first column, rows dont care...
-    onCustomFilterChange([flatColumns[0]], makeSelectedRowsFilter(selectedRowPaths));
+    onCustomFilterChange(flatColumns[0], FILTER_ACTIONS.FILTER_ADD, [makeSelectedRowsFilter(selectedRowPaths)]);
   }, [onCustomFilterChange, selectedRowPaths]);
 
-  return <div className="relatable__toolbar-selection-popup">
+  return <div className="relatable__toolbar-popup relatable__toolbar-selection-popup">
     <Form className="relatable__toolbar-selection-form">
       <h4>You have selected {selectedRows.length} rows</h4>
       <Form.Group>

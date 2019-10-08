@@ -18,6 +18,7 @@ export { default as ValueAggregate } from './aggregates/value-aggregate';
 
 export interface ICellProps {
   cell: any; // react-table cell
+  [key: string]: any;
 }
 
 export interface IRowProps {

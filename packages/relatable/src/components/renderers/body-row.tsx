@@ -10,9 +10,9 @@ import RowActions from './row-actions';
 import arrayHasItems from '../../utils/array-has-items';
 
 export default function BodyRow(props: IRowProps) {
-  const { row, rowNumber, loading } = props;
+  const { row, rowNumber, loading, ...rowProps } = props;
   const { isExpanded } = row;
-  const { onCustomExpandedChange, onCustomSelectionChange } = useRelatableStateContext();
+  const { onCustomExpandedChange, onCustomSelectionChange, getCustomCellColSpan } = useRelatableStateContext();
   const onExpandClick = useCallback(
     () => onCustomExpandedChange([row], !row.isExpanded),
     [onCustomExpandedChange, row],
@@ -23,7 +23,7 @@ export default function BodyRow(props: IRowProps) {
   );
 
   return <>
-    <SemanticTable.Row {...row.getRowProps()} className={getRowClasses(row)}>
+    <SemanticTable.Row {...rowProps} className={getRowClasses(row)}>
       <SemanticTable.Cell className="relatable__table-cell relatable__table-body-cell relatable__table-row-actions-cell">
         <Label className="relatable__table-row-number">{rowNumber.toLocaleString()}</Label>
         <RowActions
@@ -31,7 +31,7 @@ export default function BodyRow(props: IRowProps) {
           onExpandClick={onCustomExpandedChange && arrayHasItems(row.subRows) && onExpandClick}
           onSelectClick={onCustomSelectionChange && onSelectClick}/>
       </SemanticTable.Cell>
-      {!loading && map(row.cells, (cell, i) => <BodyCell cell={cell} key={`cell-${i}`}/>)}
+      {!loading && map(row.cells, (cell) => <BodyCell cell={cell} getCellColSpan={getCustomCellColSpan} {...cell.getCellProps()}/>)}
       {loading && <SemanticTable.Cell className="relatable__table-cell relatable__table-body-cell" colSpan="100%">
         <div className="relatable__table-body-cell-loader"/>
       </SemanticTable.Cell>}

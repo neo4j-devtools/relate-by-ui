@@ -41,9 +41,9 @@ export const TOOLBAR_STATE_CLASSES = {
 };
 
 export const COLUMN_STATE_CLASSES = {
-  isSorted: 'rgba(109,206,157,0.10)',
-  filterValue: 'rgba(253,118,110,0.10)',
-  isGrouped: 'rgba(245,166,35,0.10)',
+  isGrouped: 'rgb(245,166,35)',
+  filterValue: 'rgb(253,118,110)',
+  isSorted: 'rgb(109,206,157)',
 };
 
 export const ROW_STATE_CLASSES = {
@@ -84,6 +84,23 @@ export const FLAT_COLUMNS: any[] = [
   {
     Header: 'Baz',
     accessor: 'baz',
+  },
+];
+export const DISABLED_COLUMNS: any[] = [
+  {
+    Header: 'Foo',
+    accessor: 'foo',
+    disableFilters: true
+  },
+  {
+    Header: 'Bar',
+    accessor: 'bar',
+    disableSorting: true,
+  },
+  {
+    Header: 'Baz',
+    accessor: 'baz',
+    disableGrouping: true
   },
 ];
 export const CUSTOM_COLUMNS: any[] = [

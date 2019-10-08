@@ -1,19 +1,17 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useSortBy } from 'react-table';
+import { SortingRule, useSortBy, UseSortByOptions } from 'react-table';
 import { filter, values } from 'lodash-es';
 
 import { SORT_ACTIONS, SortSetter, TableAddOnReturn } from '../relatable.types';
 
-export interface IWithSortingOptions {
+export interface IWithSortingOptions<Row extends object = any> extends UseSortByOptions<Row> {
   onSortChange?: SortSetter;
 
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
-  manualSorting?: boolean;
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
-  sortBy?: any[];
+  sortBy?: SortingRule<Row>[];
 }
 
-export default function withSorting(options: IWithSortingOptions = {}): TableAddOnReturn {
+export default function withSorting<Row extends object = any>(options: IWithSortingOptions<Row> = {}): TableAddOnReturn {
   const { sortBy: theirSortBy, onSortChange, ...tableParams } = options;
   const [ourSortBy, setOurSortBy] = useState<any[]>([]);
   const sortBy = theirSortBy || ourSortBy;
@@ -36,6 +34,7 @@ export default function withSorting(options: IWithSortingOptions = {}): TableAdd
 
   return [
     withSorting.name,
+    ({canSort}) => canSort,
     () => useMemo(() => ({
       ...tableParams,
       onCustomSortChange,

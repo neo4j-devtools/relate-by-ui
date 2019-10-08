@@ -1,14 +1,14 @@
-import { compact, entries, flatMap, join, kebabCase, keys, map, reduce } from 'lodash-es';
+import { compact, entries, kebabCase, keys, map, reduce, some } from 'lodash-es';
 
 import { COLUMN_STATE_CLASSES, ROW_STATE_CLASSES, TOOLBAR_STATE_CLASSES } from '../constants';
 import { isColumnFilter } from './filters';
 
-export function createColumnStateClasses() {
-  return flatMap(new Array(100), (_, index) => map(entries(COLUMN_STATE_CLASSES), ([state, bgColor]) => `
-    .${getColumnStateClass(state, index)} > tbody > tr > .relatable__table-body-cell:nth-of-type(${index + 1}) {
+export function createColumnStateLabelClasses() {
+  return map(entries(COLUMN_STATE_CLASSES), ([state, bgColor]) => `
+    .relatable__table-header-row .${getColumnStateClass(state)} {
       background-color: ${bgColor};
     }
-  `));
+  `);
 }
 
 export function getRowClasses(row: any) {
@@ -33,19 +33,19 @@ export function createToolbarStateClasses() {
   `);
 }
 
-export function getTableStateClasses(columns: any[]) {
-  const columnClasses = flatMap(columns, (column, index) => map(keys(COLUMN_STATE_CLASSES), (state) => isValidColumnState(column, state)
-    ? getColumnStateClass(state, index + 1) // @todo: + 1 due to table numbers
+export function getColumnStateLabelClasses(column: any) {
+  const columnClasses = map(keys(COLUMN_STATE_CLASSES), (state) => isValidColumnState(column, state)
+    ? getColumnStateClass(state)
     : '',
-  ));
+  );
 
-  return join(compact(columnClasses), ' ');
+  return compact(columnClasses);
 }
 
 function isValidColumnState(column: any, state: string) {
   switch (state) {
     case 'filterValue':
-      return isColumnFilter(column[state]);
+      return some(column[state], isColumnFilter);
     default:
       return Boolean(column[state]);
   }
@@ -59,10 +59,10 @@ function getRowStateClasses(row: any) {
   return reduce(keys(ROW_STATE_CLASSES), (agg, state) => row[state] ? `${agg} ${getRowStateClass(state)}` : agg, '');
 }
 
-function getColumnStateClass(state: string, index: number) {
-  return `relatable__table-column--${kebabCase(state)}-${index + 1}`;
+function getColumnStateClass(state: string) {
+  return `relatable__table-column-state--${kebabCase(state)}`;
 }
 
 function getRowStateClass(state: string) {
-  return `relatable__table-row--${kebabCase(state)}`;
+  return `relatable__table-row-state--${kebabCase(state)}`;
 }

@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useGroupBy } from 'react-table';
+import { IdType, useGroupBy, UseGroupByOptions } from 'react-table';
 import { values } from 'lodash-es';
 
 import { GroupSetter, TableAddOnReturn } from '../relatable.types';
@@ -8,18 +8,16 @@ import { DEFAULT_AGGREGATE_OPTIONS } from '../constants';
 
 import { ValueAggregate, ICellProps } from '../components/renderers';
 
-export interface IWithGroupingOptions {
+export interface IWithGroupingOptions<Row extends object = any> extends UseGroupByOptions<Row> {
   defaultAggregate?: string[] | string | ((values: any[]) => any);
   defaultAggregateCell?: React.FC<ICellProps>;
   onGroupChange?: GroupSetter;
 
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
-  manualGroupBy?: boolean;
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
-  groupBy?: string[];
+  groupBy?: IdType<Row>[];
 }
 
-export default function withGrouping(options: IWithGroupingOptions = {}): TableAddOnReturn {
+export default function withGrouping<Row extends object = any>(options: IWithGroupingOptions<Row> = {}): TableAddOnReturn {
   const {
     groupBy,
     onGroupChange,
@@ -49,6 +47,7 @@ export default function withGrouping(options: IWithGroupingOptions = {}): TableA
 
   return [
     withGrouping.name,
+    ({ canGroupBy }) => canGroupBy,
     ({ defaultColumn }) => useMemo(() => ({
       ...tableParams,
       defaultColumn: {

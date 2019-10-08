@@ -8,6 +8,7 @@ import {
   IWithExpandedOptions,
   IWithSelectionOptions,
 } from '../../add-ons';
+import { StateChangeHandler } from '../../relatable.types';
 
 import { RelatableActionContext, RelatableStateContext } from '../../states';
 import { useRelatableActions, useRelatableState } from './relatable.hooks';
@@ -24,7 +25,10 @@ export interface IRelatableProps {
   defaultColumn?: any;
 
   // Relatable state change handler
-  onStateChange?: (state: any) => any;
+  onStateChange?: StateChangeHandler;
+
+  // cell col span getter
+  getCellColSpan?: (cell: any) => number | string | undefined;
 
   // add on options
   filterable?: boolean | IWithFiltersOptions;
@@ -68,7 +72,7 @@ function RelatableState({ children, ...rest }: IRelatableChildrenProps): JSX.Ele
 
   return <RelatableStateContext.Provider value={tableProps}>
     <RelatableActions>
-      <StyleWrapper className="relatable__style-wrapper">
+      <StyleWrapper className="relatable">
         {children}
       </StyleWrapper>
     </RelatableActions>

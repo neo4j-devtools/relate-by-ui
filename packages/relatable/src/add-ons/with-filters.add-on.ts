@@ -1,58 +1,58 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useFilters } from 'react-table';
-import {
-  assign,
-  map,
-  omit,
-  reduce,
-  values,
-} from 'lodash-es';
+import { FilterValue, useFilters, UseFiltersOptions } from 'react-table';
+import { concat, omit, values, without } from 'lodash-es';
 
-import { FilterFunc, FilterSetter, TableAddOnReturn } from '../relatable.types';
+import { FILTER_ACTIONS, FilterFunc, FilterSetter, TableAddOnReturn } from '../relatable.types';
 
 import { relatableDefaultFilter } from '../utils/filters';
 
-import { TextFilter, IFilterFieldProps } from '../components/renderers';
+import { IFilterFieldProps, TextFilter } from '../components/renderers';
 
-export interface IWithFiltersOptions {
+export interface IWithFiltersOptions<Row extends object = any> extends UseFiltersOptions<Row> {
   defaultFilterCell?: React.FC<IFilterFieldProps>;
+  defaultFilterFunc?: string | FilterFunc;
   onFilterChange?: FilterSetter;
 
-  // react-table API https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
-  defaultFilter?: string | FilterFunc;
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
-  filters?: any;
+  // with custom filter value array
+  filters?: Record<string, FilterValue[]>;
 }
 
-export default function withFilters(options: IWithFiltersOptions = {}): TableAddOnReturn {
+export default function withFilters<Row extends object = any>(options: IWithFiltersOptions<Row> = {}): TableAddOnReturn {
   const {
     defaultFilterCell,
-    defaultFilter = relatableDefaultFilter,
+    defaultFilterFunc = relatableDefaultFilter,
     filters: theirFilters,
     onFilterChange,
     ...rest
   } = options;
-  const [ourFilters, setOurFilters] = useState({});
+  const [ourFilters, setOurFilters] = useState<Record<string, FilterValue[]>>({});
   const filters = theirFilters || ourFilters;
   const stateParams = { filters };
-  const onCustomFilterChange: FilterSetter = useCallback((columns, value) => {
+  const onCustomFilterChange: FilterSetter = useCallback((column, action, values) => {
     if (onFilterChange) {
-      onFilterChange(columns, value);
+      onFilterChange(column, action, values);
       return;
     }
 
-    if (value === undefined) {
-      setOurFilters(omit(ourFilters, map(columns, 'id')));
+    if (action === FILTER_ACTIONS.FILTER_CLEAR) {
+      setOurFilters(omit(ourFilters, column.id));
       return;
     }
 
-    const newFilters = reduce(
-      columns,
-      (agg, column) => assign(agg, { [column.id]: value }),
-      { ...ourFilters },
-    );
+    if (action === FILTER_ACTIONS.FILTER_ADD) {
+      setOurFilters({
+        ...ourFilters,
+        [column.id]: concat(ourFilters[column.id] || [], values),
+      });
 
-    setOurFilters(newFilters);
+      return;
+    }
+
+    setOurFilters({
+      ...ourFilters,
+      [column.id]: without(ourFilters[column.id] || [], ...values),
+    });
   }, [onFilterChange, ourFilters, setOurFilters]);
 
   const tableParams = {
@@ -60,19 +60,20 @@ export default function withFilters(options: IWithFiltersOptions = {}): TableAdd
     onCustomFilterChange,
     defaultColumn: {
       Filter: defaultFilterCell || TextFilter,
-      filter: defaultFilter,
+      filter: defaultFilterFunc,
     },
   };
 
   return [
     withFilters.name,
+    ({ canFilter }) => canFilter,
     ({ defaultColumn }) => useMemo(() => ({
       ...tableParams,
       defaultColumn: {
         ...defaultColumn,
         ...tableParams.defaultColumn,
       },
-    }), [defaultColumn, defaultFilterCell, defaultFilter, onCustomFilterChange, ...values(rest)]),
+    }), [defaultColumn, defaultFilterCell, defaultFilterFunc, onCustomFilterChange, ...values(rest)]),
     () => useMemo(() => stateParams, [filters]),
     useFilters,
   ];
