@@ -3,7 +3,7 @@ import { Button, Divider, Form, Icon, Label, Menu } from 'semantic-ui-react';
 import { FormSelect } from '@relate-by-ui/form-elements';
 import { entries, filter, find, flatMap, get, head, map } from 'lodash-es';
 
-import { FILTER_ACTIONS } from '../../relatable.types';
+import { FILTER_ACTIONS, RELATABLE_ICONS } from '../../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
@@ -15,6 +15,7 @@ import { withFilters } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
 import { Filter } from '../renderers';
+import RelatableIcon from '../relatable-icon';
 
 export default function FiltersToolbar() {
   const { flatColumns: columns, state: { filters }, onCustomFilterChange } = useRelatableStateContext();
@@ -35,7 +36,7 @@ export default function FiltersToolbar() {
     selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
     <Menu.Item name="filter" onClick={() => setToolbar(withFilters.name)}>
-      <Icon name='filter' className="relatable__toolbar-icon"/>
+      <RelatableIcon name={RELATABLE_ICONS.FILTER}/>
       Filters
       {isFiltered &&
       <Label className={isFiltered ? getToolbarStateClass('filterValue') : ''}>{appliedFilterValues.length}</Label>}
@@ -65,7 +66,7 @@ function FiltersPopup({ columns, selectedToolbarAction, isFiltered, onClose, app
 }
 
 function FiltersForm({ columns, selectedToolbarAction, onCustomFilterChange, onClose }: any) {
-  const {availableActions} = useRelatableStateContext();
+  const { availableActions } = useRelatableStateContext();
   const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
   const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
   const firstId = selectedToolbarAction.column

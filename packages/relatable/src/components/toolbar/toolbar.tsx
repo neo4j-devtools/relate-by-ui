@@ -11,9 +11,10 @@ import GroupingToolbar from './grouping.toolbar';
 import SelectionToolbar from './selection.toolbar';
 
 export default function Toolbar(props: MenuProps = {}): JSX.Element {
+  const { className = '', ...rest } = props;
   const { availableActions } = useRelatableStateContext();
 
-  return <Menu icon secondary {...props}>
+  return <Menu icon secondary {...rest} className={`relatable__toolbar ${className}`}>
     {isActionAvailable(availableActions, withGrouping.name) && <GroupingToolbar/>}
     {isActionAvailable(availableActions, withFilters.name) && <FiltersToolbar/>}
     {isActionAvailable(availableActions, withSorting.name) && <SortingToolbar/>}

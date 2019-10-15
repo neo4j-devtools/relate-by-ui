@@ -10,7 +10,9 @@ import {
   CUSTOM_COLUMNS,
   CUSTOM_ROWS,
   DISABLED_COLUMNS,
-} from '../../../packages/relatable/src/constants';
+  SUPER_ROWS,
+  SUPER_COLUMNS,
+} from './data';
 
 const stories = storiesOf('Relatable', module);
 const onStateChangeHandler = action('onStateChange');
@@ -190,6 +192,22 @@ stories.add(
       onStateChange={onStateChangeHandler}
       columns={FLAT_COLUMNS}
       data={ROWS}/>
+  ),
+);
+
+stories.add(
+  'Relatable SUPER',
+  () => (
+    <Relatable
+      filterable
+      groupable
+      sortable
+      paginated
+      selectable
+      expandable
+      onStateChange={onStateChangeHandler}
+      columns={SUPER_COLUMNS}
+      data={SUPER_ROWS}/>
   ),
 );
 

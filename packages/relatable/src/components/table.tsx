@@ -4,7 +4,7 @@ import { map } from 'lodash-es';
 
 import { useRelatableStateContext } from '../states';
 import arrayHasItems from '../utils/array-has-items';
-import { columnHasActions} from '../utils/column-actions';
+import { columnHasActions } from '../utils/column-actions';
 import getSemanticTableProps from '../utils/get-semantic-table-props';
 import isLastIndex from '../utils/is-last-index';
 import getRowNumber from '../utils/get-row-number';
@@ -51,7 +51,7 @@ export default function Table({ loading, expectedRowCount, headless, ...rest }: 
     availableActions,
     onCustomSelectionChange,
   } = useRelatableStateContext();
-  const {className= '', semanticTableProps} = getSemanticTableProps(rest);
+  const { className = '', semanticTableProps } = getSemanticTableProps(rest);
   const onSelectAllClick = useCallback(
     (select: boolean) => {
       onCustomSelectionChange(rows, select);
@@ -73,12 +73,12 @@ export default function Table({ loading, expectedRowCount, headless, ...rest }: 
               <RowActions rows={rows} onSelectClick={onCustomSelectionChange && onSelectAllClick}/>}
             </SemanticTable.HeaderCell>
             {map(headerGroup.headers, (column: any) => {
-              const headerProps = column.getHeaderProps();
-              const hasActions = isLastIndex(headerGroups, index) && columnHasActions(column, availableActions);
+                const headerProps = column.getHeaderProps();
+                const hasActions = isLastIndex(headerGroups, index) && columnHasActions(column, availableActions);
 
-              if (column.colSpan === 0) return null;
+                if (column.colSpan === 0) return null;
 
-              return hasActions
+                return hasActions
                   ? <ColumnActions
                     column={column}
                     {...headerProps}/>
@@ -87,8 +87,8 @@ export default function Table({ loading, expectedRowCount, headless, ...rest }: 
                     colSpan={column.colSpan !== undefined ? column.colSpan : headerProps.colSpan}
                     className="relatable__table-cell relatable__table-header-cell">
                     {column.render('Header')}
-                  </SemanticTable.HeaderCell>
-              }
+                  </SemanticTable.HeaderCell>;
+              },
             )}
           </SemanticTable.Row>
         ))}

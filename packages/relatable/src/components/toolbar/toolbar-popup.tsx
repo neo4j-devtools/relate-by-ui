@@ -23,6 +23,7 @@ export function ToolbarPopup({ children = null, content, name, selectedToolbarAc
     {...rest}
     on="click"
     open={isOpen}
+    style={{ maxWidth: 'none' }}
     position="bottom left"
     children={<StyleWrapper>{content}</StyleWrapper>}
     trigger={children}/>;

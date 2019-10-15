@@ -13,14 +13,14 @@ import { withSelection } from '../../add-ons';
 import { ToolbarPopup } from './toolbar-popup';
 
 export default function SelectionToolbar() {
-  const { rows, state: { selectedRowPaths } } = useRelatableStateContext();
+  const { preFilteredFlatRows, state: { selectedRowPaths } } = useRelatableStateContext();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isSelected = arrayHasItems(selectedRowPaths);
 
   return <ToolbarPopup
     name={withSelection.name}
     content={<SelectionPopup
-      rows={rows}
+      rows={preFilteredFlatRows}
       selectedRowPaths={selectedRowPaths}
       selectedToolbarAction={selectedToolbarAction}/>}
     selectedToolbarAction={selectedToolbarAction}
@@ -37,11 +37,12 @@ export default function SelectionToolbar() {
 function SelectionPopup({ rows, selectedRowPaths }: any) {
   const { flatColumns, onCustomSelectionChange, onCustomFilterChange } = useRelatableStateContext();
   const [, , clearToolbar] = useRelatableToolbarContext();
-  const selectedRows = filter(rows, 'isSelected');
   const onSelectionClear = useCallback(() => {
+    const selectedRows = filter(rows, 'isSelected');
+
     clearToolbar();
     onCustomSelectionChange(selectedRows, false);
-  }, [onCustomSelectionChange, selectedRows]);
+  }, [onCustomSelectionChange, rows]);
   const onSelectionView = useCallback(() => {
     if (!onCustomFilterChange) return;
     clearToolbar();
@@ -51,7 +52,7 @@ function SelectionPopup({ rows, selectedRowPaths }: any) {
 
   return <div className="relatable__toolbar-popup relatable__toolbar-selection-popup">
     <Form className="relatable__toolbar-selection-form">
-      <h4>You have selected {selectedRows.length} rows</h4>
+      <h4>You have selected {selectedRowPaths.length} rows</h4>
       <Form.Group>
         {onCustomFilterChange && <Button
           inverted

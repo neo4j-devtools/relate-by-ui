@@ -12,6 +12,14 @@ export type RelatableAction = [string, AddOnColumnPredicate];
 export type ToolbarAction = { name: string, column?: any }
 export type ToolbarActionDispatch = (name: string, column?: any) => void
 
+export enum RELATABLE_ICONS {
+  SORT = 'SORT',
+  SORT_ASC = 'SORT_ASC',
+  SORT_DESC = 'SORT_DESC',
+  FILTER = 'FILTER',
+  GROUP_BY = 'GROUP_BY',
+}
+
 /**
  * Externally exposed types
  */
@@ -28,6 +36,7 @@ export enum SORT_ACTIONS {
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
 }
+
 export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
 
 /* Filters */
@@ -36,10 +45,12 @@ export enum FILTER_ACTIONS {
   FILTER_ADD = 'FILTER_ADD',
   FILTER_REMOVE = 'FILTER_REMOVE',
 }
+
 export enum FILTER_VARIANTS {
   EQUALS = 'EQUALS',
   ANY_IN = 'ANY_IN'
 }
+
 export type ColumnFilter = {
   type: 'column',
   variant?: FILTER_VARIANTS,

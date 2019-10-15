@@ -3,16 +3,17 @@ import { Button, Divider, Form, Icon, Label, List, Menu } from 'semantic-ui-reac
 import { filter, find, get, head, map } from 'lodash-es';
 import { FormSelect } from '@relate-by-ui/form-elements';
 
-import { SORT_ACTIONS } from '../../relatable.types';
+import { RELATABLE_ICONS, SORT_ACTIONS } from '../../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withSorting } from '../../add-ons';
-
-import { ToolbarPopup } from './toolbar-popup';
 import { getRelatableAction } from '../../utils/relatable-actions';
 import { columnHasAction } from '../../utils/column-actions';
+
+import { ToolbarPopup } from './toolbar-popup';
+import RelatableIcon from '../relatable-icon';
 
 export default function SortingToolbar() {
   const { flatColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext();
@@ -30,7 +31,7 @@ export default function SortingToolbar() {
     selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
     <Menu.Item name="sort" onClick={() => setToolbar(withSorting.name)}>
-      <Icon name='sort' className="relatable__toolbar-icon"/>
+      <RelatableIcon name={RELATABLE_ICONS.SORT}/>
       Sorting
       {isSorted && <Label className={isSorted ? getToolbarStateClass('isSorted') : ''}>{sortBy.length}</Label>}
     </Menu.Item>
@@ -61,7 +62,7 @@ function SortingPopup({ columns, sortBy, onClose, selectedToolbarAction, onCusto
 }
 
 function SortingForm({ columns, onCustomSortChange, selectedToolbarAction, onClose }: any) {
-  const {availableActions} = useRelatableStateContext();
+  const { availableActions } = useRelatableStateContext();
   const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
   const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
   const firstId = get(head(columnsToUse), 'id', undefined);

@@ -26,7 +26,7 @@ export default function withSelection<Row extends object = any>(options: IWithSe
     const newPaths = flatMap(rows, ({ path, subRows }) => arrayHasItems(subRows)
       // this is kinda funky but it's what react-table is doing atm... ¯\(°_o)/¯
       ? map(subRows, (subRow) => join(subRow.path, '.'))
-      : [join(path, '.')]
+      : [join(path, '.')],
     );
 
     if (select) {

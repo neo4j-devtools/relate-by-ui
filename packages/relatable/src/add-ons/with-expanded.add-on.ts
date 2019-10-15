@@ -30,7 +30,7 @@ export default function withExpanded<Row extends object = any>(options: IWithExp
 
   return [
     null,
-    ({subRows}) => arrayHasItems(subRows),
+    ({ subRows }) => arrayHasItems(subRows),
     () => useMemo(() => ({
       ...tableParams,
       expandSubRows: false,

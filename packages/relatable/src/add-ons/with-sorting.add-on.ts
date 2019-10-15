@@ -34,7 +34,7 @@ export default function withSorting<Row extends object = any>(options: IWithSort
 
   return [
     withSorting.name,
-    ({canSort}) => canSort,
+    ({ canSort }) => canSort,
     () => useMemo(() => ({
       ...tableParams,
       onCustomSortChange,

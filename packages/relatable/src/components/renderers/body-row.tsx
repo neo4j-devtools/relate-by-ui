@@ -24,14 +24,16 @@ export default function BodyRow(props: IRowProps) {
 
   return <>
     <SemanticTable.Row {...rowProps} className={getRowClasses(row)}>
-      <SemanticTable.Cell className="relatable__table-cell relatable__table-body-cell relatable__table-row-actions-cell">
+      <SemanticTable.Cell
+        className="relatable__table-cell relatable__table-body-cell relatable__table-row-actions-cell">
         <Label className="relatable__table-row-number">{rowNumber.toLocaleString()}</Label>
         <RowActions
           rows={[row]}
           onExpandClick={onCustomExpandedChange && arrayHasItems(row.subRows) && onExpandClick}
           onSelectClick={onCustomSelectionChange && onSelectClick}/>
       </SemanticTable.Cell>
-      {!loading && map(row.cells, (cell) => <BodyCell cell={cell} getCellColSpan={getCustomCellColSpan} {...cell.getCellProps()}/>)}
+      {!loading && map(row.cells, (cell) => <BodyCell cell={cell}
+                                                      getCellColSpan={getCustomCellColSpan} {...cell.getCellProps()}/>)}
       {loading && <SemanticTable.Cell className="relatable__table-cell relatable__table-body-cell" colSpan="100%">
         <div className="relatable__table-body-cell-loader"/>
       </SemanticTable.Cell>}

@@ -3,14 +3,17 @@ import { Button, Divider, Form, Icon, Label, Menu } from 'semantic-ui-react';
 import { FormSelect } from '@relate-by-ui/form-elements';
 import { filter, find, get, head, map } from 'lodash-es';
 
+import { RELATABLE_ICONS } from '../../relatable.types';
+
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { withGrouping } from '../../add-ons';
-
-import { ToolbarPopup } from './toolbar-popup';
 import { getRelatableAction } from '../../utils/relatable-actions';
 import { columnHasAction } from '../../utils/column-actions';
+
+import { ToolbarPopup } from './toolbar-popup';
+import RelatableIcon from '../relatable-icon';
 
 export default function GroupingToolbar() {
   const { flatColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext();
@@ -28,7 +31,7 @@ export default function GroupingToolbar() {
     selectedToolbarAction={selectedToolbarAction}
     onClose={clearToolbar}>
     <Menu.Item name="group" onClick={() => setToolbar(withGrouping.name)}>
-      <Icon name='group' className="relatable__toolbar-icon"/>
+      <RelatableIcon name={RELATABLE_ICONS.GROUP_BY}/>
       Groups
       {isGrouped && <Label className={isGrouped ? getToolbarStateClass('isGrouped') : ''}>{groupBy.length}</Label>}
     </Menu.Item>
@@ -57,7 +60,7 @@ function GroupingPopup({ columns, groupBy, onClose, selectedToolbarAction, onCus
 }
 
 function GroupingForm({ columns, onCustomGroupingChange, selectedToolbarAction, onClose }: any) {
-  const {availableActions} = useRelatableStateContext();
+  const { availableActions } = useRelatableStateContext();
   const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
   const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
   const firstId = get(head(columnsToUse), 'id', undefined);

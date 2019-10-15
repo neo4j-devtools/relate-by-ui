@@ -3,15 +3,18 @@ import { Dropdown, Label, Table as SemanticTable } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 import { map } from 'lodash-es';
 
-import { SORT_ACTIONS } from '../relatable.types';
+import { RELATABLE_ICONS, SORT_ACTIONS } from '../relatable.types';
 
 import { useRelatableStateContext, useRelatableToolbarContext } from '../states';
 import { withFilters, withGrouping, withSorting } from '../add-ons';
 import { getColumnStateLabelClasses } from '../utils/relatable-state-classes';
 import { isColumnActionAvailable } from '../utils/column-actions';
 
+import RelatableIcon from './relatable-icon';
+
 export interface IColumnActionsProps {
   column: any;
+
   [key: string]: any;
 }
 
@@ -46,37 +49,42 @@ export default function ColumnActions({ column, ...headerProps }: IColumnActions
       </StyledHeader>
       <CustomDropdown isOpen={isOpen} onClick={onClose}>
         {isColumnActionAvailable(column, availableActions, withGrouping.name) && (
-          <Dropdown.Item
-            text="Group by"
-            icon="group"
-            onClick={() => onCustomGroupingChange(column, true)}/>
+          <Dropdown.Item className="relatable__dropdown-item" onClick={() => onCustomGroupingChange(column, true)}>
+            <RelatableIcon name={RELATABLE_ICONS.GROUP_BY}/>
+            Group by
+          </Dropdown.Item>
         )}
         {isColumnActionAvailable(column, availableActions, withFilters.name) && (
-          <Dropdown.Item
-            text="Filter"
-            icon="tags"
-            onClick={() => setRelatableToolbar(withFilters.name, column)}/>
+          <>
+            {isColumnActionAvailable(column, availableActions, withGrouping.name) && <Dropdown.Divider/>}
+            <Dropdown.Item
+              className="relatable__dropdown-item"
+              onClick={() => setRelatableToolbar(withFilters.name, column)}>
+              <RelatableIcon name={RELATABLE_ICONS.FILTER}/>
+              Filter
+            </Dropdown.Item>
+          </>
         )}
         {isColumnActionAvailable(column, availableActions, withSorting.name) && (
           <>
             {availableActions.length > 1 && <Dropdown.Divider/>}
             <Dropdown.Item
-              text="Clear sort"
-              icon="dont"
-              onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_CLEAR)}/>
+              className="relatable__dropdown-item"
+              onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_DESC)}>
+              <RelatableIcon name={RELATABLE_ICONS.SORT_DESC}/>
+              Sort desc.
+            </Dropdown.Item>
             <Dropdown.Item
-              text="Sort Desc"
-              icon="sort content descending"
-              onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_DESC)}/>
-            <Dropdown.Item
-              text="Sort Asc"
-              icon="sort content ascending"
-              onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_ASC)}/>
+              className="relatable__dropdown-item"
+              onClick={() => onCustomSortChange(column, SORT_ACTIONS.SORT_ASC)}>
+              <RelatableIcon name={RELATABLE_ICONS.SORT_ASC}/>
+              Sort asc.
+            </Dropdown.Item>
           </>
         )}
       </CustomDropdown>
     </div>
-  </SemanticTable.HeaderCell>
+  </SemanticTable.HeaderCell>;
 }
 
 function CustomDropdown({ isOpen, onClick, children }: any) {
@@ -84,7 +92,7 @@ function CustomDropdown({ isOpen, onClick, children }: any) {
     <Dropdown.Menu open={isOpen} onClick={onClick}>
       {children}
     </Dropdown.Menu>
-  </div>
+  </div>;
 }
 
 function useCustomBlur(onBlur: () => void) {
@@ -105,5 +113,5 @@ function useCustomBlur(onBlur: () => void) {
     return () => document.removeEventListener('mousedown', handler, false);
   }, [onBlur]);
 
-  return ref
+  return ref;
 }

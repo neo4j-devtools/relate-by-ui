@@ -11,7 +11,13 @@ export const StyleWrapper = styled.div`
     position: relative;
   }
   
+  .relatable__icon {
+    height: 14px;
+    margin-right: .8em;
+  }
+  
   .relatable__table-header-cell {
+    position: relative;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -31,9 +37,14 @@ export const StyleWrapper = styled.div`
     position: static; /* force dropdown to align to sticky th */
   }
   
+  .relatable__column-actions .relatable__dropdown-item.item {
+    display: flex;
+    align-items: center;
+  }
+  
   .relatable__column-actions-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
   }
   
   .relatable__column-actions-header [class*="relatable__table-column-state"] {
@@ -92,8 +103,8 @@ export const StyleWrapper = styled.div`
     margin: 0;
   }
   
-  .menu.icon.ui .icon.relatable__toolbar-icon {
-    margin-right: .8em;
+  .relatable__toolbar {
+    min-height: 42px;
   }
   
   ${join(createToolbarStateClasses(), '\n\n')}
@@ -120,5 +131,14 @@ export const StyleWrapper = styled.div`
   @keyframes relatable__table-moving-gradient {
     0% { background-position: -250px 0; }
     100% { background-position: 250px 0; }
+  }
+  
+  .relatable__pagination {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .relatable__pagination-size-setter.field label {
+    font-weight: normal !important;
   }
 `;

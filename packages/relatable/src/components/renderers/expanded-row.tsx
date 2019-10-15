@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
-import { map } from 'lodash-es';
-
-import { useRelatableStateContext } from '../../states';
+import { flatMap } from 'lodash-es';
 
 import { IRowProps } from './index';
+
+import { useRelatableStateContext } from '../../states';
+import getFinalDepthSubRows from '../../utils/get-final-depth-subrows';
+
 import Relatable from '../relatable/relatable';
 
 export default function ExpandedRow({ row }: IRowProps): JSX.Element {
   const { _originalColumns } = useRelatableStateContext();
-  const data = useMemo(() => map(row.subRows, 'original'), [row]);
+  const data = useMemo(() => flatMap(row.subRows, getFinalDepthSubRows), [row]);
 
   return (
     <Relatable

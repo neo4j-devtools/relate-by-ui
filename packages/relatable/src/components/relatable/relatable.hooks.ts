@@ -7,7 +7,7 @@ import { IRelatableProps } from './relatable';
 
 import { ON_STATE_CHANGE_TRIGGERS } from '../../constants';
 import getRelatableAddOns from '../../utils/get-relatable-add-ons';
-import {getRelatableActions} from '../../utils/relatable-actions';
+import { getRelatableActions } from '../../utils/relatable-actions';
 
 import { TextCell } from '../renderers';
 
@@ -46,7 +46,7 @@ export function useRelatableState(props: IRelatableProps): any {
     defaultColumn: useMemo(() => ({
       Cell: TextCell,
       ...defaultColumn,
-    }), [defaultColumn])
+    }), [defaultColumn]),
   });
   const contextValue = useTable(
     // @ts-ignore
@@ -64,6 +64,7 @@ export function useRelatableState(props: IRelatableProps): any {
     // @todo: cleanup
     _originalColumns: columns,
     // @todo: figure out a cleaner way of detecting and passing rows to use based on addOns used
+    // @ts-ignore
     _rowsToUse: contextValue.page || contextValue.rows,
   };
 }
