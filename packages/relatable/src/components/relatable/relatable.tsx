@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { Column } from 'react-table';
 
 import {
   IWithPaginationOptions,
@@ -8,27 +9,26 @@ import {
   IWithExpandedOptions,
   IWithSelectionOptions,
 } from '../../add-ons';
-import { StateChangeHandler } from '../../relatable.types';
+import { CellCollSpanGetter, StateChangeHandler } from '../../relatable.types';
 
 import { RelatableActionContext, RelatableStateContext } from '../../states';
 import { useRelatableActions, useRelatableState } from './relatable.hooks';
 
 import Table, { ITableProps } from '../table';
-import Toolbar from '../toolbar/toolbar';
 import Pagination from '../pagination';
 import { StyleWrapper } from './relatable.styled';
 
-export interface IRelatableProps {
+export interface IRelatableProps<Data extends object = any> {
   // see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usetable
-  columns: any[];
-  data: any[];
-  defaultColumn?: any;
+  columns: Column<Data>[];
+  data: Data[];
+  defaultColumn?: Partial<Column<Data>>;
 
   // Relatable state change handler
   onStateChange?: StateChangeHandler;
 
   // cell col span getter
-  getCellColSpan?: (cell: any) => number | string | undefined;
+  getCellColSpan?: CellCollSpanGetter;
 
   // add on options
   filterable?: boolean | IWithFiltersOptions;
@@ -58,10 +58,9 @@ export default function Relatable(props: IRelatableChildrenProps | IRelatableBas
 }
 
 function RelatableBasic(props: IRelatableBasicProps): JSX.Element {
-  const { columns, data, defaultColumn, paginated, sortable, filterable, ...rest } = props;
+  const { columns, data, defaultColumn, paginated, ...rest } = props;
 
   return <RelatableState {...props}>
-    {(sortable || filterable) && <Toolbar/>}
     <Table {...rest} />
     {paginated && <Pagination/>}
   </RelatableState>;

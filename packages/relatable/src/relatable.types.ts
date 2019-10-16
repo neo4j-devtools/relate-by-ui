@@ -1,14 +1,30 @@
 /**
  * Internal types
  */
-import { PluginHook } from 'react-table';
+import {
+  Column,
+  PluginHook,
+  TableInstance,
+  Row,
+  ColumnInstance,
+  UseExpandedRowProps,
+  UseGroupByColumnProps,
+  UseFiltersColumnProps,
+  UseSortByColumnProps,
+  TableOptions,
+  Cell,
+  IdType,
+} from 'react-table';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-export type TableParamFactory = (params: any) => any
-export type TableStateFactory = (state: any) => any
-export type AddOnColumnPredicate = (column: any) => boolean;
-export type TableAddOnReturn = [string | null, AddOnColumnPredicate, TableParamFactory, TableStateFactory, PluginHook<any>]
-export type RelatableAction = [string, AddOnColumnPredicate];
+export type TableStateDefault = { [key: string]: any }; // @todo: better typings
+export type TableParamFactory<Data extends object = any, IInstance extends IRelatableStateInstance<Data> = any> = (params: TableOptions<Data>) => IInstance;
+export type TableStateFactory = (state: TableStateDefault) => TableStateDefault;
+export type AddOnPredicate = (columnOrRow: any) => boolean;
+export type GlobalActionName = string | null;
+export type TableActionName = string | null;
+export type TableAddOnReturn<Data extends object = any> = [GlobalActionName, TableActionName, AddOnPredicate, TableParamFactory<Data>, TableStateFactory, PluginHook<Data>]
+export type RelatableAction = [string, AddOnPredicate];
 export type ToolbarAction = { name: string, column?: any }
 export type ToolbarActionDispatch = (name: string, column?: any) => void
 
@@ -20,15 +36,35 @@ export enum RELATABLE_ICONS {
   GROUP_BY = 'GROUP_BY',
 }
 
+export interface IRelatableStateInstance<Data extends object = any, State extends object = TableStateDefault> extends TableInstance<Data> {
+  availableGlobalActions: RelatableAction[];
+  availableTableActions: RelatableAction[];
+  getCustomCellColSpan: CellCollSpanGetter[];
+  _originalColumns: Column<Data>[];
+  _rowsToUse: Row<Data>[];
+
+  state: State;
+
+  // add-on methods
+  onCustomExpandedChange?: ExpandSetter<Data>;
+  onCustomSelectionChange?: SelectSetter<Data>;
+  onCustomFiltersChange?: FilterSetter<Data>;
+  onCustomGroupingChange?: GroupSetter<Data>;
+  onCustomSortChange?: SortSetter<Data>;
+  onCustomPageSizeChange?: PageSizeSetter;
+  onCustomPageChange?: PageSetter;
+}
+
 /**
  * Externally exposed types
  */
-export type StateChangeHandler = (state: any, changedKeys: string[]) => void;
+export type CellCollSpanGetter<Data extends object = any> = (cell: Cell<Data>) => number | string | undefined;
+export type StateChangeHandler<State = any> = (state: Partial<State>, changedKeys: string[]) => void;
 export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
-export type GroupSetter = (column: any, group: boolean) => void;
-export type ExpandSetter = (rows: any[], expand: boolean) => void;
-export type SelectSetter = (rows: any[], select: boolean) => void;
+export type GroupSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseGroupByColumnProps<Data>), group: boolean) => void;
+export type ExpandSetter<Data extends object = any> = (rows: (Row<Data> & UseExpandedRowProps<Data>)[], expand: boolean) => void;
+export type SelectSetter<Data extends object = any> = (rows: Row<Data>[], select: boolean) => void;
 
 /* Sorting */
 export enum SORT_ACTIONS {
@@ -37,7 +73,7 @@ export enum SORT_ACTIONS {
   SORT_ASC = 'SORT_ASC',
 }
 
-export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
+export type SortSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseSortByColumnProps<Data>), action: SORT_ACTIONS) => void;
 
 /* Filters */
 export enum FILTER_ACTIONS {
@@ -63,5 +99,5 @@ export type SelectedRowsFilter = {
   value: any[]
 }
 export type FilterValue = ColumnFilter | SelectedRowsFilter;
-export type FilterFunc = (rows: any[], columnID: any, value: FilterValue) => any[];
-export type FilterSetter = (column: any, action: FILTER_ACTIONS, values: FilterValue[]) => void
+export type FilterFunc<Data extends object = any> = (rows: Row<Data>[], columnID: IdType<Data>, value: FilterValue) => any[];
+export type FilterSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseFiltersColumnProps<Data>), action: FILTER_ACTIONS, values: FilterValue[]) => void;

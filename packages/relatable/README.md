@@ -12,7 +12,7 @@ This package provides a thin abstraction over the [react-table API](https://gith
 3. [Base Components](#base-components)
 4. [Exposed Typings](#exposed-typings)
 5. [Add-ons](#add-ons)
-6. [Column Enhancements](#column-enhancements)
+6. [Further Enhancements](#further-enhancements)
 
 ---
 ## Basic usage
@@ -59,7 +59,7 @@ There are currently four components available:
 The base component of the library.
 
 ```typescript
-import {PropsWithChildren} from 'react';
+import React from 'react';
 import {
   StateChangeHandler,
   ITableProps,
@@ -93,7 +93,7 @@ export interface IRelatableProps {
 export interface IRelatableBasicProps extends IRelatableProps, ITableProps {
 }
 
-export interface IRelatableChildrenProps extends PropsWithChildren<IRelatableProps> {
+export interface IRelatableChildrenProps extends React.PropsWithChildren<IRelatableProps> {
 }
 
 function Relatable(props: IRelatableChildrenProps | IRelatableBasicProps): JSX.Element;
@@ -136,12 +136,56 @@ function Table({ loading, expectedRowCount, ...rest }: ITableProps): JSX.Element
 ### Toolbar
 [Source](./src/components/toolbar/toolbar.tsx)
 
-The Toolbar component of the library.
+The Toolbar component of the library. Enables basic interaction for:
+- [Groupable](#groupable)
+- [Filterable](#filterable)
+- [Sortable](#sortable)
+- [Selectable](#selectable)
+
+See [Toolbar Items](#toolbar-items) for examples on how to create your own interactive elements for the table.
 
 ```typescript
+import React from 'react';
 import {MenuProps} from 'semantic-ui-react';
 
-function Toolbar(props: MenuProps = {}): JSX.Element;
+function Toolbar(props: React.PropsWithChildren<MenuProps> = {}): JSX.Element;
+```
+
+#### Basic Usage
+```typescript jsx
+import React from 'react';
+import Relatable, {Table, Toolbar} from '@relate-by-ui/relatable';
+
+// see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usetable
+const COLUMNS = []
+const DATA = []
+
+const ATable = () => (
+  <Relatable columns={COLUMNS} data={DATA}>
+    <Toolbar/>
+    <Table/>
+  </Relatable>
+)
+```
+
+#### Advanced Usage
+```typescript jsx
+import React from 'react';
+import Relatable, {Table, Toolbar, FilterableToolbar, GroupableToolbar} from '@relate-by-ui/relatable';
+
+// see https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#usetable
+const COLUMNS = []
+const DATA = []
+
+const ATable = () => (
+  <Relatable columns={COLUMNS} data={DATA}>
+    <Toolbar>
+      <FilterableToolbar/>
+      <GroupableToolbar/>
+    </Toolbar>
+    <Table/>
+  </Relatable>
+)
 ```
 
 ### Pagination
@@ -167,12 +211,24 @@ function Pagination(props: IPaginationProps = {}): JSX.Element;
 [Source](./src/relatable.types.ts)
 
 ```typescript
+import {
+  Row,
+  ColumnInstance,
+  UseExpandedRowProps,
+  UseGroupByColumnProps,
+  UseFiltersColumnProps,
+  UseSortByColumnProps,
+  Cell,
+  IdType,
+} from 'react-table';
+
+export type CellCollSpanGetter<Data extends object = any> = (cell: Cell<Data>) => number | string | undefined;
 export type StateChangeHandler = (state: any, changedKeys: string[]) => void;
 export type PageSetter = (pageIndex: number) => void;
 export type PageSizeSetter = (pageSize: number) => void;
-export type GroupSetter = (column: any, group: boolean) => void;
-export type ExpandSetter = (rows: any[], expand: boolean) => void;
-export type SelectSetter = (rows: any[], select: boolean) => void;
+export type GroupSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseGroupByColumnProps<Data>), group: boolean) => void;
+export type ExpandSetter<Data extends object = any> = (rows: (Row<Data> & UseExpandedRowProps<Data>)[], expand: boolean) => void;
+export type SelectSetter<Data extends object = any> = (rows: Row<Data>[], select: boolean) => void;
 
 /* Sorting */
 export enum SORT_ACTIONS {
@@ -180,7 +236,8 @@ export enum SORT_ACTIONS {
   SORT_DESC = 'SORT_DESC',
   SORT_ASC = 'SORT_ASC',
 }
-export type SortSetter = (column: any, action: SORT_ACTIONS) => void;
+
+export type SortSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseSortByColumnProps<Data>), action: SORT_ACTIONS) => void;
 
 /* Filters */
 export enum FILTER_ACTIONS {
@@ -188,10 +245,12 @@ export enum FILTER_ACTIONS {
   FILTER_ADD = 'FILTER_ADD',
   FILTER_REMOVE = 'FILTER_REMOVE',
 }
+
 export enum FILTER_VARIANTS {
   EQUALS = 'EQUALS',
   ANY_IN = 'ANY_IN'
 }
+
 export type ColumnFilter = {
   type: 'column',
   variant?: FILTER_VARIANTS,
@@ -204,8 +263,8 @@ export type SelectedRowsFilter = {
   value: any[]
 }
 export type FilterValue = ColumnFilter | SelectedRowsFilter;
-export type FilterFunc = (rows: any[], columnID: any, value: FilterValue) => any[];
-export type FilterSetter = (column: any, action: FILTER_ACTIONS, values: FilterValue[]) => void
+export type FilterFunc<Data extends object = any> = (rows: Row<Data>[], columnID: IdType<Data>, value: FilterValue) => any[];
+export type FilterSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseFiltersColumnProps<Data>), action: FILTER_ACTIONS, values: FilterValue[]) => void;
 ```
 
 ---
@@ -233,10 +292,10 @@ Enables filtering of table. Please ensure the [Toolbar](#toolbar) component is r
 import { UseFiltersOptions } from 'react-table';
 import { IFilterFieldProps, FilterSetter, FilterFunc, FilterValue } from '@relate-by-ui/relatable';
 
-export interface IWithFiltersOptions<Row extends object = any> extends UseFiltersOptions<Row>{
+export interface IWithFiltersOptions<Data extends object = any> extends UseFiltersOptions<Data> {
   defaultFilterCell?: React.FC<IFilterFieldProps>;
-  defaultFilterFunc?: string | FilterFunc;
-  onFilterChange?: FilterSetter;
+  defaultFilterFunc?: FilterFunc<Data>;
+  onFilterChange?: FilterSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
   // with custom filter value array
@@ -270,13 +329,13 @@ Enables grouping of table rows. Please ensure the [Toolbar](#toolbar) component 
 import { IdType, UseGroupByOptions } from 'react-table';
 import { ICellProps, GroupSetter } from '@relate-by-ui/relatable';
 
-export interface IWithGroupingOptions<Row extends object = any> extends UseGroupByOptions<Row> {
+export interface IWithGroupingOptions<Data extends object = any> extends UseGroupByOptions<Data> {
   defaultAggregate?: string[] | string | ((values: any[]) => any);
   defaultAggregateCell?: React.FC<ICellProps>;
-  onGroupChange?: GroupSetter;
+  onGroupChange?: GroupSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
-  groupBy?: IdType<Row>[];
+  groupBy?: IdType<Data>[];
 }
 ```
 
@@ -305,11 +364,11 @@ Enables sorting of table.
 import { SortingRule, UseSortByOptions } from 'react-table';
 import {SortSetter} from '@relate-by-ui/relatable';
 
-export interface IWithSortingOptions<Row extends object = any> extends UseSortByOptions<Row> {
-  onSortChange?: SortSetter;
+export interface IWithSortingOptions<Data extends object = any> extends UseSortByOptions<Data> {
+  onSortChange?: SortSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
-  sortBy?: SortingRule<Row>[];
+  sortBy?: SortingRule<Data>[];
 }
 ```
 
@@ -337,12 +396,12 @@ Enables expanding rows of table.
 import { IdType, UseExpandedOptions } from 'react-table';
 import {ExpandSetter, IRowProps} from '@relate-by-ui/relatable';
 
-export interface IWithExpandedOptions<Row extends object = any> extends UseExpandedOptions<Row> {
-  onExpandedChange?: ExpandSetter;
+export interface IWithExpandedOptions<Data extends object = any> extends UseExpandedOptions<Data> {
+  onExpandedChange?: ExpandSetter<Data>;
   expandedRowComponent?: React.FC<IRowProps>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useExpanded
-  expanded?: IdType<Row>[];
+  expanded?: IdType<Data>[];
 }
 ```
 
@@ -370,7 +429,7 @@ Enables pagination of table. Please ensure the [Pagination](#pagination) compone
 import { UsePaginationOptions } from 'react-table';
 import {PageSetter, PageSizeSetter} from '@relate-by-ui/relatable';
 
-export interface IWithPaginationOptions<Row extends object = any> extends UsePaginationOptions<Row> {
+export interface IWithPaginationOptions<Data extends object = any> extends UsePaginationOptions<Data> {
   onPageChange?: PageSetter;
   onPageSizeChange?: PageSizeSetter;
   pageSizeOptions?: number[];
@@ -405,11 +464,11 @@ Enables selection of table rows. Please ensure the [Toolbar](#toolbar) component
 import { IdType, UseRowSelectOptions } from 'react-table';
 import { SelectSetter } from '@relate-by-ui/relatable';
 
-export interface IWithSelectionOptions<Row extends object = any> extends UseRowSelectOptions<Row> {
-  onSelectionChange?: SelectSetter;
+export interface IWithSelectionOptions<Data extends object = any> extends UseRowSelectOptions<Data> {
+  onSelectionChange?: SelectSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
-  selectedRowPaths?: IdType<Row>[];
+  selectedRowPaths?: IdType<Data>[];
 }
 ```
 
@@ -427,19 +486,29 @@ const SelectableTable = () => <Relatable
 
 ---
 
-## Column Enhancements
+## Further Enhancements
+
+### Cell Renderers
 The react-table API allows you to specify custom [Cells](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options), [Aggregates](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options-3), and [Filters](https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#column-options-2) for columns.
 As a courtesy this library provides some standard components for this purpose.
 You can create your own simply by copying the implementation.
 
-### Cell values
+#### Cell values
 - [TextCell](./src/components/renderers/cells/text-cell.tsx)
 - [DateCell](./src/components/renderers/cells/date-cell.tsx)
 - [NumberCell](./src/components/renderers/cells/number-cell.tsx)
 - [JSONCell](./src/components/renderers/cells/json-cell.tsx)
 
-### Aggregate cell values
+#### Aggregate cell values
 - [ValueAggregate](src/components/renderers/aggregates/value-aggregate.tsx)
 
-### Column filter fields
+#### Column filter fields
 - [TextFilter](src/components/renderers/filters/text-filter.tsx)
+
+### Toolbar Items
+As a courtesy this library provides some standard components for enabling add-on interactions.
+You can create your own simply by copying the implementation.
+- [GroupableToolbar](./src/components/toolbar/groupable.toolbar.tsx)
+- [FilterableToolbar](./src/components/toolbar/filterable.toolbar.tsx)
+- [SortableToolbar](./src/components/toolbar/sortable.toolbar.tsx)
+- [SelectableToolbar](./src/components/toolbar/selectable.toolbar.tsx)

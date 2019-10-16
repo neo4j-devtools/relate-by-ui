@@ -8,19 +8,19 @@ import { useRelatableStateContext, useRelatableToolbarContext } from '../../stat
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
 import { makeSelectedRowsFilter } from '../../utils/filters';
-import { withSelection } from '../../add-ons';
+import { IWithFiltersInstance, IWithSelectionInstance, withSelection } from '../../add-ons';
 
 import { ToolbarPopup } from './toolbar-popup';
 
-export default function SelectionToolbar() {
-  const { preFilteredFlatRows, state: { selectedRowPaths } } = useRelatableStateContext();
+export default function SelectableToolbar() {
+  const { selectedFlatRows, state: { selectedRowPaths } } = useRelatableStateContext<any, IWithSelectionInstance>();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isSelected = arrayHasItems(selectedRowPaths);
 
   return <ToolbarPopup
     name={withSelection.name}
     content={<SelectionPopup
-      rows={preFilteredFlatRows}
+      rows={selectedFlatRows}
       selectedRowPaths={selectedRowPaths}
       selectedToolbarAction={selectedToolbarAction}/>}
     selectedToolbarAction={selectedToolbarAction}
@@ -35,7 +35,7 @@ export default function SelectionToolbar() {
 }
 
 function SelectionPopup({ rows, selectedRowPaths }: any) {
-  const { flatColumns, onCustomSelectionChange, onCustomFilterChange } = useRelatableStateContext();
+  const { flatColumns, onCustomSelectionChange, onCustomFilterChange } = useRelatableStateContext<any, IWithSelectionInstance & IWithFiltersInstance>();
   const [, , clearToolbar] = useRelatableToolbarContext();
   const onSelectionClear = useCallback(() => {
     const selectedRows = filter(rows, 'isSelected');
@@ -47,6 +47,7 @@ function SelectionPopup({ rows, selectedRowPaths }: any) {
     if (!onCustomFilterChange) return;
     clearToolbar();
     // just use the first column, rows dont care...
+    // @ts-ignore
     onCustomFilterChange(flatColumns[0], FILTER_ACTIONS.FILTER_ADD, [makeSelectedRowsFilter(selectedRowPaths)]);
   }, [onCustomFilterChange, selectedRowPaths]);
 
@@ -57,7 +58,7 @@ function SelectionPopup({ rows, selectedRowPaths }: any) {
         {onCustomFilterChange && <Button
           inverted
           icon
-          color="blue"
+          color="black"
           onClick={onSelectionView}
           title="View selection">
           <Icon name="eye"/> Show
@@ -65,7 +66,7 @@ function SelectionPopup({ rows, selectedRowPaths }: any) {
         <Button
           inverted
           icon
-          color="orange"
+          color="black"
           title="Clear selection"
           type="button"
           onClick={onSelectionClear}>

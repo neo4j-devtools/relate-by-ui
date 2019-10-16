@@ -1,24 +1,44 @@
 import { useCallback, useMemo, useState } from 'react';
-import { FilterValue, useFilters, UseFiltersOptions } from 'react-table';
+import {
+  Column,
+  FilterValue,
+  useFilters,
+  UseFiltersColumnOptions,
+  UseFiltersInstanceProps,
+  UseFiltersOptions, UseFiltersState,
+} from 'react-table';
 import { concat, omit, values, without } from 'lodash-es';
 
-import { FILTER_ACTIONS, FilterFunc, FilterSetter, TableAddOnReturn } from '../relatable.types';
+import {
+  FILTER_ACTIONS,
+  FilterFunc,
+  FilterSetter,
+  IRelatableStateInstance,
+  TableAddOnReturn,
+} from '../relatable.types';
 
 import { relatableDefaultFilter } from '../utils/filters';
 
 import { IFilterFieldProps, TextFilter } from '../components/renderers';
 
-export interface IWithFiltersOptions<Row extends object = any> extends UseFiltersOptions<Row> {
+export interface IWithFiltersOptions<Data extends object = any> extends UseFiltersOptions<Data> {
   defaultFilterCell?: React.FC<IFilterFieldProps>;
-  defaultFilterFunc?: string | FilterFunc;
-  onFilterChange?: FilterSetter;
+  defaultFilterFunc?: FilterFunc<Data>;
+  onFilterChange?: FilterSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
   // with custom filter value array
   filters?: Record<string, FilterValue[]>;
 }
 
-export default function withFilters<Row extends object = any>(options: IWithFiltersOptions<Row> = {}): TableAddOnReturn {
+export interface IWithFiltersState<Data extends object = any> extends UseFiltersState<Data> {}
+
+export interface IWithFiltersInstance<Data extends object = any> extends UseFiltersInstanceProps<Data>, IRelatableStateInstance<Data, IWithFiltersState<Data>> {
+  onCustomFilterChange: FilterSetter<Data>;
+  defaultColumn: Partial<Column<Data> & UseFiltersColumnOptions<Data>>;
+}
+
+export default function withFilters<Data extends object = any>(options: IWithFiltersOptions<Data> = {}): TableAddOnReturn {
   const {
     defaultFilterCell,
     defaultFilterFunc = relatableDefaultFilter,
@@ -66,8 +86,9 @@ export default function withFilters<Row extends object = any>(options: IWithFilt
 
   return [
     withFilters.name,
+    null,
     ({ canFilter }) => canFilter,
-    ({ defaultColumn }) => useMemo(() => ({
+    ({ defaultColumn }) => useMemo((): Partial<IWithFiltersInstance>  => ({
       ...tableParams,
       defaultColumn: {
         ...defaultColumn,

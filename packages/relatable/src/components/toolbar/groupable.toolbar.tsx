@@ -8,15 +8,15 @@ import { RELATABLE_ICONS } from '../../relatable.types';
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
-import { withGrouping } from '../../add-ons';
+import { IWithGroupingInstance, withGrouping } from '../../add-ons';
 import { getRelatableAction } from '../../utils/relatable-actions';
 import { columnHasAction } from '../../utils/column-actions';
 
 import { ToolbarPopup } from './toolbar-popup';
 import RelatableIcon from '../relatable-icon';
 
-export default function GroupingToolbar() {
-  const { flatColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext();
+export default function GroupableToolbar() {
+  const { flatColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext<any, IWithGroupingInstance>();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isGrouped = arrayHasItems(groupBy);
 
@@ -60,8 +60,8 @@ function GroupingPopup({ columns, groupBy, onClose, selectedToolbarAction, onCus
 }
 
 function GroupingForm({ columns, onCustomGroupingChange, selectedToolbarAction, onClose }: any) {
-  const { availableActions } = useRelatableStateContext();
-  const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
+  const { availableGlobalActions } = useRelatableStateContext();
+  const relatableAction = getRelatableAction(availableGlobalActions, selectedToolbarAction.name);
   const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
   const firstId = get(head(columnsToUse), 'id', undefined);
   const [selectedColumnId, setSelectedColumnId] = useState<any>(firstId);

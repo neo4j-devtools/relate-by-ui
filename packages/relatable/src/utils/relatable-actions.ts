@@ -2,10 +2,17 @@ import { filter, find, map, some } from 'lodash-es';
 
 import { RelatableAction, TableAddOnReturn } from '../relatable.types';
 
-export function getRelatableActions(addOns: TableAddOnReturn[]): RelatableAction[] {
+export function getRelatableGlobalActions(addOns: TableAddOnReturn[]): RelatableAction[] {
   return map(
     filter(addOns, ([name]) => Boolean(name)),
-    ([name, predicate]): RelatableAction => [name!, predicate],
+    ([name, , predicate]): RelatableAction => [name!, predicate],
+  );
+}
+
+export function getRelatableTableActions(addOns: TableAddOnReturn[]): RelatableAction[] {
+  return map(
+    filter(addOns, ([, name]) => Boolean(name)),
+    ([, name, predicate]): RelatableAction => [name!, predicate],
   );
 }
 

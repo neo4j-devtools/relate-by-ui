@@ -17,17 +17,17 @@ export { default as TextFilter } from './filters/text-filter';
 export { default as ValueAggregate } from './aggregates/value-aggregate';
 
 export interface ICellProps {
-  cell: any; // react-table cell
+  cell: any;
   [key: string]: any;
 }
 
 export interface IRowProps {
-  row: any; // react-table row
+  row: any;
   rowNumber: number;
   loading?: boolean;
 }
 
 export interface IFilterFieldProps {
-  column: any; // react-table column
+  column: any;
   onChange: (val: any) => void;
 }

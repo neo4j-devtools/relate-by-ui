@@ -1,23 +1,37 @@
 import { useCallback, useMemo } from 'react';
-import { IdType, useGroupBy, UseGroupByOptions } from 'react-table';
+import {
+  Column,
+  IdType,
+  useGroupBy,
+  UseGroupByColumnOptions,
+  UseGroupByInstanceProps,
+  UseGroupByOptions, UseGroupByState,
+} from 'react-table';
 import { values } from 'lodash-es';
 
-import { GroupSetter, TableAddOnReturn } from '../relatable.types';
+import { GroupSetter, IRelatableStateInstance, TableAddOnReturn } from '../relatable.types';
 
 import { DEFAULT_AGGREGATE_OPTIONS } from '../constants';
 
 import { ValueAggregate, ICellProps } from '../components/renderers';
 
-export interface IWithGroupingOptions<Row extends object = any> extends UseGroupByOptions<Row> {
+export interface IWithGroupingOptions<Data extends object = any> extends UseGroupByOptions<Data> {
   defaultAggregate?: string[] | string | ((values: any[]) => any);
   defaultAggregateCell?: React.FC<ICellProps>;
-  onGroupChange?: GroupSetter;
+  onGroupChange?: GroupSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useGroupBy
-  groupBy?: IdType<Row>[];
+  groupBy?: IdType<Data>[];
 }
 
-export default function withGrouping<Row extends object = any>(options: IWithGroupingOptions<Row> = {}): TableAddOnReturn {
+export interface IWithGroupingState<Data extends object = any> extends UseGroupByState<Data> {}
+
+export interface IWithGroupingInstance<Data extends object = any> extends UseGroupByInstanceProps<Data>, IRelatableStateInstance<Data, IWithGroupingState<Data>>{
+  onCustomGroupingChange: GroupSetter<Data>;
+  defaultColumn: Partial<Column<Data> & UseGroupByColumnOptions<Data>>;
+}
+
+export default function withGrouping<Data extends object = any>(options: IWithGroupingOptions<Data> = {}): TableAddOnReturn {
   const {
     groupBy,
     onGroupChange,
@@ -34,7 +48,7 @@ export default function withGrouping<Row extends object = any>(options: IWithGro
       return;
     }
 
-    column.toggleGroupBy(group);
+    column.toggleGroupBy();
   }, [onGroupChange]);
   const tableParams = {
     ...rest,
@@ -47,8 +61,9 @@ export default function withGrouping<Row extends object = any>(options: IWithGro
 
   return [
     withGrouping.name,
+    null,
     ({ canGroupBy }) => canGroupBy,
-    ({ defaultColumn }) => useMemo(() => ({
+    ({ defaultColumn }) => useMemo((): Partial<IWithGroupingInstance> => ({
       ...tableParams,
       defaultColumn: {
         ...defaultColumn,

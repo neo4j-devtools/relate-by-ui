@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { join } from 'lodash-es';
 import {
-  createColumnStateLabelClasses,
   createRowStateClasses,
   createToolbarStateClasses,
 } from '../../utils/relatable-state-classes';
@@ -32,19 +31,15 @@ export const StyleWrapper = styled.div`
     cursor: pointer;
   }
   
-  /* semantic specificity... */
-  .relatable__column-actions.dropdown {
-    position: static; /* force dropdown to align to sticky th */
-  }
-  
-  .relatable__column-actions .relatable__dropdown-item.item {
-    display: flex;
-    align-items: center;
-  }
-  
   .relatable__column-actions-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+  }
+  
+  .relatable__column-actions-header .relatable__icon {
+    margin: 0;
+    margin-left: 10px;
   }
   
   .relatable__column-actions-header [class*="relatable__table-column-state"] {
@@ -108,7 +103,6 @@ export const StyleWrapper = styled.div`
   }
   
   ${join(createToolbarStateClasses(), '\n\n')}
-  ${join(createColumnStateLabelClasses(), '\n\n')}
   ${join(createRowStateClasses(), '\n\n')}
   
   .relatable__table-body-cell-loader {

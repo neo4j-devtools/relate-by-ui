@@ -1,9 +1,9 @@
 import { createContext, Dispatch, useContext } from 'react';
 
-import { ToolbarAction, ToolbarActionDispatch } from './relatable.types';
+import { IRelatableStateInstance, ToolbarAction, ToolbarActionDispatch } from './relatable.types';
 
 export const RelatableStateContext = createContext<any>([{}, () => null]);
-export const useRelatableStateContext = () => useContext(RelatableStateContext);
+export const useRelatableStateContext = <Data extends object = any, IInstance extends IRelatableStateInstance = IRelatableStateInstance<Data>>(): IInstance => useContext(RelatableStateContext);
 export const RelatableActionContext = createContext<[ToolbarAction | null, ToolbarActionDispatch, Dispatch<void>]>([null, () => ({
   name: 'NOOP',
   column: {},

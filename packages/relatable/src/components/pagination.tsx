@@ -4,6 +4,7 @@ import { FormSelect } from '@relate-by-ui/form-elements';
 import { map } from 'lodash-es';
 
 import { Omit } from '../relatable.types';
+import { IWithPaginationInstance } from '../add-ons';
 
 import { useRelatableStateContext } from '../states';
 
@@ -22,7 +23,7 @@ export default function Pagination(props: IPaginationProps = {}): JSX.Element {
     setPageSize,
     onCustomPageSizeChange,
     state: { pageIndex, pageSize },
-  } = useRelatableStateContext();
+  } = useRelatableStateContext<any, IWithPaginationInstance>();
   const pageSetter = onCustomPageChange || gotoPage;
   const pageSizeSetter = onCustomPageSizeChange || setPageSize;
   const pageSizeOptions = map(customPageSizeOptions, (opt) => ({ key: opt, value: opt, text: opt }));
@@ -51,6 +52,6 @@ export default function Pagination(props: IPaginationProps = {}): JSX.Element {
       className="relatable__pagination-size-setter"
       options={pageSizeOptions}
       value={pageSize}
-      onChange={(_, { value }) => pageSizeSetter(value)}/>
+      onChange={(_, { value }: any) => pageSizeSetter(value)}/>
   </Form>;
 }

@@ -9,15 +9,19 @@ import {
 export default Relatable;
 export { IRelatableBasicProps, IRelatableChildrenProps, IRelatableProps };
 export { default as Table, ITableProps } from './components/table';
-export { default as Toolbar } from './components/toolbar/toolbar';
 export { default as Pagination, IPaginationProps } from './components/pagination';
+
+// toolbar components
+export * from './components/toolbar';
 
 // state access hooks
 export { useRelatableStateContext, useRelatableToolbarContext } from './states';
 
 // types
-export * from './add-ons';
 export * from './relatable.types';
+
+// add-ons
+export * from './add-ons';
 
 // renderers
 export * from './components/renderers';

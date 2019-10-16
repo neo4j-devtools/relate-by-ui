@@ -8,15 +8,15 @@ import { RELATABLE_ICONS, SORT_ACTIONS } from '../../relatable.types';
 import { useRelatableStateContext, useRelatableToolbarContext } from '../../states';
 import arrayHasItems from '../../utils/array-has-items';
 import { getToolbarStateClass } from '../../utils/relatable-state-classes';
-import { withSorting } from '../../add-ons';
+import { IWithSortingInstance, withSorting } from '../../add-ons';
 import { getRelatableAction } from '../../utils/relatable-actions';
 import { columnHasAction } from '../../utils/column-actions';
 
 import { ToolbarPopup } from './toolbar-popup';
 import RelatableIcon from '../relatable-icon';
 
-export default function SortingToolbar() {
-  const { flatColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext();
+export default function SortableToolbar() {
+  const { flatColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext<any, IWithSortingInstance>();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isSorted = arrayHasItems(sortBy);
 
@@ -62,8 +62,8 @@ function SortingPopup({ columns, sortBy, onClose, selectedToolbarAction, onCusto
 }
 
 function SortingForm({ columns, onCustomSortChange, selectedToolbarAction, onClose }: any) {
-  const { availableActions } = useRelatableStateContext();
-  const relatableAction = getRelatableAction(availableActions, selectedToolbarAction.name);
+  const { availableGlobalActions } = useRelatableStateContext();
+  const relatableAction = getRelatableAction(availableGlobalActions, selectedToolbarAction.name);
   const columnsToUse = filter(columns, (column) => relatableAction && columnHasAction(column, relatableAction));
   const firstId = get(head(columnsToUse), 'id', undefined);
   const [selectedSort, setSelectedSort] = useState<string>(SORT_ACTIONS.SORT_DESC);

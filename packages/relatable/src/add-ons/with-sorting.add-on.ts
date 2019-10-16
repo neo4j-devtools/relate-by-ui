@@ -1,22 +1,30 @@
 import { useCallback, useMemo, useState } from 'react';
-import { SortingRule, useSortBy, UseSortByOptions } from 'react-table';
+import { SortingRule, useSortBy, UseSortByInstanceProps, UseSortByOptions, UseSortByState } from 'react-table';
 import { filter, values } from 'lodash-es';
 
-import { SORT_ACTIONS, SortSetter, TableAddOnReturn } from '../relatable.types';
+import { IRelatableStateInstance, SORT_ACTIONS, SortSetter, TableAddOnReturn } from '../relatable.types';
 
-export interface IWithSortingOptions<Row extends object = any> extends UseSortByOptions<Row> {
-  onSortChange?: SortSetter;
+export interface IWithSortingOptions<Data extends object = any> extends UseSortByOptions<Data> {
+  onSortChange?: SortSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useSortBy
-  sortBy?: SortingRule<Row>[];
+  sortBy?: SortingRule<Data>[];
 }
 
-export default function withSorting<Row extends object = any>(options: IWithSortingOptions<Row> = {}): TableAddOnReturn {
+export interface IWithSortingState<Data extends object = any> extends UseSortByState<Data> {
+  onCustomSortChange: SortSetter<Data>;
+}
+
+export interface IWithSortingInstance<Data extends object = any> extends UseSortByInstanceProps<Data>, IRelatableStateInstance<Data, IWithSortingState<Data>> {
+  onCustomSortChange: SortSetter<Data>;
+}
+
+export default function withSorting<Data extends object = any>(options: IWithSortingOptions<Data> = {}): TableAddOnReturn {
   const { sortBy: theirSortBy, onSortChange, ...tableParams } = options;
-  const [ourSortBy, setOurSortBy] = useState<any[]>([]);
+  const [ourSortBy, setOurSortBy] = useState<SortingRule<Data>[]>([]);
   const sortBy = theirSortBy || ourSortBy;
   const stateParams = { sortBy };
-  const onCustomSortChange: SortSetter = useCallback((column, action) => {
+  const onCustomSortChange: SortSetter<Data> = useCallback((column, action) => {
     if (onSortChange) {
       onSortChange(column, action);
       return;
@@ -34,8 +42,9 @@ export default function withSorting<Row extends object = any>(options: IWithSort
 
   return [
     withSorting.name,
+    withSorting.name,
     ({ canSort }) => canSort,
-    () => useMemo(() => ({
+    () => useMemo((): Partial<IWithSortingInstance> => ({
       ...tableParams,
       onCustomSortChange,
     }), [onCustomSortChange, ...values(tableParams)]),

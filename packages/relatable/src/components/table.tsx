@@ -48,13 +48,13 @@ export default function Table({ loading, expectedRowCount, headless, ...rest }: 
     },
     _rowsToUse: rows, // @todo: handle this more gracefully inside addOns
     prepareRow,
-    availableActions,
+    availableTableActions,
     onCustomSelectionChange,
   } = useRelatableStateContext();
-  const { className = '', semanticTableProps } = getSemanticTableProps(rest);
+  const { className = '', ...semanticTableProps } = getSemanticTableProps(rest);
   const onSelectAllClick = useCallback(
     (select: boolean) => {
-      onCustomSelectionChange(rows, select);
+      onCustomSelectionChange!(rows, select);
     },
     [onCustomSelectionChange, rows],
   );
@@ -74,7 +74,7 @@ export default function Table({ loading, expectedRowCount, headless, ...rest }: 
             </SemanticTable.HeaderCell>
             {map(headerGroup.headers, (column: any) => {
                 const headerProps = column.getHeaderProps();
-                const hasActions = isLastIndex(headerGroups, index) && columnHasActions(column, availableActions);
+                const hasActions = isLastIndex(headerGroups, index) && columnHasActions(column, availableTableActions);
 
                 if (column.colSpan === 0) return null;
 
@@ -94,16 +94,18 @@ export default function Table({ loading, expectedRowCount, headless, ...rest }: 
         ))}
       </SemanticTable.Header>}
       <SemanticTable.Body>
-        {map(rows, (row, index: number) =>
-          prepareRow(row) || (
+        {map(rows, (row, index: number) => {
+          prepareRow(row);
+
+          return (
             <BodyRow
               row={row}
               rowNumber={getRowNumber(index, pageIndex, pageSize)}
               loading={loading}
               {...row.getRowProps()}
             />
-          ),
-        )}
+          );
+        })}
         {/* render empty rows when passed expectedRowCount and no data */}
         {!arrayHasItems(rows) && loading && expectedRowCount
           ? map(Array(expectedRowCount), (_, index) => (

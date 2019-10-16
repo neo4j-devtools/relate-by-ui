@@ -2,7 +2,14 @@ import React, { useCallback, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import Relatable, { SORT_ACTIONS, Pagination, Table, Toolbar } from '../../../packages/relatable/src';
+import Relatable, {
+  SORT_ACTIONS,
+  Pagination,
+  Table,
+  Toolbar,
+  FilterSetter,
+  FILTER_ACTIONS,
+} from '../../../packages/relatable/src';
 import {
   COLUMNS,
   ROWS,
@@ -89,40 +96,7 @@ stories.add(
 );
 
 stories.add(
-  'Relatable filterable',
-  () => (
-    <Relatable
-      filterable
-      columns={COLUMNS}
-      data={ROWS}/>
-  ),
-);
-
-stories.add(
-  'Relatable groupable ',
-  () => (
-    <Relatable
-      groupable
-      columns={COLUMNS}
-      data={ROWS}/>
-  ),
-);
-
-stories.add(
-  'Relatable groupable filterable sortable paginated',
-  () => (
-    <Relatable
-      groupable
-      filterable
-      sortable
-      paginated
-      columns={COLUMNS}
-      data={ROWS}/>
-  ),
-);
-
-stories.add(
-  'Relatable filterable sortable paginated selectable inverted striped compact',
+  'Relatable inverted striped compact',
   () => (
     <Relatable
       filterable
@@ -138,7 +112,7 @@ stories.add(
 );
 
 stories.add(
-  'Relatable filterable sortable paginated flat',
+  'Relatable sortable paginated flat',
   () => (
     <Relatable
       filterable
@@ -150,7 +124,7 @@ stories.add(
 );
 
 stories.add(
-  'Relatable filterable groupable sortable paginated expandable flat disabled',
+  'Relatable sortable paginated sort disabled',
   () => (
     <Relatable
       filterable
@@ -164,95 +138,34 @@ stories.add(
   ),
 );
 
-stories.add(
-  'Relatable filterable groupable sortable paginated expandable flat',
-  () => (
-    <Relatable
-      filterable
-      groupable
-      sortable
-      paginated
-      expandable
-      onStateChange={onStateChangeHandler}
-      columns={FLAT_COLUMNS}
-      data={ROWS}/>
-  ),
-);
 
 stories.add(
-  'Relatable filterable groupable sortable selectable paginated expandable flat',
+  'Relatable with all the stuff',
   () => (
     <Relatable
       filterable
-      groupable
       sortable
       paginated
       selectable
-      expandable
-      onStateChange={onStateChangeHandler}
-      columns={FLAT_COLUMNS}
-      data={ROWS}/>
-  ),
-);
-
-stories.add(
-  'Relatable SUPER',
-  () => (
-    <Relatable
-      filterable
       groupable
-      sortable
-      paginated
-      selectable
       expandable
       onStateChange={onStateChangeHandler}
       columns={SUPER_COLUMNS}
-      data={SUPER_ROWS}/>
-  ),
-);
-
-
-stories.add(
-  'Relatable filterable sortable paginated custom data',
-  () => (
-    <Relatable
-      filterable
-      sortable
-      paginated
-      columns={CUSTOM_COLUMNS}
-      data={CUSTOM_ROWS}/>
+      data={SUPER_ROWS}>
+      <Toolbar/>
+      <Table/>
+      <Pagination/>
+    </Relatable>
   ),
 );
 
 stories.add(
-  'Relatable filterable sortable paginated selectable custom data',
+  'Relatable sortable paginated custom cell renderer',
   () => (
     <Relatable
-      filterable
-      sortable
-      paginated
-      selectable
       onStateChange={onStateChangeHandler}
       columns={CUSTOM_COLUMNS}
       data={CUSTOM_ROWS}/>
-  ),
-);
-
-stories.add(
-  'Relatable with options',
-  () => (
-    <BasicOptions
-      columns={COLUMNS}
-      data={ROWS}/>
-  ),
-);
-
-stories.add(
-  'Relatable advanced',
-  () => (
-    <Advanced
-      columns={COLUMNS}
-      data={ROWS}/>
   ),
 );
 
@@ -264,37 +177,6 @@ stories.add(
       data={ROWS}/>
   ),
 );
-
-
-/**
- * Sample Components
- */
-
-function BasicOptions({ columns, data }: any) {
-  const [filters, onFilterChange] = useOnFilterChange();
-
-  return <Relatable
-    filterable={{ filters, onFilterChange }}
-    sortable
-    paginated
-    columns={columns}
-    data={data}/>;
-}
-
-function Advanced({ columns, data }: any) {
-  return <Relatable
-    columns={columns}
-    data={data}
-    filterable
-    sortable
-    paginated
-    groupable
-    onStateChange={onStateChangeHandler}>
-      <Toolbar/>
-      <Table/>
-      <Pagination/>
-  </Relatable>;
-}
 
 function AsyncTable({ columns, data }: any) {
   const [loading, asyncData, onStateChange] = useAsyncData(data);
@@ -379,24 +261,31 @@ function useOnSortChange(): [any, (column: any, action: string) => void] {
   return [sortBy, onSortChange];
 }
 
-function useOnFilterChange(): [any, (columns: any[], val: any) => void] {
+function useOnFilterChange(): [any, FilterSetter<any>] {
   const [filters, setFilters] = useState({});
-  const onFilterChange = useCallback((columns, val) => {
-    if (val === undefined) {
-      const clone: { [key: string]: any } = { ...filters };
+  const onFilterChange = useCallback<FilterSetter<any>>((column, action, values) => {
+    const clone: any = {...filters};
 
-      columns.forEach(({ id }: any) => {
-        delete clone[id];
-      });
+    if (action === FILTER_ACTIONS.FILTER_CLEAR) {
+      delete clone[column.id];
 
       setFilters(clone);
       return;
     }
 
-    setFilters(columns.reduce((agg: any, { id }: any) => ({
-      ...agg,
-      [id]: val,
-    }), filters));
+    if (action === FILTER_ACTIONS.FILTER_ADD) {
+      setFilters({
+        ...clone,
+        [column.id]: (clone[column.id] || []).concat(values),
+      });
+
+      return;
+    }
+
+    setFilters({
+      ...clone,
+      [column.id]: (clone[column.id] || []).filter((value: any) => !values.includes(value)),
+    });
   }, [filters]);
 
   return [filters, onFilterChange];

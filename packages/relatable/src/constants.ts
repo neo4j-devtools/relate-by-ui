@@ -35,12 +35,6 @@ export const TOOLBAR_STATE_CLASSES = {
   isSelected: 'rgb(104,189,244)',
 };
 
-export const COLUMN_STATE_CLASSES = {
-  isGrouped: 'rgb(245,166,35)',
-  filterValue: 'rgb(253,118,110)',
-  isSorted: 'rgb(109,206,157)',
-};
-
 export const ROW_STATE_CLASSES = {
   isSelected: 'rgba(104,189,244,0.10)',
 };

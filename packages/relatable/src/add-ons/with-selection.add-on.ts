@@ -1,20 +1,32 @@
 import { useCallback, useMemo, useState } from 'react';
-import { IdType, useRowSelect, UseRowSelectOptions } from 'react-table';
+import {
+  IdType,
+  useRowSelect,
+  UseRowSelectInstanceProps,
+  UseRowSelectOptions,
+  UseRowSelectState,
+} from 'react-table';
 import { map, values, uniq, without, join, flatMap } from 'lodash-es';
 
-import { SelectSetter, TableAddOnReturn } from '../relatable.types';
+import { IRelatableStateInstance, SelectSetter, TableAddOnReturn } from '../relatable.types';
 import arrayHasItems from '../utils/array-has-items';
 
-export interface IWithSelectionOptions<Row extends object = any> extends UseRowSelectOptions<Row> {
-  onSelectionChange?: SelectSetter;
+export interface IWithSelectionOptions<Data extends object = any> extends UseRowSelectOptions<Data> {
+  onSelectionChange?: SelectSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
-  selectedRowPaths?: IdType<Row>[];
+  selectedRowPaths?: IdType<Data>[];
 }
 
-export default function withSelection<Row extends object = any>(options: IWithSelectionOptions<Row> = {}): TableAddOnReturn {
+export interface IWithSelectionState<Data extends object = any> extends UseRowSelectState<Data> {}
+
+export interface IWithSelectionInstance<Data extends object = any> extends UseRowSelectInstanceProps<Data>, IRelatableStateInstance<Data, IWithSelectionState<Data>> {
+  onCustomSelectionChange: SelectSetter<Data>;
+}
+
+export default function withSelection<Data extends object = any>(options: IWithSelectionOptions<Data> = {}): TableAddOnReturn {
   const { selectedRowPaths: theirSelectedRowPaths, onSelectionChange, ...tableParams } = options;
-  const [ourSelectedRowPaths, setOurSelectedRowPaths] = useState<any[]>([]);
+  const [ourSelectedRowPaths, setOurSelectedRowPaths] = useState<IdType<Data>[]>([]);
   const selectedRowPaths = theirSelectedRowPaths || ourSelectedRowPaths;
   const stateParams = { selectedRowPaths };
   const onCustomSelectionChange: SelectSetter = useCallback((rows, select) => {
@@ -39,8 +51,9 @@ export default function withSelection<Row extends object = any>(options: IWithSe
 
   return [
     withSelection.name,
+    null,
     () => true,
-    () => useMemo(() => ({
+    () => useMemo((): Partial<IWithSelectionInstance> => ({
       ...tableParams,
       onCustomSelectionChange,
     }), [onCustomSelectionChange, ...values(tableParams)]),

@@ -2,12 +2,12 @@ import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 import { assign, map, pick, reduce, values, filter, keys } from 'lodash-es';
 
-import { StateChangeHandler, ToolbarAction, ToolbarActionDispatch } from '../../relatable.types';
+import { IRelatableStateInstance, StateChangeHandler, ToolbarAction, ToolbarActionDispatch } from '../../relatable.types';
 import { IRelatableProps } from './relatable';
 
 import { ON_STATE_CHANGE_TRIGGERS } from '../../constants';
 import getRelatableAddOns from '../../utils/get-relatable-add-ons';
-import { getRelatableActions } from '../../utils/relatable-actions';
+import { getRelatableGlobalActions, getRelatableTableActions } from '../../utils/relatable-actions';
 
 import { TextCell } from '../renderers';
 
@@ -26,15 +26,16 @@ export function useRelatableActions(): [ToolbarAction | null, ToolbarActionDispa
 const getCellColSpanDefault = () => undefined;
 const DEFAULT_COLUMN = {};
 
-export function useRelatableState(props: IRelatableProps): any {
+export function useRelatableState<Data extends object = any, IInstance extends IRelatableStateInstance = IRelatableStateInstance<Data>>(props: IRelatableProps<Data>): IRelatableStateInstance<Data> {
   const { columns, data, onStateChange, defaultColumn = DEFAULT_COLUMN, getCellColSpan = getCellColSpanDefault } = props;
 
   // prepare add-ons and extract return values
   const addOns = getRelatableAddOns(props);
-  const availableActions = getRelatableActions(addOns);
-  const tableParamFactories = map(addOns, (prep) => prep[2]);
-  const tableStateFactories = map(addOns, (prep) => prep[3]);
-  const reactTableHooks = map(addOns, (prep) => prep[4]);
+  const availableGlobalActions = getRelatableGlobalActions(addOns);
+  const availableTableActions = getRelatableTableActions(addOns);
+  const tableParamFactories = map(addOns, (prep) => prep[3]);
+  const tableStateFactories = map(addOns, (prep) => prep[4]);
+  const reactTableHooks = map(addOns, (prep) => prep[5]);
 
   // prepare table params and context values
   const stateParams = reduce(tableStateFactories, (agg, fac) => assign(agg, fac(agg) || {}), {});
@@ -48,28 +49,30 @@ export function useRelatableState(props: IRelatableProps): any {
       ...defaultColumn,
     }), [defaultColumn]),
   });
-  const contextValue = useTable(
-    // @ts-ignore
-    tableParams, // @todo: fix typing from lib
+  const contextValue = useTable<Data>(
+    tableParams,
     ...reactTableHooks,
   );
 
-  // hoist and override react-table state
-  useOnStateChange(contextValue, onStateChange);
-
   // add additional values for context
-  return {
+  const added = {
     ...contextValue,
-    availableActions,
+    availableGlobalActions,
+    availableTableActions,
     // @todo: cleanup
     _originalColumns: columns,
     // @todo: figure out a cleaner way of detecting and passing rows to use based on addOns used
     // @ts-ignore
-    _rowsToUse: contextValue.page || contextValue.rows,
-  };
+    _rowsToUse: contextValue.page || contextValue.rows
+  } as IInstance;
+
+  // hoist and override react-table state
+  useOnStateChange(added, onStateChange);
+
+  return added;
 }
 
-export function useOnStateChange({ state: tableState }: any, onStateChange?: StateChangeHandler) {
+export function useOnStateChange<Data extends object = any, IInstance extends IRelatableStateInstance = IRelatableStateInstance<Data>>({ state: tableState }: IInstance, onStateChange?: StateChangeHandler) {
   const toOutside = pick(tableState, ON_STATE_CHANGE_TRIGGERS);
   const [oldState, setOldState] = useState(toOutside);
 
