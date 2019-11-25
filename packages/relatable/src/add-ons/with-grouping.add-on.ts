@@ -45,6 +45,7 @@ export default function withGrouping<Data extends object = any>(options: IWithGr
   const onCustomGroupingChange: GroupSetter = useCallback((column, group) => {
     if (onGroupChange) {
       onGroupChange(column, group);
+
       return;
     }
 

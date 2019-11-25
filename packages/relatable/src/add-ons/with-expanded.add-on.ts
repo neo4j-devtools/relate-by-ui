@@ -3,6 +3,7 @@ import { IdType, useExpanded, UseExpandedInstanceProps, UseExpandedOptions, UseE
 import { forEach, values } from 'lodash-es';
 
 import { ExpandSetter, IRelatableStateInstance, TableAddOnReturn } from '../relatable.types';
+
 import { ExpandedRow, IRowProps } from '../components/renderers';
 import arrayHasItems from '../utils/array-has-items';
 
@@ -34,6 +35,7 @@ export default function withExpanded<Data extends object = any>(options: IWithEx
   const onCustomExpandedChange: ExpandSetter = useCallback((rows, expand) => {
     if (onExpandedChange) {
       onExpandedChange(rows, expand);
+
       return;
     }
 

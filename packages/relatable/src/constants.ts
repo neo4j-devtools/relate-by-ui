@@ -1,12 +1,12 @@
 export const DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 30, 40, 50];
-export const DEFAULT_AGGREGATE_OPTIONS = ['sum', 'count'];
+export const DEFAULT_AGGREGATE_OPTIONS = 'count';
 export const ON_STATE_CHANGE_TRIGGERS = [
   'pageIndex',
   'pageSize',
   'sortBy',
   'filters',
   'groupBy',
-  'selectedRowPaths',
+  'selectedRowIds',
   'expanded',
 ];
 export const SEMANTIC_TABLE_PROPS = [

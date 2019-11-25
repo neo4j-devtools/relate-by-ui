@@ -163,6 +163,8 @@ stories.add(
   'Relatable sortable paginated custom cell renderer',
   () => (
     <Relatable
+      sortable
+      paginated
       onStateChange={onStateChangeHandler}
       columns={CUSTOM_COLUMNS}
       data={CUSTOM_ROWS}/>
@@ -262,30 +264,27 @@ function useOnSortChange(): [any, (column: any, action: string) => void] {
 }
 
 function useOnFilterChange(): [any, FilterSetter<any>] {
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<any[]>([]);
   const onFilterChange = useCallback<FilterSetter<any>>((column, action, values) => {
-    const clone: any = {...filters};
+    const clone: any = [...filters];
 
     if (action === FILTER_ACTIONS.FILTER_CLEAR) {
-      delete clone[column.id];
-
-      setFilters(clone);
+      setFilters(clone.filter(({id}) => id !== column.id));
       return;
     }
 
     if (action === FILTER_ACTIONS.FILTER_ADD) {
-      setFilters({
+      setFilters([
         ...clone,
-        [column.id]: (clone[column.id] || []).concat(values),
-      });
+        ...values.map((value) => ({id: column.id, value})),
+      ]);
 
       return;
     }
 
-    setFilters({
-      ...clone,
-      [column.id]: (clone[column.id] || []).filter((value: any) => !values.includes(value)),
-    });
+    setFilters([
+      ...clone.filter(({id, value}) => column.id !== id && !values.includes(value)),
+    ]);
   }, [filters]);
 
   return [filters, onFilterChange];

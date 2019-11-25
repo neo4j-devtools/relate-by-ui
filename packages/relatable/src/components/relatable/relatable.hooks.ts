@@ -1,5 +1,5 @@
 import { Dispatch, useCallback, useEffect, useMemo, useState } from 'react';
-import { useTable } from 'react-table';
+import { TableOptions, useTable } from 'react-table';
 import { assign, map, pick, reduce, values, filter, keys } from 'lodash-es';
 
 import { IRelatableStateInstance, StateChangeHandler, ToolbarAction, ToolbarActionDispatch } from '../../relatable.types';
@@ -39,11 +39,15 @@ export function useRelatableState<Data extends object = any, IInstance extends I
 
   // prepare table params and context values
   const stateParams = reduce(tableStateFactories, (agg, fac) => assign(agg, fac(agg) || {}), {});
-  const tableParams = reduce(tableParamFactories, (agg, fac) => assign(agg, fac(agg) || {}), {
+  const tableParams: TableOptions<Data> = reduce(tableParamFactories, (agg, fac) => assign(agg, fac(agg) || {}), {
     columns,
     data,
     state: stateParams,
     getCustomCellColSpan: getCellColSpan,
+    useControlledState: (state: any) => useMemo(
+      () => assign({}, state, stateParams),
+      [state, values(stateParams)]
+    ),
     defaultColumn: useMemo(() => ({
       Cell: TextCell,
       ...defaultColumn,
@@ -81,8 +85,8 @@ export function useOnStateChange<Data extends object = any, IInstance extends IR
     if (!onStateChange) return;
 
     const changedKeys = filter(keys(toOutside), (key) => toOutside[key] !== oldState[key]);
-    setOldState(toOutside);
 
+    setOldState(toOutside);
     onStateChange(toOutside, changedKeys);
   }, [onStateChange, ...values(toOutside)]); // spread to prevent double trigger
 }

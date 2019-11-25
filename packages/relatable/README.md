@@ -219,7 +219,6 @@ import {
   UseFiltersColumnProps,
   UseSortByColumnProps,
   Cell,
-  IdType,
 } from 'react-table';
 
 export type CellCollSpanGetter<Data extends object = any> = (cell: Cell<Data>) => number | string | undefined;
@@ -246,25 +245,7 @@ export enum FILTER_ACTIONS {
   FILTER_REMOVE = 'FILTER_REMOVE',
 }
 
-export enum FILTER_VARIANTS {
-  EQUALS = 'EQUALS',
-  ANY_IN = 'ANY_IN'
-}
-
-export type ColumnFilter = {
-  type: 'column',
-  variant?: FILTER_VARIANTS,
-  value: any
-}
-export type SelectedRowsFilter = {
-  type: 'selected-rows',
-  key: 'path',
-  variant: FILTER_VARIANTS.ANY_IN,
-  value: any[]
-}
-export type FilterValue = ColumnFilter | SelectedRowsFilter;
-export type FilterFunc<Data extends object = any> = (rows: Row<Data>[], columnID: IdType<Data>, value: FilterValue) => any[];
-export type FilterSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseFiltersColumnProps<Data>), action: FILTER_ACTIONS, values: FilterValue[]) => void;
+export type FilterSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseFiltersColumnProps<Data>), action: FILTER_ACTIONS, values: any[]) => void;
 ```
 
 ---
@@ -289,8 +270,8 @@ Enables filtering of table. Please ensure the [Toolbar](#toolbar) component is r
 
 #### Parameters:
 ```typescript
-import { UseFiltersOptions } from 'react-table';
-import { IFilterFieldProps, FilterSetter, FilterFunc, FilterValue } from '@relate-by-ui/relatable';
+import { IdType, UseFiltersOptions } from 'react-table';
+import { IFilterFieldProps, FilterSetter, FilterFunc } from '@relate-by-ui/relatable';
 
 export interface IWithFiltersOptions<Data extends object = any> extends UseFiltersOptions<Data> {
   defaultFilterCell?: React.FC<IFilterFieldProps>;
@@ -298,11 +279,9 @@ export interface IWithFiltersOptions<Data extends object = any> extends UseFilte
   onFilterChange?: FilterSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useFilters
-  // with custom filter value array
-  filters?: Record<string, FilterValue[]>;
+  filters?: {id: IdType<Data>, value: any}[];
 }
 ```
-Please note that we depart sligthly from the react-table state API here to enable multiple filters per column.
 
 #### Usage
 ```typescript jsx
@@ -461,14 +440,14 @@ Enables selection of table rows. Please ensure the [Toolbar](#toolbar) component
 
 #### Parameters:
 ```typescript
-import { IdType, UseRowSelectOptions } from 'react-table';
+import { UseRowSelectOptions } from 'react-table';
 import { SelectSetter } from '@relate-by-ui/relatable';
 
 export interface IWithSelectionOptions<Data extends object = any> extends UseRowSelectOptions<Data> {
   onSelectionChange?: SelectSetter<Data>;
 
   // react-table state override https://github.com/tannerlinsley/react-table/blob/master/docs/api.md#useRowSelect
-  selectedRowPaths?: IdType<Data>[];
+  selectedRowPaths?: {[id: string]: boolean};
 }
 ```
 

@@ -27,6 +27,7 @@ export default function withSorting<Data extends object = any>(options: IWithSor
   const onCustomSortChange: SortSetter<Data> = useCallback((column, action) => {
     if (onSortChange) {
       onSortChange(column, action);
+
       return;
     }
 
@@ -34,6 +35,7 @@ export default function withSorting<Data extends object = any>(options: IWithSor
 
     if (action === SORT_ACTIONS.SORT_CLEAR) {
       setOurSortBy(withoutColumn);
+
       return;
     }
 

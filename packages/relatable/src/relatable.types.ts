@@ -13,7 +13,6 @@ import {
   UseSortByColumnProps,
   TableOptions,
   Cell,
-  IdType,
 } from 'react-table';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
@@ -41,6 +40,7 @@ export interface IRelatableStateInstance<Data extends object = any, State extend
   availableTableActions: RelatableAction[];
   getCustomCellColSpan: CellCollSpanGetter[];
   _originalColumns: Column<Data>[];
+  allColumns: Column<Data>[]; // @todo: remove when typings catch up
   _rowsToUse: Row<Data>[];
 
   state: State;
@@ -82,22 +82,4 @@ export enum FILTER_ACTIONS {
   FILTER_REMOVE = 'FILTER_REMOVE',
 }
 
-export enum FILTER_VARIANTS {
-  EQUALS = 'EQUALS',
-  ANY_IN = 'ANY_IN'
-}
-
-export type ColumnFilter = {
-  type: 'column',
-  variant?: FILTER_VARIANTS,
-  value: any
-}
-export type SelectedRowsFilter = {
-  type: 'selected-rows',
-  key: 'path',
-  variant: FILTER_VARIANTS.ANY_IN,
-  value: any[]
-}
-export type FilterValue = ColumnFilter | SelectedRowsFilter;
-export type FilterFunc<Data extends object = any> = (rows: Row<Data>[], columnID: IdType<Data>, value: FilterValue) => any[];
-export type FilterSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseFiltersColumnProps<Data>), action: FILTER_ACTIONS, values: FilterValue[]) => void;
+export type FilterSetter<Data extends object = any> = (column: (ColumnInstance<Data> & UseFiltersColumnProps<Data>), action: FILTER_ACTIONS, values: any[]) => void;

@@ -16,7 +16,7 @@ import { ToolbarPopup } from './toolbar-popup';
 import RelatableIcon from '../relatable-icon';
 
 export default function SortableToolbar() {
-  const { flatColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext<any, IWithSortingInstance>();
+  const { allColumns: columns, state: { sortBy }, onCustomSortChange } = useRelatableStateContext<any, IWithSortingInstance>();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isSorted = arrayHasItems(sortBy);
 

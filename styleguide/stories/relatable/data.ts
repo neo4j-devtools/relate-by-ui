@@ -47,7 +47,7 @@ export const DISABLED_COLUMNS: any[] = [
   {
     Header: 'Bar',
     accessor: 'bar',
-    disableSorting: true,
+    disableSortBy: true,
   },
   {
     Header: 'Baz',

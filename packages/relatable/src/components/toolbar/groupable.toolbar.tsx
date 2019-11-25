@@ -16,7 +16,7 @@ import { ToolbarPopup } from './toolbar-popup';
 import RelatableIcon from '../relatable-icon';
 
 export default function GroupableToolbar() {
-  const { flatColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext<any, IWithGroupingInstance>();
+  const { allColumns: columns, state: { groupBy }, onCustomGroupingChange } = useRelatableStateContext<any, IWithGroupingInstance>();
   const [selectedToolbarAction, setToolbar, clearToolbar] = useRelatableToolbarContext();
   const isGrouped = arrayHasItems(groupBy);
 
