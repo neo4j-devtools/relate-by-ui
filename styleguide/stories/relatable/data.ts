@@ -1,6 +1,6 @@
 import { loremIpsum } from 'lorem-ipsum';
 
-import { DateCell, JSONCell, NumberCell, TextCell } from '../../../packages/relatable/src';
+import { DateCell, JSONCell, NumberCell, TextCell } from '@relate-by-ui/relatable';
 
 /**
  * DUMMY DATA BELOW
