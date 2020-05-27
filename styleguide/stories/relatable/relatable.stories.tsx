@@ -9,7 +9,7 @@ import Relatable, {
   Toolbar,
   FilterSetter,
   FILTER_ACTIONS,
-} from '../../../packages/relatable/src';
+} from '@relate-by-ui/relatable';
 import {
   COLUMNS,
   ROWS,
@@ -269,6 +269,7 @@ function useOnFilterChange(): [any, FilterSetter<any>] {
     const clone: any = [...filters];
 
     if (action === FILTER_ACTIONS.FILTER_CLEAR) {
+      // @ts-ignore
       setFilters(clone.filter(({id}) => id !== column.id));
       return;
     }
@@ -283,6 +284,7 @@ function useOnFilterChange(): [any, FilterSetter<any>] {
     }
 
     setFilters([
+      // @ts-ignore
       ...clone.filter(({id, value}) => column.id !== id && !values.includes(value)),
     ]);
   }, [filters]);
