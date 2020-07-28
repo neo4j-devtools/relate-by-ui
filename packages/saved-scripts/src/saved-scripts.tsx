@@ -52,16 +52,10 @@ export default function SavedScripts(props: ISavedScriptsProps) {
   const [rootFolder, subFolders] = useScriptsFolders(scriptsNamespace, scripts);
   // lodash-es typings cant handle tuples
   const allSavedFolderNames = compact([first(rootFolder), ...map(subFolders, first)]) as string[];
-  const [
-    emptyFolders,
-    canAddFolder,
-    addEmptyFolder,
-    updateEmptyFolder,
-    removeEmptyFolder,
-  ] = useEmptyFolders(
+  const [emptyFolders, canAddFolder, addEmptyFolder, updateEmptyFolder, removeEmptyFolder] = useEmptyFolders(
     scriptsNamespace,
     newFolderPathGenerator || getEmptyFolderDefaultPath,
-    allSavedFolderNames
+    allSavedFolderNames,
   );
   const allFolderNames = [...allSavedFolderNames, ...emptyFolders];
   const sortedSubFolders = sortBy(subFolders, folder =>
@@ -79,11 +73,8 @@ export default function SavedScripts(props: ISavedScriptsProps) {
               <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
                 {isStatic ? null : (
                   <>
-                    <SavedScriptsExportButton onExport={() => onExportScripts()}/>
-                    <SavedScriptsNewFolderButton
-                      disabled={!canAddFolder}
-                      onAdd={() => addEmptyFolder()}
-                    />
+                    <SavedScriptsExportButton onExport={() => onExportScripts()} />
+                    <SavedScriptsNewFolderButton disabled={!canAddFolder} onAdd={() => addEmptyFolder()} />
                   </>
                 )}
               </SavedScriptsButtonWrapper>
