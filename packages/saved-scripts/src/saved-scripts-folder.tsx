@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import { lowerCase, map, sortBy, without } from 'lodash-es';
-import {DropTarget} from 'react-dnd';
+import { DropTarget } from 'react-dnd';
 
 import { AnyFunc, IScript } from './types';
 
 import { ENTER_KEY_CODE } from './saved-scripts.constants';
-import {
-  addScriptPathPrefix,
-  getScriptDisplayName,
-  omitScriptPathPrefix,
-} from './saved-scripts.utils';
+import { addScriptPathPrefix, getScriptDisplayName, omitScriptPathPrefix } from './saved-scripts.utils';
 import { useCustomBlur, useNameUpdate } from './saved-scripts.hooks';
 
 import SavedScriptsListItem from './saved-scripts-list-item';
 import SavedScriptsEditButton from './saved-scripts-edit-button';
 import SavedScriptsRemoveButton from './saved-scripts-remove-button';
-import {
-  CollapseMenuIcon,
-  ExpandMenuRightIcon,
-} from './icons';
+import { CollapseMenuIcon, ExpandMenuRightIcon } from './icons';
 
 import {
   SavedScriptsButtonWrapper,
@@ -31,90 +24,88 @@ import {
 } from './saved-scripts.styled';
 
 export interface ISavedScriptsFolderProps {
-  isRoot?: boolean,
-  scriptsNamespace: string,
-  allFolderNames: string[],
-  folderName: string,
-  scripts: IScript[],
-  onSelectScript: AnyFunc,
-  onExecScript: AnyFunc,
-  onRemoveScript: AnyFunc,
-  onUpdateFolder: AnyFunc,
-  onRemoveFolder: AnyFunc,
-  isStatic?: boolean,
-  connectDropTarget?: AnyFunc
+  isRoot?: boolean;
+  scriptsNamespace: string;
+  allFolderNames: string[];
+  folderName: string;
+  scripts: IScript[];
+  isRelateScripts?: boolean;
+  onSelectScript: AnyFunc;
+  onExecScript: AnyFunc;
+  onRemoveScript: AnyFunc;
+  onUpdateFolder: AnyFunc;
+  onRemoveFolder: AnyFunc;
+  isStatic?: boolean;
+  connectDropTarget?: AnyFunc;
 }
 
 export default DropTarget<ISavedScriptsFolderProps>(
-  ({allFolderNames, folderName}) => map(without(allFolderNames, folderName), name => name),
+  ({ allFolderNames, folderName }) => map(without(allFolderNames, folderName), name => name),
   {
-    drop({onUpdateFolder, folderName}, monitor) {
+    drop({ onUpdateFolder, folderName }, monitor) {
       const item = monitor.getItem();
 
       onUpdateFolder([item], { path: folderName });
-    }
+    },
   },
-  (connect) => ({
-    connectDropTarget: connect.dropTarget()
-  })
-)(SavedScriptsFolder)
+  connect => ({
+    connectDropTarget: connect.dropTarget(),
+  }),
+)(SavedScriptsFolder);
 
 function SavedScriptsFolder({
   isRoot = false,
   scriptsNamespace,
   folderName,
   scripts,
+  isRelateScripts,
   isStatic,
   onSelectScript,
   onExecScript,
   onRemoveScript,
   onUpdateFolder,
   onRemoveFolder,
-  connectDropTarget
+  connectDropTarget,
 }: ISavedScriptsFolderProps) {
-  const sortedScripts = sortBy(scripts, script =>
-    lowerCase(getScriptDisplayName(script)),
-  );
-  const [isEditing, labelInput, setIsEditing, setLabelInput] = useNameUpdate(
-    folderName,
-    name =>
-      onUpdateFolder(scripts, {
-        isFolderName: true,
-        path: addScriptPathPrefix(scriptsNamespace, name),
-      }),
+  const sortedScripts = sortBy(scripts, script => lowerCase(getScriptDisplayName(script)));
+  const [isEditing, labelInput, setIsEditing, setLabelInput] = useNameUpdate(folderName, name =>
+    onUpdateFolder(scripts, {
+      isFolderName: true,
+      path: addScriptPathPrefix(scriptsNamespace, name),
+    }),
   );
   const [expanded, setExpanded] = useState(false);
   const [blurRef] = useCustomBlur(() => setIsEditing(false));
 
   if (isRoot) {
     return connectDropTarget!(
-      <div style={{paddingTop: 16}}>
-        <SavedScriptsFolderMain className='saved-scripts-folder saved-scripts-folder--root'>
+      <div style={{ paddingTop: 16 }}>
+        <SavedScriptsFolderMain className="saved-scripts-folder saved-scripts-folder--root">
           {map(sortedScripts, (script, index) => (
             <SavedScriptsListItem
               key={`my-script-${script.id || index}`}
               isStatic={isStatic}
               script={script}
+              isRelateScripts={isRelateScripts}
               onSelectScript={onSelectScript}
               onExecScript={onExecScript}
-              onUpdateScript={(script: IScript, payload: any) =>
-                onUpdateFolder([script], payload)
-              }
+              onUpdateScript={(script: IScript, payload: any) => onUpdateFolder([script], payload)}
               onRemoveScript={onRemoveScript}
             />
           ))}
         </SavedScriptsFolderMain>
-      </div>
+      </div>,
     );
   }
 
-  return connectDropTarget!(<div>
-      <SavedScriptsFolderMain className='saved-scripts-folder'>
-        <SavedScriptsFolderHeader title={folderName} ref={blurRef} className='saved-scripts-folder__header'>
+  return connectDropTarget!(
+    <div>
+      <SavedScriptsFolderMain className="saved-scripts-folder">
+        <SavedScriptsFolderHeader title={folderName} ref={blurRef} className="saved-scripts-folder__header">
           {isEditing ? (
             <SavedScriptsInput
-              className='saved-scripts-folder__label-input'
-              type='text'
+              className="saved-scripts-folder__label-input"
+              type="text"
               autoFocus
               onKeyPress={({ charCode }) => {
                 charCode === ENTER_KEY_CODE && setIsEditing(false);
@@ -123,43 +114,39 @@ function SavedScriptsFolder({
               onChange={({ target }) => setLabelInput(target.value)}
             />
           ) : (
-            <SavedScriptsFolderLabel
-              className='saved-scripts-folder__label'
-              onClick={() => setExpanded(!expanded)}
-            >
-              <SavedScriptsFolderCollapseIcon className='saved-scripts-folder__collapse-icon'>
-                {expanded ? <CollapseMenuIcon/> : <ExpandMenuRightIcon/>}
+            <SavedScriptsFolderLabel className="saved-scripts-folder__label" onClick={() => setExpanded(!expanded)}>
+              <SavedScriptsFolderCollapseIcon className="saved-scripts-folder__collapse-icon">
+                {expanded ? <CollapseMenuIcon /> : <ExpandMenuRightIcon />}
               </SavedScriptsFolderCollapseIcon>
               {omitScriptPathPrefix(scriptsNamespace, folderName)}
             </SavedScriptsFolderLabel>
           )}
-          <SavedScriptsButtonWrapper className='saved-scripts__button-wrapper'>
-            {isStatic || isEditing ? null : (
-              <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)}/>
+          <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
+            {isStatic || isRelateScripts || isEditing ? null : (
+              <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)} />
             )}
-            {isStatic || !isEditing ? null : (
-              <SavedScriptsRemoveButton onRemove={() => onRemoveFolder(scripts)}/>
+            {isStatic || isRelateScripts || !isEditing ? null : (
+              <SavedScriptsRemoveButton onRemove={() => onRemoveFolder(scripts)} />
             )}
           </SavedScriptsButtonWrapper>
         </SavedScriptsFolderHeader>
         {expanded ? (
-          <SavedScriptsFolderBody className='saved-scripts-folder__body'>
+          <SavedScriptsFolderBody className="saved-scripts-folder__body">
             {map(sortedScripts, (script, index) => (
               <SavedScriptsListItem
                 key={`my-script-${script.id || index}`}
                 isStatic={isStatic}
                 script={script}
+                isRelateScripts={isRelateScripts}
                 onSelectScript={onSelectScript}
                 onExecScript={onExecScript}
-                onUpdateScript={(script: IScript, payload: any) =>
-                  onUpdateFolder([script], payload)
-                }
+                onUpdateScript={(script: IScript, payload: any) => onUpdateFolder([script], payload)}
                 onRemoveScript={onRemoveScript}
               />
             ))}
           </SavedScriptsFolderBody>
         ) : null}
       </SavedScriptsFolderMain>
-    </div>
+    </div>,
   );
 }

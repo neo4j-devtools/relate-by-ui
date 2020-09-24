@@ -19,13 +19,14 @@ import {
 } from './saved-scripts.styled';
 
 export interface ISavedScriptsListItemProps {
-  isStatic?: boolean,
-  script: IScript,
-  onSelectScript: AnyFunc,
-  onExecScript: AnyFunc,
-  onUpdateScript: AnyFunc,
-  onRemoveScript: AnyFunc,
-  connectDragSource?: AnyFunc
+  isStatic?: boolean;
+  script: IScript;
+  isRelateScripts?: boolean;
+  onSelectScript: AnyFunc;
+  onExecScript: AnyFunc;
+  onUpdateScript: AnyFunc;
+  onRemoveScript: AnyFunc;
+  connectDragSource?: AnyFunc;
 }
 
 export default DragSource<ISavedScriptsListItemProps>(
@@ -33,7 +34,7 @@ export default DragSource<ISavedScriptsListItemProps>(
   {
     beginDrag: ({ script }) => script,
   },
-  (connect) => ({
+  connect => ({
     connectDragSource: connect.dragSource(),
   }),
 )(SavedScriptsListItem);
@@ -41,6 +42,7 @@ export default DragSource<ISavedScriptsListItemProps>(
 function SavedScriptsListItem({
   isStatic,
   script,
+  isRelateScripts,
   onSelectScript,
   onExecScript,
   onUpdateScript,
@@ -48,18 +50,17 @@ function SavedScriptsListItem({
   connectDragSource,
 }: ISavedScriptsListItemProps) {
   const displayName = getScriptDisplayName(script);
-  const [isEditing, nameValue, setIsEditing, setLabelInput] = useNameUpdate(
-    displayName,
-    name => onUpdateScript(script, { name }),
+  const [isEditing, nameValue, setIsEditing, setLabelInput] = useNameUpdate(displayName, name =>
+    onUpdateScript(script, { name }),
   );
   const [blurRef] = useCustomBlur(() => setIsEditing(false));
 
   return (
-    <SavedScriptsListItemMain ref={blurRef} className='saved-scripts-list-item'>
-      {isEditing ? (
+    <SavedScriptsListItemMain ref={blurRef} className="saved-scripts-list-item">
+      {isEditing && !isRelateScripts ? (
         <SavedScriptsInput
-          className='saved-scripts-list-item__name-input'
-          type='text'
+          className="saved-scripts-list-item__name-input"
+          type="text"
           autoFocus
           onKeyPress={({ charCode }) => {
             charCode === ENTER_KEY_CODE && setIsEditing(false);
@@ -69,23 +70,16 @@ function SavedScriptsListItem({
         />
       ) : (
         <SavedScriptsListItemDisplayName
-          className='saved-scripts-list-item__display-name'
-          onClick={() => !isEditing && onSelectScript(script)}
+          className="saved-scripts-list-item__display-name"
+          onClick={() => (isRelateScripts || !isEditing) && onSelectScript(script)}
         >
-          {connectDragSource!(<span>
-            {displayName}
-          </span>)}</SavedScriptsListItemDisplayName>
+          {connectDragSource!(<span>{displayName}</span>)}
+        </SavedScriptsListItemDisplayName>
       )}
-      <SavedScriptsButtonWrapper className='saved-scripts__button-wrapper'>
-        {isStatic || isEditing ? null : (
-          <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)}/>
-        )}
-        {isStatic || !isEditing ? null : (
-          <SavedScriptsRemoveButton onRemove={() => onRemoveScript(script)}/>
-        )}
-        {script.isSuggestion || isEditing ? null : (
-          <SavedScriptsExecButton onExec={() => onExecScript(script)}/>
-        )}
+      <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
+        {isStatic || isEditing ? null : <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)} />}
+        {isStatic || !isEditing ? null : <SavedScriptsRemoveButton onRemove={() => onRemoveScript(script)} />}
+        {script.isSuggestion || isEditing ? null : <SavedScriptsExecButton onExec={() => onExecScript(script)} />}
       </SavedScriptsButtonWrapper>
     </SavedScriptsListItemMain>
   );

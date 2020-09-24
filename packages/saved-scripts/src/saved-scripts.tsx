@@ -26,6 +26,7 @@ export interface ISavedScriptsProps {
   isStatic?: boolean;
   scriptsNamespace: string;
   scripts: IScript[];
+  isRelateScripts?: boolean;
   newFolderPathGenerator?: NewFolderPathGenerator;
   onSelectScript: AnyFunc;
   onExportScripts: AnyFunc;
@@ -41,6 +42,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
     isStatic,
     scriptsNamespace,
     scripts,
+    isRelateScripts,
     newFolderPathGenerator,
     onSelectScript,
     onExportScripts,
@@ -52,16 +54,10 @@ export default function SavedScripts(props: ISavedScriptsProps) {
   const [rootFolder, subFolders] = useScriptsFolders(scriptsNamespace, scripts);
   // lodash-es typings cant handle tuples
   const allSavedFolderNames = compact([first(rootFolder), ...map(subFolders, first)]) as string[];
-  const [
-    emptyFolders,
-    canAddFolder,
-    addEmptyFolder,
-    updateEmptyFolder,
-    removeEmptyFolder,
-  ] = useEmptyFolders(
+  const [emptyFolders, canAddFolder, addEmptyFolder, updateEmptyFolder, removeEmptyFolder] = useEmptyFolders(
     scriptsNamespace,
     newFolderPathGenerator || getEmptyFolderDefaultPath,
-    allSavedFolderNames
+    allSavedFolderNames,
   );
   const allFolderNames = [...allSavedFolderNames, ...emptyFolders];
   const sortedSubFolders = sortBy(subFolders, folder =>
@@ -77,13 +73,10 @@ export default function SavedScripts(props: ISavedScriptsProps) {
             <SavedScriptsHeader className="saved-scripts__header">
               {title}
               <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
-                {isStatic ? null : (
+                {isStatic || isRelateScripts ? null : (
                   <>
-                    <SavedScriptsExportButton onExport={() => onExportScripts()}/>
-                    <SavedScriptsNewFolderButton
-                      disabled={!canAddFolder}
-                      onAdd={() => addEmptyFolder()}
-                    />
+                    <SavedScriptsExportButton onExport={() => onExportScripts()} />
+                    <SavedScriptsNewFolderButton disabled={!canAddFolder} onAdd={() => addEmptyFolder()} />
                   </>
                 )}
               </SavedScriptsButtonWrapper>
@@ -95,6 +88,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
               allFolderNames={allFolderNames}
               folderName={first(rootFolder) as string}
               scripts={last(rootFolder) as IScript[]}
+              isRelateScripts={isRelateScripts}
               onSelectScript={onSelectScript}
               onExecScript={onExecScript}
               onRemoveScript={onRemoveScript}
@@ -109,6 +103,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                 allFolderNames={allFolderNames}
                 folderName={folderName}
                 scripts={subScripts}
+                isRelateScripts={isRelateScripts}
                 onSelectScript={onSelectScript}
                 onExecScript={onExecScript}
                 onRemoveScript={onRemoveScript}
@@ -124,6 +119,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                 allFolderNames={allFolderNames}
                 folderName={folderName}
                 scripts={[]}
+                isRelateScripts={isRelateScripts}
                 onSelectScript={Function.prototype}
                 onExecScript={Function.prototype}
                 onRemoveScript={Function.prototype}
