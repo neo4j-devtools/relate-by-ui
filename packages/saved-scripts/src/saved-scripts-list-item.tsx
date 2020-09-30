@@ -21,7 +21,7 @@ import {
 export interface ISavedScriptsListItemProps {
   isStatic?: boolean;
   script: IScript;
-  isRelateScripts?: boolean;
+  isProjectFiles?: boolean;
   onSelectScript: AnyFunc;
   onExecScript: AnyFunc;
   onUpdateScript: AnyFunc;
@@ -42,7 +42,7 @@ export default DragSource<ISavedScriptsListItemProps>(
 function SavedScriptsListItem({
   isStatic,
   script,
-  isRelateScripts,
+  isProjectFiles,
   onSelectScript,
   onExecScript,
   onUpdateScript,
@@ -57,7 +57,7 @@ function SavedScriptsListItem({
 
   return (
     <SavedScriptsListItemMain ref={blurRef} className="saved-scripts-list-item">
-      {isEditing && !isRelateScripts ? (
+      {isEditing && !isProjectFiles ? (
         <SavedScriptsInput
           className="saved-scripts-list-item__name-input"
           type="text"
@@ -71,7 +71,7 @@ function SavedScriptsListItem({
       ) : (
         <SavedScriptsListItemDisplayName
           className="saved-scripts-list-item__display-name"
-          onClick={() => (isRelateScripts || !isEditing) && onSelectScript(script)}
+          onClick={() => (isProjectFiles || !isEditing) && onSelectScript(script)}
         >
           {connectDragSource!(<span>{displayName}</span>)}
         </SavedScriptsListItemDisplayName>

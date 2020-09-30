@@ -29,7 +29,7 @@ export interface ISavedScriptsFolderProps {
   allFolderNames: string[];
   folderName: string;
   scripts: IScript[];
-  isRelateScripts?: boolean;
+  isProjectFiles?: boolean;
   onSelectScript: AnyFunc;
   onExecScript: AnyFunc;
   onRemoveScript: AnyFunc;
@@ -58,7 +58,7 @@ function SavedScriptsFolder({
   scriptsNamespace,
   folderName,
   scripts,
-  isRelateScripts,
+  isProjectFiles,
   isStatic,
   onSelectScript,
   onExecScript,
@@ -86,7 +86,7 @@ function SavedScriptsFolder({
               key={`my-script-${script.id || index}`}
               isStatic={isStatic}
               script={script}
-              isRelateScripts={isRelateScripts}
+              isProjectFiles={isProjectFiles}
               onSelectScript={onSelectScript}
               onExecScript={onExecScript}
               onUpdateScript={(script: IScript, payload: any) => onUpdateFolder([script], payload)}
@@ -122,10 +122,10 @@ function SavedScriptsFolder({
             </SavedScriptsFolderLabel>
           )}
           <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
-            {isStatic || isRelateScripts || isEditing ? null : (
+            {isStatic || isProjectFiles || isEditing ? null : (
               <SavedScriptsEditButton onEdit={() => setIsEditing(!isEditing)} />
             )}
-            {isStatic || isRelateScripts || !isEditing ? null : (
+            {isStatic || isProjectFiles || !isEditing ? null : (
               <SavedScriptsRemoveButton onRemove={() => onRemoveFolder(scripts)} />
             )}
           </SavedScriptsButtonWrapper>
@@ -137,7 +137,7 @@ function SavedScriptsFolder({
                 key={`my-script-${script.id || index}`}
                 isStatic={isStatic}
                 script={script}
-                isRelateScripts={isRelateScripts}
+                isProjectFiles={isProjectFiles}
                 onSelectScript={onSelectScript}
                 onExecScript={onExecScript}
                 onUpdateScript={(script: IScript, payload: any) => onUpdateFolder([script], payload)}

@@ -26,7 +26,7 @@ export interface ISavedScriptsProps {
   isStatic?: boolean;
   scriptsNamespace: string;
   scripts: IScript[];
-  isRelateScripts?: boolean;
+  isProjectFiles?: boolean;
   newFolderPathGenerator?: NewFolderPathGenerator;
   onSelectScript: AnyFunc;
   onExportScripts: AnyFunc;
@@ -42,7 +42,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
     isStatic,
     scriptsNamespace,
     scripts,
-    isRelateScripts,
+    isProjectFiles,
     newFolderPathGenerator,
     onSelectScript,
     onExportScripts,
@@ -73,7 +73,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
             <SavedScriptsHeader className="saved-scripts__header">
               {title}
               <SavedScriptsButtonWrapper className="saved-scripts__button-wrapper">
-                {isStatic || isRelateScripts ? null : (
+                {isStatic || isProjectFiles ? null : (
                   <>
                     <SavedScriptsExportButton onExport={() => onExportScripts()} />
                     <SavedScriptsNewFolderButton disabled={!canAddFolder} onAdd={() => addEmptyFolder()} />
@@ -88,7 +88,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
               allFolderNames={allFolderNames}
               folderName={first(rootFolder) as string}
               scripts={last(rootFolder) as IScript[]}
-              isRelateScripts={isRelateScripts}
+              isProjectFiles={isProjectFiles}
               onSelectScript={onSelectScript}
               onExecScript={onExecScript}
               onRemoveScript={onRemoveScript}
@@ -103,7 +103,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                 allFolderNames={allFolderNames}
                 folderName={folderName}
                 scripts={subScripts}
-                isRelateScripts={isRelateScripts}
+                isProjectFiles={isProjectFiles}
                 onSelectScript={onSelectScript}
                 onExecScript={onExecScript}
                 onRemoveScript={onRemoveScript}
@@ -119,7 +119,7 @@ export default function SavedScripts(props: ISavedScriptsProps) {
                 allFolderNames={allFolderNames}
                 folderName={folderName}
                 scripts={[]}
-                isRelateScripts={isRelateScripts}
+                isProjectFiles={isProjectFiles}
                 onSelectScript={Function.prototype}
                 onExecScript={Function.prototype}
                 onRemoveScript={Function.prototype}
