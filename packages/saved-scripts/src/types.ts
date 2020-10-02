@@ -3,7 +3,7 @@ export interface IScript {
   name?: string;
   contents: string;
   path: string;
-  isSuggestion?: boolean // dummy prop for static scripts
+  isSuggestion?: boolean; // dummy prop for static scripts
 }
 
 export type AnyFunc = Function | ((...args: any[]) => any);
